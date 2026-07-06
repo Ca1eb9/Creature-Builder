@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Test Leg Front
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 9572ab12-c1d0-4b27-86cc-f689d66bb40a
   partName: Test Leg Front
   category: 2
   prefab: {fileID: 6631836631365029990, guid: 26cf4206ecf33ba4383dd693b53c7f7f, type: 3}
   icon: {fileID: 0}
-  description: 
+  description:
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
-  scaleOverride: {x: 1, y: 1, z: 1}
+  scaleMultiplier: 1
+  useAutoScale: 1

@@ -1,0 +1,76 @@
+# Creature Builder — Ship Plan
+
+Goal: deliver a polished, working Windows build to Mom **once**, with no
+follow-up patch needed. Plan created 2026-07-06.
+
+## Decisions (locked in)
+
+- Target platform: **Windows** (her machine confirmed)
+- Scope: **all 8 categories including Horns & Accessories**
+- companyName: **Caleb Penley** (set 2026-07-06 — FROZEN, see below)
+- Delivery: USB or cloud link — final note to Mom will cover SmartScreen either way
+
+## ⚠️ Frozen before ship — never change after Mom has a save file
+
+| Frozen | Why |
+|---|---|
+| `BodyPartCategory` enum order | Saves store category as int; reordering scrambles slots. Append only. |
+| Every `partID` | Saves reference parts by ID; regenerating orphans saved creatures. |
+| `companyName` + `productName` | Determine persistentDataPath; renaming "loses" all her saves. |
+| Save folder name (`Creatures`) + JSON field names | Same reason. |
+
+Ownership legend — **[ME]**: Claude, unsupervised. **[ME+V]**: Claude does it,
+Caleb visually verifies in Unity. **[YOU]**: Caleb only.
+
+## Phase 0 — Unblock save/load
+
+- [x] 0.1 [ME] Migrate 4 BodyPartData assets to new schema (partID, scaleMultiplier, useAutoScale) — done 2026-07-06
+- [x] 0.2 [ME] Validator editor script: `Tools > Creature Builder > Validate Parts` + `Fix Missing Part IDs` — done 2026-07-06
+- [ ] 0.3 [YOU] Play mode: save → clear → load round-trip (5 min)
+
+## Phase 1 — Repair the UI shell (2–4 hrs)
+
+- [ ] 1.1 [ME+V] Editor script to fix panel layouts (ChildControl flags, LayoutElements, ContentSizeFitters, SaveLoadPanel rebuild)
+- [ ] 1.2 [ME+V] Add + wire AttachPoint_Horns and AttachPoint_Accessories (in scope!)
+- [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display
+- [ ] 1.4 [YOU] Visual taste pass (colors, fonts, spacing)
+- [ ] 1.5 [ME] Delete TutorialInfo/, root screenshots
+
+## Phase 2 — Real content (8–15 hrs, the long pole)
+
+- [ ] 2.1 [YOU] Scope: aim ~3–4 parts × 8 categories; Horns/Accessories can have fewer
+- [ ] 2.2 [YOU] Download CC0 packs (Quaternius, Kenney, Poly Pizza — guide §5)
+- [ ] 2.3 [YOU] Split models in Blender (separate → set origin → export FBX; ~1–2 hrs/animal at first)
+- [ ] 2.4 [ME] Batch importer: `Tools > Creature Builder > Import Parts Folder` (auto BodyPartData + partID + database + AssetPreview icons)
+- [ ] 2.5 [YOU] Calibrate positionOffset/scaleMultiplier per part (safe to refine post-ship)
+
+## Phase 3 — Mom-proofing (3–5 hrs)
+
+- [ ] 3.1 [ME] Save toast + overwrite warning
+- [ ] 3.2 [ME] Delete confirmation dialog
+- [ ] 3.3 [ME] Screenshot feedback toast
+- [ ] 3.4 [ME] Startup creature (auto-equip default on launch)
+- [ ] 3.5 [ME] Input field limits/UX
+- [ ] 3.6 [ME] Graceful-degradation audit (empty db, missing prefab, corrupt save)
+- [ ] 3.7 [YOU] Full 9-step smoke test (architecture doc §10F) in editor
+
+## Phase 4 — Build & deliver (2–3 hrs)
+
+- [ ] 4.1 [ME+V] Player settings: window title, icon, resolution defaults
+- [ ] 4.2 [YOU] Build Windows x64
+- [ ] 4.3 [YOU] Smoke test in the BUILT exe (saves + screenshots especially)
+- [ ] 4.4 [ME] "Read me first" note for Mom (includes SmartScreen "More info → Run anyway" walkthrough); [YOU] zip excluding `*_BurstDebugInformation_DoNotShip`
+- [ ] 4.5 [YOU] Deliver (USB avoids SmartScreen; cloud link triggers it — note covers both)
+- [ ] 4.6 [YOU] Ideally test zip on a second Windows machine/account first
+
+## Estimates
+
+| Phase | Claude | Caleb |
+|---|---|---|
+| 0 | 30 min | 10 min |
+| 1 | 1–2 hrs | 1–2 hrs |
+| 2 | 1 hr | 8–15 hrs |
+| 3 | 2–3 hrs | 1–2 hrs |
+| 4 | 30 min | 2 hrs |
+
+Content (Phase 2) dominates. Everything else is a few evenings.
