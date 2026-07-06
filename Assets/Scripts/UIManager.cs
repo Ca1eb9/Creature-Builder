@@ -67,6 +67,9 @@ public class UIManager : MonoBehaviour
         // Greet the user with a creature instead of an empty void
         assembler.Randomize(database);
 
+        // Start with the info chip hidden until a part is clicked
+        UpdateInfoDisplay(null);
+
         var categories = database.GetAvailableCategories();
         if (categories.Count > 0) SelectCategory(categories[0]);
     }
@@ -151,6 +154,13 @@ public class UIManager : MonoBehaviour
     {
         if (partNameLabel != null) partNameLabel.text = part != null ? part.partName : "";
         if (partDescLabel != null) partDescLabel.text = part != null ? part.description : "";
+
+        // Hide the whole info chip when there's nothing to show
+        if (partNameLabel != null && partNameLabel.transform.parent != null)
+        {
+            bool hasContent = part != null && !string.IsNullOrEmpty(part.partName);
+            partNameLabel.transform.parent.gameObject.SetActive(hasContent);
+        }
     }
 
     // -------- ACTION BUTTONS --------

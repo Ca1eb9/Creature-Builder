@@ -34,6 +34,7 @@ public static class CreatureBuilderLayoutFixer
         FixAdjustmentPanel();
         FixSaveLoadPanel();
         FixLoadListEntryPrefab();
+        EnsureInfoPanel();
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         Debug.Log("Fix Panel Layouts: done. Save the scene to keep the changes.");
     }
@@ -65,6 +66,7 @@ public static class CreatureBuilderLayoutFixer
             FixAdjustmentPanel();
             FixSaveLoadPanel();
             FixLoadListEntryPrefab();
+            EnsureInfoPanel();
             AddMissingAttachPoints();
             AddPartButtonIconSlot();
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
@@ -356,6 +358,67 @@ public static class CreatureBuilderLayoutFixer
         {
             PrefabUtility.UnloadPrefabContents(root);
         }
+    }
+
+    // ------------------------------------------------------------------
+    // INFO PANEL (task 1.3)
+    // ------------------------------------------------------------------
+
+    /// <summary>
+    /// Creates the part name/description display and wires it into
+    /// UIManager. Sits bottom-left, right of the part grid strip, clear of
+    /// the bottom-center toasts and the bottom-right SaveLoadPanel.
+    /// UIManager hides it whenever nothing is selected.
+    /// </summary>
+    private static void EnsureInfoPanel()
+    {
+        var ui = Object.FindAnyObjectByType<UIManager>(FindObjectsInactive.Include);
+        if (ui == null) { Debug.LogWarning("No UIManager in scene — info panel skipped."); return; }
+        if (ui.partNameLabel != null)
+        {
+            Debug.Log("Info panel: already wired, nothing to do.");
+            return;
+        }
+
+        var panel = new GameObject("InfoPanel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        panel.transform.SetParent(ui.transform, false);
+
+        var rect = (RectTransform)panel.transform;
+        rect.anchorMin = new Vector2(0f, 0f);
+        rect.anchorMax = new Vector2(0f, 0f);
+        rect.pivot = new Vector2(0f, 0f);
+        rect.anchoredPosition = new Vector2(210f, 10f);
+        rect.sizeDelta = new Vector2(320f, 80f); // height overridden by fitter
+
+        panel.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.392f); // matches the other panels
+        ConfigureVertical(panel, padding: 10, spacing: 4);
+        EnsureFitter(panel);
+
+        TextMeshProUGUI nameLabel = CreateInfoLabel(panel.transform, "PartNameLabel", 22f, FontStyles.Bold);
+        EnsureLayoutElement(nameLabel.gameObject, preferredHeight: 26);
+        TextMeshProUGUI descLabel = CreateInfoLabel(panel.transform, "PartDescLabel", 16f, FontStyles.Normal);
+        // desc height not fixed — wraps and grows, the fitter follows
+
+        var so = new SerializedObject(ui);
+        so.FindProperty("partNameLabel").objectReferenceValue = nameLabel;
+        so.FindProperty("partDescLabel").objectReferenceValue = descLabel;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        Debug.Log("Info panel: created bottom-left and wired into UIManager.");
+    }
+
+    private static TextMeshProUGUI CreateInfoLabel(Transform parent, string name, float size, FontStyles style)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer));
+        go.transform.SetParent(parent, false);
+        var tmp = go.AddComponent<TextMeshProUGUI>();
+        tmp.text = "";
+        tmp.fontSize = size;
+        tmp.fontStyle = style;
+        tmp.color = new Color(0.13f, 0.13f, 0.15f, 1f);
+        tmp.alignment = TextAlignmentOptions.TopLeft;
+        tmp.raycastTarget = false;
+        return tmp;
     }
 
     // ------------------------------------------------------------------

@@ -19,12 +19,16 @@ public class CameraFramer : MonoBehaviour
     public float userZoomMultiplier = 1.0f;
 
     [Header("Zoom Input")]
-    [Tooltip("Fraction of the current distance moved per wheel notch. 0.15 = each notch zooms 15% closer/farther.")]
+    [Tooltip("Fraction of the current distance moved per wheel notch. 0.2 = each notch zooms 20% closer/farther.")]
     [Range(0.05f, 0.4f)]
-    public float zoomStepPerNotch = 0.15f;
+    public float zoomStepPerNotch = 0.2f;
+
+    [Tooltip("How quickly the camera glides to the target zoom. Higher = snappier, lower = floatier.")]
+    public float zoomSmoothing = 12f;
 
     private Vector3 cameraOffsetDirection;  // direction from creature to camera (unit vector)
     private float baseDistance;             // distance the framer computed last time
+    private float targetZoomMultiplier = 1f; // where the glide is headed
 
     // Runs in Awake (not Start) so the viewing direction is already captured
     // if another script's Start — e.g. UIManager equipping a startup creature —
@@ -33,6 +37,7 @@ public class CameraFramer : MonoBehaviour
     // camera into the creature and permanently lose the original view angle.
     void Awake()
     {
+        targetZoomMultiplier = userZoomMultiplier;
         if (targetCamera == null) targetCamera = Camera.main;
         if (creatureRoot == null)
         {
@@ -55,27 +60,41 @@ public class CameraFramer : MonoBehaviour
 
     void Update()
     {
-        if (UnityEngine.InputSystem.Mouse.current == null) return;
+        var mouse = UnityEngine.InputSystem.Mouse.current;
 
-        // No zooming while a modal dialog is up
-        if (UIFeedback.IsDialogOpen) return;
+        // Input is gated (no zooming over UI or under a dialog), but the
+        // glide below still runs so an in-progress zoom finishes smoothly
+        bool inputAllowed =
+            mouse != null &&
+            !UIFeedback.IsDialogOpen &&
+            !(UnityEngine.EventSystems.EventSystem.current != null &&
+              UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject());
 
-        // Only handle zoom if not over UI
-        if (UnityEngine.EventSystems.EventSystem.current != null &&
-            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            return;
-
-        float scroll = UnityEngine.InputSystem.Mouse.current.scroll.ReadValue().y;
-        if (Mathf.Abs(scroll) > 0.01f)
+        if (inputAllowed)
         {
-            // Proportional zoom: each notch moves a fixed FRACTION of the
-            // current distance, which feels uniform whether close or far.
-            // Windows wheels report ~±120 per notch, trackpads small smooth
-            // values — normalize and cap at one notch per frame so both feel
-            // the same.
-            float steps = Mathf.Clamp(scroll / 120f, -1f, 1f);
-            userZoomMultiplier *= 1f - steps * zoomStepPerNotch;
-            userZoomMultiplier = Mathf.Clamp(userZoomMultiplier, 0.3f, 3.0f);
+            float scroll = mouse.scroll.ReadValue().y;
+            if (Mathf.Abs(scroll) > 0.01f)
+            {
+                // Proportional zoom: each notch moves a fixed FRACTION of
+                // the current distance, uniform whether close or far. The
+                // Input System normalizes a wheel notch to ±1 (older setups
+                // report raw ±120 — the clamp treats anything past one notch
+                // the same); trackpads stream small fractional deltas and
+                // get proportionally gentler steps.
+                float steps = Mathf.Clamp(scroll, -1f, 1f);
+                targetZoomMultiplier *= 1f - steps * zoomStepPerNotch;
+                targetZoomMultiplier = Mathf.Clamp(targetZoomMultiplier, 0.3f, 3.0f);
+            }
+        }
+
+        // Exponential glide toward the target — snappy at first, easing in
+        if (!Mathf.Approximately(userZoomMultiplier, targetZoomMultiplier))
+        {
+            userZoomMultiplier = Mathf.Lerp(
+                userZoomMultiplier, targetZoomMultiplier,
+                1f - Mathf.Exp(-zoomSmoothing * Time.deltaTime));
+            if (Mathf.Abs(userZoomMultiplier - targetZoomMultiplier) < 0.001f)
+                userZoomMultiplier = targetZoomMultiplier;
             ApplyCameraPosition();
         }
     }
@@ -122,6 +141,7 @@ public class CameraFramer : MonoBehaviour
     public void ResetZoom()
     {
         userZoomMultiplier = 1.0f;
+        targetZoomMultiplier = 1.0f;
         ApplyCameraPosition();
     }
 

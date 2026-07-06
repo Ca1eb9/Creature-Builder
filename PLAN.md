@@ -32,9 +32,9 @@ Caleb visually verifies in Unity. **[YOU]**: Caleb only.
 
 - [x] 1.1 [ME+V] Panel layout fixer (Tools > Creature Builder > Fix Panel Layouts) — verified 2026-07-06; also rebuilt LoadListEntry (root was a TMP text object with no Button, so loading was never wired)
 - [x] 1.2 [ME+V] AttachPoint_Horns / AttachPoint_Accessories added + wired — positions still need tuning with real models
-- [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display (or decide to cut)
+- [x] 1.3 [ME+V] Info panel created bottom-left + wired (hides when nothing selected) — done 2026-07-06, quick visual check pending
 - [x] 1.6 [ME+V] PartButton "Icon" Image child added; UIManager toggles it by sprite presence — done 2026-07-06
-- [ ] 1.4 [YOU] Visual taste pass (colors, fonts, spacing)
+- [x] 1.4 [YOU] Visual taste pass — approved 2026-07-06 (aspect-ratio check also fine)
 - [x] 1.5 [ME] Delete TutorialInfo/, root screenshots — done 2026-07-06
 
 ## Phase 2 — Real content (8–15 hrs, the long pole)
