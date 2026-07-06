@@ -39,12 +39,32 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        // Fail loudly and early if core references are missing — otherwise the
+        // first NullReferenceException here would silently abort the rest of
+        // Start and leave every button dead with no obvious cause.
+        if (database == null)
+        {
+            Debug.LogError("UIManager: no BodyPartDatabase assigned — UI cannot be built.", this);
+            return;
+        }
+        if (assembler == null)
+        {
+            Debug.LogError("UIManager: no CreatureAssembler assigned — UI cannot be built.", this);
+            return;
+        }
+
         cachedRotator = FindFirstObjectByType<RotateCreature>();
+
+        if (saveNameInput != null)
+            saveNameInput.characterLimit = 30;
 
         BuildCategoryTabs();
         WireActionButtons();
         WireSaveLoad();
         RefreshLoadList();
+
+        // Greet the user with a creature instead of an empty void
+        assembler.Randomize(database);
 
         var categories = database.GetAvailableCategories();
         if (categories.Count > 0) SelectCategory(categories[0]);
@@ -166,6 +186,10 @@ public class UIManager : MonoBehaviour
 
         yield return null;
         if (canvas != null) canvas.enabled = true;
+
+        // Wait one more frame so the toast can't leak into the captured image
+        yield return null;
+        UIFeedback.ShowToast("Screenshot saved to your Downloads folder 📸");
     }
 
     void OnToggleAutoRotate()
@@ -197,7 +221,32 @@ public class UIManager : MonoBehaviour
         if (saveLoad == null) return;
         string creatureName = saveNameInput != null ? saveNameInput.text : "MyCreature";
         if (string.IsNullOrWhiteSpace(creatureName)) creatureName = "MyCreature";
-        if (saveLoad.SaveCreature(creatureName)) RefreshLoadList();
+
+        if (saveLoad.CreatureExists(creatureName))
+        {
+            UIFeedback.ShowConfirm(
+                $"Overwrite \"{creatureName}\"?",
+                "A creature with this name already exists. Saving will replace it.",
+                "Overwrite", "Cancel",
+                onConfirm: () => DoSave(creatureName));
+        }
+        else
+        {
+            DoSave(creatureName);
+        }
+    }
+
+    void DoSave(string creatureName)
+    {
+        if (saveLoad.SaveCreature(creatureName))
+        {
+            RefreshLoadList();
+            UIFeedback.ShowToast($"Saved \"{creatureName}\" ✓");
+        }
+        else
+        {
+            UIFeedback.ShowToast("Save failed — see log for details");
+        }
     }
 
     void RefreshLoadList()
@@ -230,12 +279,31 @@ public class UIManager : MonoBehaviour
 
     void OnLoadCreature(string creatureName)
     {
-        if (saveLoad.LoadCreature(creatureName) && currentCategory.HasValue)
-            SelectCategory(currentCategory.Value);
+        if (saveLoad.LoadCreature(creatureName))
+        {
+            if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
+            UIFeedback.ShowToast($"Loaded \"{creatureName}\"");
+        }
+        else
+        {
+            UIFeedback.ShowToast("Couldn't load that creature — see log for details");
+        }
     }
 
     void OnDeleteCreature(string creatureName)
     {
-        if (saveLoad.DeleteCreature(creatureName)) RefreshLoadList();
+        UIFeedback.ShowConfirm(
+            $"Delete \"{creatureName}\"?",
+            "This creature will be gone forever. This cannot be undone.",
+            "Delete", "Keep it",
+            onConfirm: () =>
+            {
+                if (saveLoad.DeleteCreature(creatureName))
+                {
+                    RefreshLoadList();
+                    UIFeedback.ShowToast($"Deleted \"{creatureName}\"");
+                }
+            },
+            dangerousConfirm: true);
     }
 }

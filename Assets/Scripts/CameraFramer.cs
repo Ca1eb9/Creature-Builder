@@ -25,7 +25,12 @@ public class CameraFramer : MonoBehaviour
     private Vector3 cameraOffsetDirection;  // direction from creature to camera (unit vector)
     private float baseDistance;             // distance the framer computed last time
 
-    void Start()
+    // Runs in Awake (not Start) so the viewing direction is already captured
+    // if another script's Start — e.g. UIManager equipping a startup creature —
+    // triggers FrameCreature before our own Start would have run. With an
+    // uncaptured (zero) direction, ApplyCameraPosition would teleport the
+    // camera into the creature and permanently lose the original view angle.
+    void Awake()
     {
         if (targetCamera == null) targetCamera = Camera.main;
         if (creatureRoot == null)
@@ -40,7 +45,10 @@ public class CameraFramer : MonoBehaviour
         if (offset.sqrMagnitude < 0.001f) offset = -Vector3.forward;
         cameraOffsetDirection = offset.normalized;
         baseDistance = offset.magnitude;
+    }
 
+    void Start()
+    {
         FrameCreature();
     }
 

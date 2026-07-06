@@ -34,7 +34,11 @@ public class PartAdjustmentPanel : MonoBehaviour
     private bool suppressEvents = false;
     private bool expanded = false;
 
-    void Start()
+    // Awake (not Start) so this one-time setup is guaranteed to run before
+    // UIManager.Start calls SetActiveCategory on us. With Start, execution
+    // order was undefined and this could reset the panel to "No part
+    // selected" AFTER UIManager had already pointed it at a category.
+    void Awake()
     {
         ConfigureSliderRanges();
         WireUp();

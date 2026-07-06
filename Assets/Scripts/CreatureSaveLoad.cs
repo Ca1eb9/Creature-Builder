@@ -37,8 +37,20 @@ public class CreatureSaveLoad : MonoBehaviour
         return Path.Combine(SaveDir, safeName + ".json");
     }
 
+    /// <summary>True if a save file already exists for this name (used for overwrite warnings).</summary>
+    public bool CreatureExists(string creatureName)
+    {
+        if (string.IsNullOrWhiteSpace(creatureName)) return false;
+        return File.Exists(GetSavePath(creatureName));
+    }
+
     public bool SaveCreature(string creatureName)
     {
+        if (assembler == null)
+        {
+            Debug.LogError("CreatureSaveLoad: no CreatureAssembler assigned — cannot save.", this);
+            return false;
+        }
         if (string.IsNullOrWhiteSpace(creatureName))
         {
             Debug.LogWarning("Save aborted: empty name");
@@ -84,6 +96,11 @@ public class CreatureSaveLoad : MonoBehaviour
 
     public bool LoadCreature(string creatureName)
     {
+        if (assembler == null || database == null)
+        {
+            Debug.LogError("CreatureSaveLoad: assembler or database not assigned — cannot load.", this);
+            return false;
+        }
         string path = GetSavePath(creatureName);
         if (!File.Exists(path))
         {

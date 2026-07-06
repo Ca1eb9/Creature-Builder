@@ -34,24 +34,24 @@ Caleb visually verifies in Unity. **[YOU]**: Caleb only.
 - [ ] 1.2 [ME+V] Add + wire AttachPoint_Horns and AttachPoint_Accessories (in scope!)
 - [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display
 - [ ] 1.4 [YOU] Visual taste pass (colors, fonts, spacing)
-- [ ] 1.5 [ME] Delete TutorialInfo/, root screenshots
+- [x] 1.5 [ME] Delete TutorialInfo/, root screenshots — done 2026-07-06
 
 ## Phase 2 — Real content (8–15 hrs, the long pole)
 
 - [ ] 2.1 [YOU] Scope: aim ~3–4 parts × 8 categories; Horns/Accessories can have fewer
 - [ ] 2.2 [YOU] Download CC0 packs (Quaternius, Kenney, Poly Pizza — guide §5)
 - [ ] 2.3 [YOU] Split models in Blender (separate → set origin → export FBX; ~1–2 hrs/animal at first)
-- [ ] 2.4 [ME] Batch importer: `Tools > Creature Builder > Import Parts Folder` (auto BodyPartData + partID + database + AssetPreview icons)
+- [x] 2.4 [ME] Batch importer: `Tools > Creature Builder > Import Parts Folder...` (auto BodyPartData + partID + database + rendered icons) — done 2026-07-06, batch self-test passing
 - [ ] 2.5 [YOU] Calibrate positionOffset/scaleMultiplier per part (safe to refine post-ship)
 
 ## Phase 3 — Mom-proofing (3–5 hrs)
 
-- [ ] 3.1 [ME] Save toast + overwrite warning
-- [ ] 3.2 [ME] Delete confirmation dialog
-- [ ] 3.3 [ME] Screenshot feedback toast
-- [ ] 3.4 [ME] Startup creature (auto-equip default on launch)
-- [ ] 3.5 [ME] Input field limits/UX
-- [ ] 3.6 [ME] Graceful-degradation audit (empty db, missing prefab, corrupt save)
+- [x] 3.1 [ME] Save toast + overwrite warning — done 2026-07-06 (needs visual check)
+- [x] 3.2 [ME] Delete confirmation dialog — done 2026-07-06 (needs visual check)
+- [x] 3.3 [ME] Screenshot feedback toast — done 2026-07-06 (needs visual check)
+- [x] 3.4 [ME] Startup creature (randomize on launch) — done 2026-07-06 (needs visual check)
+- [x] 3.5 [ME] Input field char limit (30) — done 2026-07-06
+- [x] 3.6 [ME] Graceful-degradation: null guards in UIManager + CreatureSaveLoad; init-order races fixed (CameraFramer & PartAdjustmentPanel now init in Awake) — done 2026-07-06
 - [ ] 3.7 [YOU] Full 9-step smoke test (architecture doc §10F) in editor
 
 ## Phase 4 — Build & deliver (2–3 hrs)
