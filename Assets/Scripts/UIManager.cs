@@ -109,7 +109,13 @@ public class UIManager : MonoBehaviour
             GameObject btnObj = Instantiate(partButtonPrefab, partGridContainer);
 
             Image iconImage = btnObj.transform.Find("Icon")?.GetComponent<Image>();
-            if (iconImage != null && part.icon != null) iconImage.sprite = part.icon;
+            if (iconImage != null)
+            {
+                iconImage.sprite = part.icon;
+                iconImage.preserveAspect = true;
+                // No sprite = keep the Image hidden, or it renders as a white box
+                iconImage.enabled = part.icon != null;
+            }
 
             var label = btnObj.GetComponentInChildren<TextMeshProUGUI>();
             if (label != null) label.text = part.partName;
