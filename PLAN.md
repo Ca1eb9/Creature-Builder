@@ -26,14 +26,14 @@ Caleb visually verifies in Unity. **[YOU]**: Caleb only.
 
 - [x] 0.1 [ME] Migrate 4 BodyPartData assets to new schema (partID, scaleMultiplier, useAutoScale) — done 2026-07-06
 - [x] 0.2 [ME] Validator editor script: `Tools > Creature Builder > Validate Parts` + `Fix Missing Part IDs` — done 2026-07-06
-- [ ] 0.3 [YOU] Play mode: save → clear → load round-trip (5 min)
+- [x] 0.3 [YOU] Play mode: save → clear → load round-trip — verified 2026-07-06
 
 ## Phase 1 — Repair the UI shell (2–4 hrs)
 
-- [ ] 1.1 [ME+V] Editor script to fix panel layouts (ChildControl flags, LayoutElements, ContentSizeFitters, SaveLoadPanel rebuild)
-- [ ] 1.2 [ME+V] Add + wire AttachPoint_Horns and AttachPoint_Accessories (in scope!)
-- [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display
-- [ ] 1.6 [ME+V] Add an Image child named exactly "Icon" to PartButton.prefab — UIManager looks it up by that name and currently finds nothing, so part thumbnails NEVER display. Must land before Phase 2 content.
+- [x] 1.1 [ME+V] Panel layout fixer (Tools > Creature Builder > Fix Panel Layouts) — verified 2026-07-06; also rebuilt LoadListEntry (root was a TMP text object with no Button, so loading was never wired)
+- [x] 1.2 [ME+V] AttachPoint_Horns / AttachPoint_Accessories added + wired — positions still need tuning with real models
+- [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display (or decide to cut)
+- [x] 1.6 [ME+V] PartButton "Icon" Image child added; UIManager toggles it by sprite presence — done 2026-07-06
 - [ ] 1.4 [YOU] Visual taste pass (colors, fonts, spacing)
 - [x] 1.5 [ME] Delete TutorialInfo/, root screenshots — done 2026-07-06
 

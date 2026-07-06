@@ -19,8 +19,9 @@ public class CameraFramer : MonoBehaviour
     public float userZoomMultiplier = 1.0f;
 
     [Header("Zoom Input")]
-    [Tooltip("How much userZoomMultiplier changes per unit of scroll. New Input System reports scroll in pixels (~120 per notch), so values around 0.001 feel natural.")]
-    public float scrollZoomSpeed = 0.001f;
+    [Tooltip("Fraction of the current distance moved per wheel notch. 0.15 = each notch zooms 15% closer/farther.")]
+    [Range(0.05f, 0.4f)]
+    public float zoomStepPerNotch = 0.15f;
 
     private Vector3 cameraOffsetDirection;  // direction from creature to camera (unit vector)
     private float baseDistance;             // distance the framer computed last time
@@ -67,8 +68,13 @@ public class CameraFramer : MonoBehaviour
         float scroll = UnityEngine.InputSystem.Mouse.current.scroll.ReadValue().y;
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            // Scroll up = zoom in (smaller multiplier), scroll down = zoom out
-            userZoomMultiplier -= scroll * scrollZoomSpeed;
+            // Proportional zoom: each notch moves a fixed FRACTION of the
+            // current distance, which feels uniform whether close or far.
+            // Windows wheels report ~±120 per notch, trackpads small smooth
+            // values — normalize and cap at one notch per frame so both feel
+            // the same.
+            float steps = Mathf.Clamp(scroll / 120f, -1f, 1f);
+            userZoomMultiplier *= 1f - steps * zoomStepPerNotch;
             userZoomMultiplier = Mathf.Clamp(userZoomMultiplier, 0.3f, 3.0f);
             ApplyCameraPosition();
         }

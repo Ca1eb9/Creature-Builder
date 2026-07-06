@@ -156,21 +156,36 @@ public class CreatureAssembler : MonoBehaviour
     /// </summary>
     private void ComputeAndApplyBaseline(BodyPartCategory cat, GameObject part, BodyPartData data)
     {
-        if (data.useAutoScale)
+        // Renderer.bounds is a WORLD-space axis-aligned box: measured through
+        // whatever rotation the creature is currently spun to, a part's box
+        // inflates or shrinks with the angle (a cube at 45° measures ~41%
+        // wider). That made auto-fit — and therefore load results — depend on
+        // the creature's rotation at equip time. Measure in the unrotated
+        // frame and restore the spin afterwards, all within the same frame.
+        Quaternion savedRotation = transform.rotation;
+        transform.rotation = Quaternion.identity;
+        try
         {
-            // Reset scale before measuring so we get a consistent starting bounds
-            part.transform.localScale = Vector3.one;
+            if (data.useAutoScale)
+            {
+                // Reset scale before measuring so we get a consistent starting bounds
+                part.transform.localScale = Vector3.one;
 
-            // Auto-fit to category budget
-            PartScaleNormalizer.NormalizeToSize(
-                part,
-                CategoryBudgets.GetBudget(cat),
-                CategoryBudgets.GetFitAxis(cat)
-            );
+                // Auto-fit to category budget
+                PartScaleNormalizer.NormalizeToSize(
+                    part,
+                    CategoryBudgets.GetBudget(cat),
+                    CategoryBudgets.GetFitAxis(cat)
+                );
+            }
+            else
+            {
+                part.transform.localScale = Vector3.one;
+            }
         }
-        else
+        finally
         {
-            part.transform.localScale = Vector3.one;
+            transform.rotation = savedRotation;
         }
 
         // Apply the per-part calibration from the BodyPartData asset

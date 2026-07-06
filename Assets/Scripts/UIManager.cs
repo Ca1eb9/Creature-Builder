@@ -53,10 +53,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        cachedRotator = FindFirstObjectByType<RotateCreature>();
+        cachedRotator = FindAnyObjectByType<RotateCreature>();
 
+        // 24 chars at the input's point size fits fully within the save row
         if (saveNameInput != null)
-            saveNameInput.characterLimit = 30;
+            saveNameInput.characterLimit = 24;
 
         BuildCategoryTabs();
         WireActionButtons();

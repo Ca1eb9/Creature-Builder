@@ -87,7 +87,7 @@ public static class CreatureBuilderLayoutFixer
 
     private static void FixAdjustmentPanel()
     {
-        var panel = Object.FindFirstObjectByType<PartAdjustmentPanel>(FindObjectsInactive.Include);
+        var panel = Object.FindAnyObjectByType<PartAdjustmentPanel>(FindObjectsInactive.Include);
         if (panel == null) { Debug.LogWarning("No PartAdjustmentPanel in scene — skipped."); return; }
 
         // Root: dock to the top-right corner, width fixed, height hugging content
@@ -101,7 +101,17 @@ public static class CreatureBuilderLayoutFixer
         ConfigureVertical(panel.gameObject, padding: 10, spacing: 8);
         EnsureFitter(panel.gameObject);
 
-        if (panel.titleLabel != null) EnsureLayoutElement(panel.titleLabel.gameObject, preferredHeight: 32);
+        if (panel.titleLabel != null)
+        {
+            EnsureLayoutElement(panel.titleLabel.gameObject, preferredHeight: 32);
+            // Long category names ("Adjusting: Accessories") must shrink to
+            // fit on one line, never wrap onto a second
+            panel.titleLabel.textWrappingMode = TextWrappingModes.NoWrap;
+            panel.titleLabel.overflowMode = TextOverflowModes.Ellipsis;
+            panel.titleLabel.enableAutoSizing = true;
+            panel.titleLabel.fontSizeMin = 12f;
+            panel.titleLabel.fontSizeMax = 26f;
+        }
         if (panel.toggleButton != null) EnsureLayoutElement(panel.toggleButton.gameObject, preferredHeight: 36);
         if (panel.resetButton != null) EnsureLayoutElement(panel.resetButton.gameObject, preferredHeight: 34);
 
@@ -157,7 +167,7 @@ public static class CreatureBuilderLayoutFixer
 
     private static void FixSaveLoadPanel()
     {
-        var ui = Object.FindFirstObjectByType<UIManager>(FindObjectsInactive.Include);
+        var ui = Object.FindAnyObjectByType<UIManager>(FindObjectsInactive.Include);
         if (ui == null || ui.saveNameInput == null || ui.loadListContainer == null)
         {
             Debug.LogWarning("UIManager (or its save/load references) missing — SaveLoadPanel skipped.");
@@ -194,6 +204,10 @@ public static class CreatureBuilderLayoutFixer
         if (ui.saveButton != null)
             EnsureLayoutElement(ui.saveButton.gameObject, preferredWidth: 90, flexibleWidth: 0);
 
+        // Sized so a maximum-length creature name (24 chars, set in
+        // UIManager) is fully visible in the field, not clipped
+        ui.saveNameInput.pointSize = 14f;
+
         // --- Load section: label above a fixed-height scroll view ---
         Transform content = ui.loadListContainer;          // ScrollView Content
         Transform viewport = content.parent;
@@ -215,7 +229,17 @@ public static class CreatureBuilderLayoutFixer
         {
             EnsureLayoutElement(scrollView.gameObject, preferredHeight: 220, flexibleHeight: 0);
             var scrollRect = scrollView.GetComponent<ScrollRect>();
-            if (scrollRect != null) scrollRect.horizontal = false; // vertical list only
+            if (scrollRect != null)
+            {
+                scrollRect.horizontal = false; // vertical list only
+                // Fully retire the horizontal scrollbar — left merely
+                // "disabled", its track still renders as a dead white bar
+                if (scrollRect.horizontalScrollbar != null)
+                {
+                    scrollRect.horizontalScrollbar.gameObject.SetActive(false);
+                    scrollRect.horizontalScrollbar = null;
+                }
+            }
         }
 
         if (viewport != null)
@@ -253,8 +277,80 @@ public static class CreatureBuilderLayoutFixer
             // LayoutElement an Image-only root reports preferred height 0
             // and every entry collapses flat.
             EnsureLayoutElement(root, preferredHeight: 32);
+
+            // The guide's "Image (background)" child was never stretched — it
+            // sat as a 100x100 white box floating over the entry. Remove it;
+            // the root gets a proper background Image below instead.
+            Transform strayImage = root.transform.Find("Image");
+            if (strayImage != null) Object.DestroyImmediate(strayImage.gameObject);
+
+            // The root was hand-built as a TMP text object, so it had a
+            // TextMeshProUGUI on itself and NO Button/Image. Consequences:
+            //  - UIManager's entry.GetComponent<Button>() found nothing, so
+            //    clicking the row never loaded anything (silently skipped);
+            //  - GetComponentInChildren<TMP>() (self-first) wrote the creature
+            //    name into this root text instead of the Label child;
+            //  - a Graphic on the root blocks adding the background Image.
+            // Remove it, then build the root as the guide intended: a Button
+            // with its own background covering the whole row.
+            var rootText = root.GetComponent<TextMeshProUGUI>();
+            if (rootText != null) Object.DestroyImmediate(rootText);
+
+            var bg = root.GetComponent<Image>();
+            if (bg == null) bg = root.AddComponent<Image>();
+            // Light translucent chip to match the app's light theme
+            bg.color = new Color(1f, 1f, 1f, 0.55f);
+            bg.raycastTarget = true;
+
+            var loadButton = root.GetComponent<Button>();
+            if (loadButton == null) loadButton = root.AddComponent<Button>();
+            loadButton.targetGraphic = bg;
+
+            // Lay the entry out as [ label, stretchy ][ delete button, 24x24 ].
+            // Before this, DeleteButton was 160x30 centered — covering nearly
+            // the whole entry and eating the clicks meant for the load button.
+            ConfigureRow(root, spacing: 4);
+            var hlg = root.GetComponent<HorizontalLayoutGroup>();
+            hlg.padding = new RectOffset(8, 4, 4, 4);
+
+            Transform label = root.transform.Find("Label");
+            if (label != null)
+            {
+                EnsureLayoutElement(label.gameObject, flexibleWidth: 1);
+                var tmp = label.GetComponent<TextMeshProUGUI>();
+                if (tmp != null)
+                {
+                    tmp.alignment = TextAlignmentOptions.MidlineLeft;
+                    tmp.textWrappingMode = TextWrappingModes.NoWrap;
+                    tmp.overflowMode = TextOverflowModes.Ellipsis;
+                    tmp.raycastTarget = false; // clicks fall through to the entry's load button
+                    // Explicit dark text on the light chip — no theme guessing
+                    tmp.color = new Color(0.13f, 0.13f, 0.15f, 1f);
+                    tmp.fontSize = 18f;
+                    tmp.enableAutoSizing = false;
+                }
+            }
+
+            Transform delete = root.transform.Find("DeleteButton");
+            if (delete != null)
+            {
+                EnsureLayoutElement(delete.gameObject, preferredHeight: 24, preferredWidth: 24, flexibleWidth: 0);
+                var img = delete.GetComponent<Image>();
+                if (img != null) img.color = new Color(0.87f, 0.42f, 0.42f, 0.95f); // soft red, fits light theme
+                var text = delete.GetComponentInChildren<TextMeshProUGUI>();
+                if (text != null)
+                {
+                    text.alignment = TextAlignmentOptions.Center;
+                    text.enableAutoSizing = true;
+                    text.fontSizeMin = 8f;
+                    text.fontSizeMax = 18f;
+                    text.raycastTarget = false;
+                    text.color = Color.white;
+                }
+            }
+
             PrefabUtility.SaveAsPrefabAsset(root, LoadListEntryPrefabPath);
-            Debug.Log("LoadListEntry prefab: added preferred height for list layout.");
+            Debug.Log("LoadListEntry prefab: row layout applied, stray white Image removed, DeleteButton sized 24x24.");
         }
         finally
         {
@@ -268,7 +364,7 @@ public static class CreatureBuilderLayoutFixer
 
     private static void AddMissingAttachPoints()
     {
-        var assembler = Object.FindFirstObjectByType<CreatureAssembler>(FindObjectsInactive.Include);
+        var assembler = Object.FindAnyObjectByType<CreatureAssembler>(FindObjectsInactive.Include);
         if (assembler == null) { Debug.LogWarning("No CreatureAssembler in scene — skipped."); return; }
 
         var so = new SerializedObject(assembler);
