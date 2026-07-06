@@ -33,6 +33,7 @@ Caleb visually verifies in Unity. **[YOU]**: Caleb only.
 - [ ] 1.1 [ME+V] Editor script to fix panel layouts (ChildControl flags, LayoutElements, ContentSizeFitters, SaveLoadPanel rebuild)
 - [ ] 1.2 [ME+V] Add + wire AttachPoint_Horns and AttachPoint_Accessories (in scope!)
 - [ ] 1.3 [ME+V] Wire partNameLabel / partDescLabel info display
+- [ ] 1.6 [ME+V] Add an Image child named exactly "Icon" to PartButton.prefab — UIManager looks it up by that name and currently finds nothing, so part thumbnails NEVER display. Must land before Phase 2 content.
 - [ ] 1.4 [YOU] Visual taste pass (colors, fonts, spacing)
 - [x] 1.5 [ME] Delete TutorialInfo/, root screenshots — done 2026-07-06
 
