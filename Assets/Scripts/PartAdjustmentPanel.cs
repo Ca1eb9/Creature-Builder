@@ -148,7 +148,7 @@ public class PartAdjustmentPanel : MonoBehaviour
 
     private void OnReset()
     {
-        if (!activeCategory.HasValue) return;
+        if (!activeCategory.HasValue || assembler == null) return;
         assembler.ResetOverride(activeCategory.Value);
         LoadSlidersFromOverride();
     }

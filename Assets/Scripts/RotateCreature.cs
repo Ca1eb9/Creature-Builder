@@ -29,6 +29,17 @@ public class RotateCreature : MonoBehaviour
     void Update()
     {
         if (mouse == null) return;
+
+        // Stand down while a modal dialog is up — its blocker stops UI
+        // raycasts but not this script, so dragging on the dialog would
+        // spin the creature behind it. Also drop any in-progress drag so
+        // the creature doesn't jump when the dialog closes.
+        if (UIFeedback.IsDialogOpen)
+        {
+            rotating = false;
+            return;
+        }
+
         HandleRotation();
         HandleAutoRotate();
     }

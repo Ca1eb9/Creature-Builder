@@ -17,6 +17,23 @@ public static class UIFeedback
     private static Canvas overlayCanvas;
     private static UIFeedbackHost host;
     private static GameObject activeDialog;
+    private static GameObject activeToast;
+
+    /// <summary>
+    /// True while a modal confirm dialog is on screen. World-input scripts
+    /// (creature rotation, scroll zoom) should check this and stand down —
+    /// the dialog's blocker only stops UI raycasts, not scene input.
+    /// </summary>
+    public static bool IsDialogOpen => activeDialog != null;
+
+    /// <summary>
+    /// Hide/show the whole feedback overlay (used by the screenshot capture
+    /// so a lingering toast can never end up in the photo).
+    /// </summary>
+    public static void SetOverlayVisible(bool visible)
+    {
+        if (overlayCanvas != null) overlayCanvas.enabled = visible;
+    }
 
     // Palette
     private static readonly Color PanelColor = new Color(0.13f, 0.13f, 0.16f, 0.97f);
@@ -34,7 +51,12 @@ public static class UIFeedback
     {
         EnsureCanvas();
 
+        // One toast at a time — a rapid save+load would otherwise stack
+        // unreadable overlapping pills in the same spot
+        if (activeToast != null) Object.Destroy(activeToast);
+
         GameObject toast = CreatePanel("Toast", overlayCanvas.transform, PanelColor);
+        activeToast = toast;
         var rect = toast.GetComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0f);
         rect.anchorMax = new Vector2(0.5f, 0f);
@@ -182,9 +204,14 @@ public static class UIFeedback
     {
         var go = new GameObject("Button_" + label, typeof(RectTransform), typeof(Image), typeof(Button));
         go.transform.SetParent(parent, false);
-        go.GetComponent<Image>().color = color;
+        var image = go.GetComponent<Image>();
+        image.color = color;
 
         var button = go.GetComponent<Button>();
+        // Wire the tint target explicitly — AddComponent doesn't do it, and
+        // without it the button gives no hover/press feedback at all. The
+        // default ColorBlock then handles hover/press tinting.
+        button.targetGraphic = image;
         button.onClick.AddListener(() => onClick());
 
         TextMeshProUGUI text = CreateLabel(go.transform, label, 26f);
@@ -202,22 +229,28 @@ public static class UIFeedback
     {
         yield return new WaitForSeconds(visibleSeconds);
 
+        // The toast may have been destroyed already (a newer toast replaced
+        // it) — bail out instead of touching a dead object
+        if (toast == null) yield break;
+
         const float fadeDuration = 0.35f;
         var graphics = toast.GetComponentsInChildren<Graphic>();
         float t = 0f;
         while (t < fadeDuration)
         {
+            if (toast == null) yield break;
             t += Time.deltaTime;
             float alpha = 1f - (t / fadeDuration);
             foreach (var g in graphics)
             {
+                if (g == null) continue;
                 Color c = g.color;
                 c.a = alpha * (g is Image ? PanelColor.a : 1f);
                 g.color = c;
             }
             yield return null;
         }
-        Object.Destroy(toast);
+        if (toast != null) Object.Destroy(toast);
     }
 
     /// <summary>Hidden coroutine host living on the overlay canvas.</summary>

@@ -173,8 +173,12 @@ public class UIManager : MonoBehaviour
 
     private System.Collections.IEnumerator CaptureCleanScreenshot()
     {
+        // Hide BOTH canvases: the main UI and the feedback overlay —
+        // a toast still fading from an earlier action would otherwise
+        // end up in the photo.
         Canvas canvas = GetComponentInParent<Canvas>();
         if (canvas != null) canvas.enabled = false;
+        UIFeedback.SetOverlayVisible(false);
         yield return new WaitForEndOfFrame();
 
         string downloadsPath = System.IO.Path.Combine(
@@ -184,12 +188,16 @@ public class UIManager : MonoBehaviour
         ScreenCapture.CaptureScreenshot(fullPath);
         Debug.Log($"Screenshot saved: {fullPath}");
 
-        yield return null;
+        // CaptureScreenshot captures at the END of a frame; called after
+        // WaitForEndOfFrame it may not resolve until the following frame's
+        // end. Stay hidden through that frame so the UI can't re-enter
+        // the shot, then restore.
+        yield return new WaitForEndOfFrame();
         if (canvas != null) canvas.enabled = true;
+        UIFeedback.SetOverlayVisible(true);
 
-        // Wait one more frame so the toast can't leak into the captured image
         yield return null;
-        UIFeedback.ShowToast("Screenshot saved to your Downloads folder 📸");
+        UIFeedback.ShowToast("Screenshot saved to your Downloads folder");
     }
 
     void OnToggleAutoRotate()
@@ -202,11 +210,18 @@ public class UIManager : MonoBehaviour
 
     void OnExit()
     {
+        UIFeedback.ShowConfirm(
+            "Exit Creature Builder?",
+            "Anything you haven't saved will be lost.",
+            "Exit", "Stay",
+            onConfirm: () =>
+            {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+            });
     }
 
     // -------- SAVE / LOAD --------
@@ -241,7 +256,7 @@ public class UIManager : MonoBehaviour
         if (saveLoad.SaveCreature(creatureName))
         {
             RefreshLoadList();
-            UIFeedback.ShowToast($"Saved \"{creatureName}\" ✓");
+            UIFeedback.ShowToast($"Saved \"{creatureName}\"!");
         }
         else
         {

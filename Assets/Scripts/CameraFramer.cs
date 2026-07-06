@@ -56,6 +56,9 @@ public class CameraFramer : MonoBehaviour
     {
         if (UnityEngine.InputSystem.Mouse.current == null) return;
 
+        // No zooming while a modal dialog is up
+        if (UIFeedback.IsDialogOpen) return;
+
         // Only handle zoom if not over UI
         if (UnityEngine.EventSystems.EventSystem.current != null &&
             UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())

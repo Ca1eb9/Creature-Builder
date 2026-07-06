@@ -88,8 +88,15 @@ public static class CreatureBuilderValidator
 
         // --- Part-level checks ---
         var seenIDs = new Dictionary<string, string>(); // partID -> first part name
+        var seenNames = new Dictionary<string, string>(); // "category/partName" -> asset name
         foreach (var part in parts)
         {
+            string nameKey = $"{part.category}/{part.partName}";
+            if (seenNames.TryGetValue(nameKey, out string existingAsset))
+                report.warnings.Add($"'{part.name}' and '{existingAsset}' both display as \"{part.partName}\" in {part.category} — the two buttons will look identical in the app.");
+            else
+                seenNames[nameKey] = part.name;
+
             if (string.IsNullOrEmpty(part.PartID))
             {
                 report.errors.Add($"'{part.name}': partID is empty. Save/load cannot reference this part. Run Tools > Creature Builder > Fix Missing Part IDs.");
