@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Badger Front Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 7045032c-cf90-4f1a-ac70-cf115ed8a7ed
+  partName: Badger Front Legs
+  category: 2
+  prefab: {fileID: 4028515245270695604, guid: 59a1b2d8286f57548b65ac735d41941c, type: 3}
+  icon: {fileID: 21300000, guid: 40c1f852f16ff2a42b23c51d8576445f, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

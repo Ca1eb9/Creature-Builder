@@ -16,8 +16,8 @@ MonoBehaviour:
   partName: Test Leg Front
   category: 2
   prefab: {fileID: 6631836631365029990, guid: 26cf4206ecf33ba4383dd693b53c7f7f, type: 3}
-  icon: {fileID: 0}
-  description:
+  icon: {fileID: 21300000, guid: 0c938ce360dbfa04caea93cc8f1471bb, type: 3}
+  description: 
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
   scaleMultiplier: 1

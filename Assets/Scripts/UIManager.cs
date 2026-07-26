@@ -37,6 +37,10 @@ public class UIManager : MonoBehaviour
     private BodyPartCategory? currentCategory = null;
     private RotateCreature cachedRotator;
 
+    // Name of the creature currently loaded/last saved. Lets an empty Save
+    // field mean "re-save the creature I have open" instead of a fresh name.
+    private string currentLoadedName = null;
+
     void Start()
     {
         // Fail loudly and early if core references are missing — otherwise the
@@ -112,17 +116,27 @@ public class UIManager : MonoBehaviour
         {
             GameObject btnObj = Instantiate(partButtonPrefab, partGridContainer);
 
+            bool hasIcon = part.icon != null;
+
             Image iconImage = btnObj.transform.Find("Icon")?.GetComponent<Image>();
             if (iconImage != null)
             {
-                iconImage.sprite = part.icon;
-                iconImage.preserveAspect = true;
-                // No sprite = keep the Image hidden, or it renders as a white box
-                iconImage.enabled = part.icon != null;
+                iconImage.gameObject.SetActive(hasIcon);
+                if (hasIcon)
+                {
+                    iconImage.sprite = part.icon;
+                    iconImage.preserveAspect = true;
+                }
             }
 
-            var label = btnObj.GetComponentInChildren<TextMeshProUGUI>();
-            if (label != null) label.text = part.partName;
+            // The label is only a fallback — when the icon can speak for the part
+            // we hide the name so the thumbnail fills the whole tile.
+            var label = btnObj.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (label != null)
+            {
+                label.gameObject.SetActive(!hasIcon);
+                if (!hasIcon) label.text = part.partName;
+            }
 
             if (assembler.IsEquipped(part))
             {
@@ -176,12 +190,17 @@ public class UIManager : MonoBehaviour
 
     void OnRandomize()
     {
+        // A randomized creature is no longer the one that was loaded — forget
+        // the name so an empty Save won't silently overwrite that file.
+        currentLoadedName = null;
         assembler.Randomize(database);
         if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
     }
 
     void OnClear()
     {
+        // Cleared to nothing — no "current creature" to re-save over.
+        currentLoadedName = null;
         assembler.ClearAll();
         if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
     }
@@ -251,8 +270,17 @@ public class UIManager : MonoBehaviour
     void OnSave()
     {
         if (saveLoad == null) return;
-        string creatureName = saveNameInput != null ? saveNameInput.text : "MyCreature";
-        if (string.IsNullOrWhiteSpace(creatureName)) creatureName = "MyCreature";
+
+        string creatureName = saveNameInput != null ? saveNameInput.text : "";
+        if (string.IsNullOrWhiteSpace(creatureName))
+        {
+            // Empty field: re-save the creature the user currently has open, so
+            // Save doubles as "save my changes". Only fall back to a default
+            // name when nothing has been loaded or saved yet this session.
+            creatureName = !string.IsNullOrWhiteSpace(currentLoadedName)
+                ? currentLoadedName
+                : "MyCreature";
+        }
 
         if (saveLoad.CreatureExists(creatureName))
         {
@@ -272,6 +300,8 @@ public class UIManager : MonoBehaviour
     {
         if (saveLoad.SaveCreature(creatureName))
         {
+            // This is now the "current" creature — a later empty Save targets it.
+            currentLoadedName = creatureName;
             RefreshLoadList();
             UIFeedback.ShowToast($"Saved \"{creatureName}\"!");
         }
@@ -313,6 +343,8 @@ public class UIManager : MonoBehaviour
     {
         if (saveLoad.LoadCreature(creatureName))
         {
+            // Remember what's open so an empty Save overwrites this creature.
+            currentLoadedName = creatureName;
             if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
             UIFeedback.ShowToast($"Loaded \"{creatureName}\"");
         }
@@ -332,6 +364,9 @@ public class UIManager : MonoBehaviour
             {
                 if (saveLoad.DeleteCreature(creatureName))
                 {
+                    // If they deleted the creature they had open, stop treating
+                    // it as the current one.
+                    if (creatureName == currentLoadedName) currentLoadedName = null;
                     RefreshLoadList();
                     UIFeedback.ShowToast($"Deleted \"{creatureName}\"");
                 }

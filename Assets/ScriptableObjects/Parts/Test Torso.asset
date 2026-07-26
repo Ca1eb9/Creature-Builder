@@ -16,8 +16,8 @@ MonoBehaviour:
   partName: Test Torso
   category: 1
   prefab: {fileID: 1663269757501722100, guid: 8f2ce3cd76b72d74bb8e2afc67df539f, type: 3}
-  icon: {fileID: 0}
-  description:
+  icon: {fileID: 21300000, guid: e8df598d8858a284a92b2e045b3b9256, type: 3}
+  description: 
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 90, y: 0, z: 0}
   scaleMultiplier: 1

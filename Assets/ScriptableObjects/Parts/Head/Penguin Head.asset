@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Penguin Head
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: d6f4b20c-0ade-4b4f-b678-e4d3e6330b65
+  partName: Penguin Head
+  category: 0
+  prefab: {fileID: 1526087310907326358, guid: 602cdcda1e52b244d88cd1dee0a6dd61, type: 3}
+  icon: {fileID: 21300000, guid: 202933eedfd97d643aebdd81f3296df5, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

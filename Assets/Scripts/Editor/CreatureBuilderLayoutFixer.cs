@@ -28,28 +28,220 @@ public static class CreatureBuilderLayoutFixer
     // MENU ITEMS
     // ------------------------------------------------------------------
 
-    [MenuItem("Tools/Creature Builder/Fix Panel Layouts")]
-    public static void FixPanelLayoutsMenu()
+    // Note: the one-time panel-layout repair and attach-point setup are no
+    // longer exposed as menu items (their job is done). The underlying
+    // methods are retained below because FixAllBatch still applies them when
+    // rebuilding a scene from scratch.
+
+    [MenuItem("Tools/Creature Builder/Fix PartButton Layout")]
+    public static void FixPartButtonLayoutMenu()
     {
-        FixAdjustmentPanel();
-        FixSaveLoadPanel();
-        FixLoadListEntryPrefab();
-        EnsureInfoPanel();
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-        Debug.Log("Fix Panel Layouts: done. Save the scene to keep the changes.");
+        FixPartButtonLayout();
     }
 
-    [MenuItem("Tools/Creature Builder/Add Missing Attach Points")]
-    public static void AddAttachPointsMenu()
+    [MenuItem("Tools/Creature Builder/View Creature From Front")]
+    public static void ViewFromFrontMenu()
     {
-        AddMissingAttachPoints();
+        ViewCreatureFromFront();
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 
-    [MenuItem("Tools/Creature Builder/Add PartButton Icon Slot")]
-    public static void AddIconSlotMenu()
+    [MenuItem("Tools/Creature Builder/Fix Part Grid Scrolling")]
+    public static void FixPartGridScrollingMenu()
     {
-        AddPartButtonIconSlot();
+        FixPartGridScrolling();
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    }
+
+    /// <summary>
+    /// Park the main camera at a 3/4 FRONT view of the creature — on the +Z side
+    /// it faces, off to one side and slightly above — keeping its current
+    /// distance. CameraFramer captures this direction in Awake and preserves it,
+    /// so the app opens at this angle. Save the scene afterwards to keep it.
+    /// </summary>
+    private static void ViewCreatureFromFront()
+    {
+        var cam = Camera.main;
+        if (cam == null) cam = Object.FindAnyObjectByType<Camera>();
+        if (cam == null) { Debug.LogWarning("View From Front: no camera found."); return; }
+
+        var asm = Object.FindAnyObjectByType<CreatureAssembler>();
+        Vector3 target = asm != null ? asm.transform.position : Vector3.zero;
+
+        float dist = (cam.transform.position - target).magnitude;
+        if (dist < 0.01f) dist = 3f;
+
+        // 3/4 front angle — must match the icon camera in
+        // CreatureBuilderImporter.GenerateIcon so tiles and the live view agree.
+        Vector3 dir = new Vector3(0.6f, 0.3f, 1f).normalized;
+        cam.transform.position = target + dir * dist;
+        cam.transform.LookAt(target);
+
+        // Re-aim the key light to hit the same front the camera now sees,
+        // otherwise the creature's front sits in shadow.
+        AimKeyLightForFront();
+
+        Debug.Log("View From Front: camera set to a 3/4 front angle and key light re-aimed. Save the scene to keep it.");
+    }
+
+    /// <summary>
+    /// Point the scene's directional light at the creature's front from the
+    /// upper-front (same +Z hemisphere as the camera) so the visible side is lit
+    /// with a bit of top-down modeling.
+    /// </summary>
+    private static void AimKeyLightForFront()
+    {
+        Light sun = null;
+        foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (l.type == LightType.Directional) { sun = l; break; }
+        }
+        if (sun == null) { Debug.LogWarning("View From Front: no directional light to re-aim."); return; }
+
+        // Light travels toward the creature from up-front-right: rays go down (-Y),
+        // toward the back (-Z, so they land on the +Z front faces), and across
+        // from +X. Slightly off the camera axis for form rather than flat fill.
+        Vector3 rayDirection = new Vector3(-0.5f, -0.7f, -0.5f).normalized;
+        sun.transform.rotation = Quaternion.LookRotation(rayDirection);
+    }
+
+    /// <summary>
+    /// Make the part picker scroll. The PartGrid object carries a ScrollRect
+    /// with nothing wired and the GridLayoutGroup mashed onto it. This splits
+    /// the roles properly: PartGrid becomes the clipping viewport (RectMask2D),
+    /// a new "PartGridContent" child holds the grid + a ContentSizeFitter so it
+    /// grows with the parts, and the ScrollRect is wired to both. UIManager's
+    /// partGridContainer is repointed at Content so buttons spawn inside it.
+    /// Idempotent.
+    /// </summary>
+    private static void FixPartGridScrolling()
+    {
+        var ui = Object.FindAnyObjectByType<UIManager>();
+        if (ui == null) { Debug.LogWarning("Part grid scroll: no UIManager in the scene."); return; }
+
+        var gridRect = ui.partGridContainer as RectTransform;
+        if (gridRect == null) { Debug.LogWarning("Part grid scroll: UIManager.partGridContainer isn't set."); return; }
+
+        // Already restructured — container points at the Content under a ScrollRect.
+        if (gridRect.name == "PartGridContent" && gridRect.GetComponentInParent<ScrollRect>() != null)
+        {
+            Debug.Log("Part grid scroll: already set up.");
+            return;
+        }
+
+        GameObject viewport = gridRect.gameObject;
+
+        var scroll = viewport.GetComponent<ScrollRect>();
+        if (scroll == null) scroll = viewport.AddComponent<ScrollRect>();
+        if (viewport.GetComponent<RectMask2D>() == null) viewport.AddComponent<RectMask2D>();
+
+        // New Content child, top-anchored and width-stretched so it grows downward.
+        var content = new GameObject("PartGridContent", typeof(RectTransform));
+        var contentRect = (RectTransform)content.transform;
+        contentRect.SetParent(gridRect, false);
+        contentRect.anchorMin = new Vector2(0f, 1f);
+        contentRect.anchorMax = new Vector2(1f, 1f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
+        contentRect.anchoredPosition = Vector2.zero;
+        contentRect.sizeDelta = Vector2.zero;
+
+        // Move the grid settings off the viewport onto Content.
+        var grid = content.AddComponent<GridLayoutGroup>();
+        var oldGrid = viewport.GetComponent<GridLayoutGroup>();
+        if (oldGrid != null)
+        {
+            grid.cellSize = oldGrid.cellSize;
+            grid.spacing = oldGrid.spacing;
+            grid.startCorner = oldGrid.startCorner;
+            grid.startAxis = oldGrid.startAxis;
+            grid.childAlignment = oldGrid.childAlignment;
+            grid.constraint = oldGrid.constraint;
+            grid.constraintCount = oldGrid.constraintCount;
+            grid.padding = oldGrid.padding;
+            Object.DestroyImmediate(oldGrid);
+        }
+        else
+        {
+            grid.cellSize = new Vector2(100f, 100f);
+            grid.childAlignment = TextAnchor.UpperCenter;
+        }
+
+        EnsureFitter(content); // vertical PreferredSize so Content height tracks the rows
+
+        scroll.content = contentRect;
+        scroll.viewport = gridRect;
+        scroll.horizontal = false;
+        scroll.vertical = true;
+        scroll.movementType = ScrollRect.MovementType.Clamped;
+        scroll.scrollSensitivity = 20f;
+
+        ui.partGridContainer = contentRect; // buttons now spawn into Content
+        EditorUtility.SetDirty(ui);
+
+        Debug.Log("Part grid scroll: wrapped the grid in a scrollable Content. Save the scene to keep it.");
+    }
+
+    /// <summary>
+    /// Batch entry: applies only the PartButton layout fix, verifies the
+    /// resulting prefab structure, exits 0 on success / 1 on failure.
+    ///   Unity.exe -batchmode -quit -projectPath ...
+    ///     -executeMethod CreatureBuilderLayoutFixer.FixPartButtonLayoutBatch
+    /// </summary>
+    public static void FixPartButtonLayoutBatch()
+    {
+        var failures = new List<string>();
+        try
+        {
+            FixPartButtonLayout();
+            AssetDatabase.SaveAssets();
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PartButtonPrefabPath);
+            if (prefab == null) failures.Add("PartButton prefab not found after fix.");
+            else
+            {
+                if (prefab.GetComponent<HorizontalLayoutGroup>() != null)
+                    failures.Add("Root still has a HorizontalLayoutGroup (overlay design expects none — the grid sizes the tile).");
+
+                var iconTf = prefab.transform.Find("Icon") as RectTransform;
+                if (iconTf == null) failures.Add("Icon child missing.");
+                else
+                {
+                    if (iconTf.gameObject.activeSelf)
+                        failures.Add("Icon should default to inactive so the label fallback shows when there's no sprite.");
+                    if (iconTf.anchorMin != Vector2.zero || iconTf.anchorMax != Vector2.one)
+                        failures.Add("Icon does not fill the tile (expected stretch anchors 0,0 → 1,1).");
+                    if (!iconTf.GetComponent<Image>().preserveAspect)
+                        failures.Add("Icon Image should preserve aspect.");
+                }
+
+                var label = prefab.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (label == null) failures.Add("Label (TextMeshProUGUI) missing.");
+                else
+                {
+                    if (!label.gameObject.activeSelf)
+                        failures.Add("Label should default to active (it's the fallback).");
+                    if (!label.enableAutoSizing) failures.Add("Label auto-sizing not enabled.");
+                    var lrt = (RectTransform)label.transform;
+                    if (lrt.anchorMin != Vector2.zero || lrt.anchorMax != Vector2.one)
+                        failures.Add("Label does not fill the tile (expected stretch anchors).");
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            failures.Add("Unhandled exception: " + e);
+        }
+
+        if (failures.Count == 0)
+        {
+            Debug.Log("PARTBUTTON LAYOUT FIX PASSED — icon-fills-tile / label-fallback verified.");
+            EditorApplication.Exit(0);
+        }
+        else
+        {
+            Debug.LogError("PARTBUTTON LAYOUT FIX FAILED:\n  • " + string.Join("\n  • ", failures));
+            EditorApplication.Exit(1);
+        }
     }
 
     /// <summary>
@@ -68,7 +260,8 @@ public static class CreatureBuilderLayoutFixer
             FixLoadListEntryPrefab();
             EnsureInfoPanel();
             AddMissingAttachPoints();
-            AddPartButtonIconSlot();
+            FixPartButtonLayout();
+            ViewCreatureFromFront();
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             AssetDatabase.SaveAssets();
 
@@ -79,6 +272,200 @@ public static class CreatureBuilderLayoutFixer
         catch (System.Exception e)
         {
             Debug.LogError("FixAllBatch failed: " + e);
+            EditorApplication.Exit(1);
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // DELETE BUTTON — replace the tiny word label with a trashcan icon
+    // ------------------------------------------------------------------
+
+    [MenuItem("Tools/Creature Builder/Fix Delete Button Icon")]
+    public static void FixDeleteButtonIconMenu()
+    {
+        int n = FixDeleteButtonIcon();
+        EditorUtility.DisplayDialog("Delete Button Icon",
+            n > 0 ? "Delete button now shows a trashcan icon." : "DeleteButton not found.", "OK");
+    }
+
+    /// <summary>
+    /// Swaps the DeleteButton's text label for a white trashcan icon built from
+    /// plain UI shapes (lid + handle + body) — no sprite asset needed. Keeps the
+    /// button's red background, size and position. Idempotent.
+    /// </summary>
+    public static int FixDeleteButtonIcon(string prefabPath = LoadListEntryPrefabPath)
+    {
+        GameObject root = PrefabUtility.LoadPrefabContents(prefabPath);
+        try
+        {
+            Transform delete = FindDescendant(root.transform, "DeleteButton");
+            if (delete == null) return 0;
+
+            // Remove the word label(s) and any previous icon so this re-runs cleanly.
+            foreach (var tmp in delete.GetComponentsInChildren<TMPro.TMP_Text>(true))
+                Object.DestroyImmediate(tmp.gameObject);
+            var oldIcon = delete.Find("TrashIcon");
+            if (oldIcon != null) Object.DestroyImmediate(oldIcon.gameObject);
+
+            BuildTrashIcon(delete);
+
+            PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+            return 1;
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
+    private static void BuildTrashIcon(Transform button)
+    {
+        var icon = new GameObject("TrashIcon", typeof(RectTransform));
+        var irt = (RectTransform)icon.transform;
+        irt.SetParent(button, false);
+        irt.anchorMin = Vector2.zero;
+        irt.anchorMax = Vector2.one;
+        irt.offsetMin = Vector2.zero;
+        irt.offsetMax = Vector2.zero;
+
+        // White bars, positioned about the button centre (button is ~24px).
+        void Bar(string name, float w, float h, float x, float y)
+        {
+            var g = new GameObject(name, typeof(RectTransform), typeof(Image));
+            var rt = (RectTransform)g.transform;
+            rt.SetParent(icon.transform, false);
+            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.sizeDelta = new Vector2(w, h);
+            rt.anchoredPosition = new Vector2(x, y);
+            var img = g.GetComponent<Image>();
+            img.color = Color.white;
+            img.raycastTarget = false; // must not steal the button's clicks
+        }
+
+        Bar("Handle", 7f, 2f, 0f, 6f);   // little grip on the lid
+        Bar("Lid", 15f, 2.5f, 0f, 4f);   // lid, wider than the body
+        Bar("Body", 11f, 11f, 0f, -2.5f); // the can
+    }
+
+    // ------------------------------------------------------------------
+    // SLIDER REPAIR — relink Fill/Handle refs that got cleared
+    // ------------------------------------------------------------------
+
+    [MenuItem("Tools/Creature Builder/Repair Adjustment Sliders")]
+    public static void RepairSlidersMenu()
+    {
+        int fixedCount = RepairSliders();
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        EditorUtility.DisplayDialog("Repair Sliders",
+            fixedCount > 0 ? $"Relinked {fixedCount} slider(s)." : "All sliders already OK.", "OK");
+    }
+
+    /// <summary>
+    /// A Slider with no Handle Rect has no draggable handle — it sits pinned at
+    /// the far left and cannot move (the RotX slider had all three internal refs
+    /// cleared to fileID 0). Relink Fill / Handle / TargetGraphic from the child
+    /// objects Unity's slider template creates ("Fill", "Handle"). Only touches
+    /// sliders that are actually missing a ref, so it is safe and idempotent.
+    /// </summary>
+    public static int RepairSliders()
+    {
+        int fixedCount = 0;
+        foreach (Slider s in Object.FindObjectsByType<Slider>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            var so = new SerializedObject(s);
+            var fillProp = so.FindProperty("m_FillRect");
+            var handleProp = so.FindProperty("m_HandleRect");
+            var targetProp = so.FindProperty("m_TargetGraphic");
+            bool changed = false;
+
+            if (handleProp.objectReferenceValue == null)
+            {
+                Transform handle = FindDescendant(s.transform, "Handle");
+                if (handle != null) { handleProp.objectReferenceValue = handle.GetComponent<RectTransform>(); changed = true; }
+            }
+            if (fillProp.objectReferenceValue == null)
+            {
+                Transform fill = FindDescendant(s.transform, "Fill");
+                if (fill != null) { fillProp.objectReferenceValue = fill.GetComponent<RectTransform>(); changed = true; }
+            }
+            if (targetProp.objectReferenceValue == null)
+            {
+                // The handle graphic is what highlights on hover/press.
+                Transform handle = FindDescendant(s.transform, "Handle");
+                Graphic g = handle != null ? handle.GetComponent<Graphic>() : null;
+                if (g != null) { targetProp.objectReferenceValue = g; changed = true; }
+            }
+
+            if (changed)
+            {
+                so.ApplyModifiedPropertiesWithoutUndo();
+                Debug.Log($"Repaired slider '{GetPath(s.transform)}'.");
+                fixedCount++;
+            }
+        }
+        return fixedCount;
+    }
+
+    /// <summary>Depth-first search for a descendant whose name matches (case-insensitive, exact).</summary>
+    private static Transform FindDescendant(Transform root, string name)
+    {
+        foreach (Transform child in root)
+        {
+            if (string.Equals(child.name, name, System.StringComparison.OrdinalIgnoreCase)) return child;
+            Transform found = FindDescendant(child, name);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private static string GetPath(Transform t)
+    {
+        string path = t.name;
+        while (t.parent != null) { t = t.parent; path = t.name + "/" + path; }
+        return path;
+    }
+
+    /// <summary>
+    /// Batch entry: opens MainScene, relinks any broken sliders, saves. Exit 0.
+    ///   Unity.exe -batchmode -quit -projectPath ...
+    ///     -executeMethod CreatureBuilderLayoutFixer.RepairSlidersBatch
+    /// </summary>
+    public static void RepairSlidersBatch()
+    {
+        try
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/MainScene.unity");
+            int fixedCount = RepairSliders();
+            EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
+            AssetDatabase.SaveAssets();
+            Debug.Log($"REPAIR SLIDERS: relinked {fixedCount} slider(s).");
+            EditorApplication.Exit(0);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("RepairSlidersBatch failed: " + e);
+            EditorApplication.Exit(1);
+        }
+    }
+
+    /// <summary>
+    /// Batch entry: swaps the delete button's word label for a trashcan icon.
+    ///   Unity.exe -batchmode -quit -projectPath ...
+    ///     -executeMethod CreatureBuilderLayoutFixer.FixDeleteButtonIconBatch
+    /// </summary>
+    public static void FixDeleteButtonIconBatch()
+    {
+        try
+        {
+            int n = FixDeleteButtonIcon();
+            AssetDatabase.SaveAssets();
+            Debug.Log($"DELETE BUTTON ICON: updated {n} prefab(s).");
+            EditorApplication.Exit(0);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("FixDeleteButtonIconBatch failed: " + e);
             EditorApplication.Exit(1);
         }
     }
@@ -462,41 +849,78 @@ public static class CreatureBuilderLayoutFixer
     // PART BUTTON ICON SLOT (task 1.6)
     // ------------------------------------------------------------------
 
-    private static void AddPartButtonIconSlot()
+    /// <summary>
+    /// Rework PartButton for the tile grid (PartGrid is a GridLayoutGroup whose
+    /// 100x100 cells fix the button size). Icon and label OVERLAY the whole tile:
+    ///   • the icon fills the tile and is shown only when the part has one
+    ///     (GameObject inactive by default; UIManager activates it per part)
+    ///   • the label fills the tile, centered, and is the FALLBACK shown when
+    ///     there's no icon (so the tile is never blank)
+    /// Any leftover row-layout components from a previous approach are removed.
+    /// Idempotent: re-running just re-applies the same values.
+    /// </summary>
+    private static void FixPartButtonLayout()
     {
         var root = PrefabUtility.LoadPrefabContents(PartButtonPrefabPath);
         try
         {
-            if (root.transform.Find("Icon") != null)
+            // The grid controls the button size, so strip any row layout / height
+            // element left over from an earlier design.
+            var hlg = root.GetComponent<HorizontalLayoutGroup>();
+            if (hlg != null) Object.DestroyImmediate(hlg, true);
+            var rootLE = root.GetComponent<LayoutElement>();
+            if (rootLE != null) Object.DestroyImmediate(rootLE, true);
+
+            // --- Icon: fills the tile, hidden until UIManager assigns a sprite ---
+            var iconTf = root.transform.Find("Icon") as RectTransform;
+            if (iconTf == null)
             {
-                Debug.Log("PartButton prefab: Icon slot already present.");
-                return;
+                var go = new GameObject("Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                go.transform.SetParent(root.transform, false);
+                iconTf = (RectTransform)go.transform;
             }
-
-            var icon = new GameObject("Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-            icon.transform.SetParent(root.transform, false);
-
-            var rect = (RectTransform)icon.transform;
-            rect.anchorMin = new Vector2(0f, 0.5f);
-            rect.anchorMax = new Vector2(0f, 0.5f);
-            rect.pivot = new Vector2(0f, 0.5f);
-            rect.anchoredPosition = new Vector2(8f, 0f);
-            rect.sizeDelta = new Vector2(44f, 44f);
-
-            var image = icon.GetComponent<Image>();
+            StretchFill(iconTf, 2f); // minimal inset so the thumbnail nearly fills the tile
+            var image = iconTf.GetComponent<Image>();
             image.raycastTarget = false;
             image.preserveAspect = true;
-            // Hidden until UIManager assigns a sprite — otherwise it would
-            // render as a white square on icon-less parts
-            image.enabled = false;
+            image.enabled = true; // visibility driven by the GameObject's active state
+            var iconLE = iconTf.GetComponent<LayoutElement>();
+            if (iconLE != null) Object.DestroyImmediate(iconLE, true);
+            iconTf.gameObject.SetActive(false); // UIManager turns it on per part
+
+            // --- Label: fills the tile, centered, the fallback when no icon ---
+            var label = root.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (label != null)
+            {
+                StretchFill((RectTransform)label.transform, 6f);
+                var labelLE = label.GetComponent<LayoutElement>();
+                if (labelLE != null) Object.DestroyImmediate(labelLE, true);
+                label.alignment = TextAlignmentOptions.Center;
+                label.textWrappingMode = TextWrappingModes.Normal;
+                label.enableAutoSizing = true;
+                label.fontSizeMin = 12;
+                label.fontSizeMax = 22;
+                label.raycastTarget = false;
+                label.gameObject.SetActive(true); // default fallback is visible
+            }
 
             PrefabUtility.SaveAsPrefabAsset(root, PartButtonPrefabPath);
-            Debug.Log("PartButton prefab: added 'Icon' Image child (44x44, left side, hidden by default).");
+            Debug.Log("PartButton prefab: icon now fills the tile (shown when present); label is a centered fallback.");
         }
         finally
         {
             PrefabUtility.UnloadPrefabContents(root);
         }
+    }
+
+    /// <summary>Anchor a child to fill its parent with a uniform inset.</summary>
+    private static void StretchFill(RectTransform rt, float padding)
+    {
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.offsetMin = new Vector2(padding, padding);
+        rt.offsetMax = new Vector2(-padding, -padding);
     }
 
     // ------------------------------------------------------------------

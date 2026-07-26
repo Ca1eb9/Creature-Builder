@@ -29,8 +29,29 @@ public class CreatureAssembler : MonoBehaviour
     // override or torso-link multiplier. This is the "natural baseline scale".
     private Dictionary<BodyPartCategory, Vector3> baselineScales = new();
 
+    // The attach-point local positions authored in the scene. Restored as the
+    // fallback layout when no torso is equipped to measure sockets from.
+    private Dictionary<BodyPartCategory, Vector3> defaultAttachLocalPos = new();
+    private bool capturedDefaults;
+
     // Event: anything that wants to know when the creature changes
     public System.Action OnCreatureChanged;
+
+    void Awake()
+    {
+        CaptureDefaultAttachPositions();
+    }
+
+    private void CaptureDefaultAttachPositions()
+    {
+        if (capturedDefaults) return;
+        foreach (BodyPartCategory cat in System.Enum.GetValues(typeof(BodyPartCategory)))
+        {
+            Transform a = GetAttachPoint(cat);
+            if (a != null) defaultAttachLocalPos[cat] = a.localPosition;
+        }
+        capturedDefaults = true;
+    }
 
     public Transform GetAttachPoint(BodyPartCategory category)
     {
@@ -79,24 +100,17 @@ public class CreatureAssembler : MonoBehaviour
         // Compute the baseline scale (auto-fit + per-part calibration)
         ComputeAndApplyBaseline(cat, newPart, partData);
 
-        // Apply current override on top
-        ApplyTransform(cat);
-
-        // If we changed the TORSO, re-process every other equipped part
-        // so they inherit the new torso's scale (if torso-link is on)
-        if (cat == BodyPartCategory.Torso && linkPartsToTorsoScale)
-        {
-            foreach (var otherCat in new List<BodyPartCategory>(equippedParts.Keys))
-            {
-                if (otherCat == BodyPartCategory.Torso) continue;
-                ApplyTransform(otherCat);
-            }
-        }
-
         if (notify)
         {
-            cameraFramer?.FrameCreature();
-            OnCreatureChanged?.Invoke();
+            // Recompute sockets from the (possibly new) torso, place every part,
+            // then signal listeners.
+            NotifyCreatureChanged();
+        }
+        else
+        {
+            // Batch equip (Randomize / Load): give the part a sane transform now;
+            // the single final NotifyCreatureChanged does the real layout once.
+            ApplyTransform(cat);
         }
     }
 
@@ -112,11 +126,7 @@ public class CreatureAssembler : MonoBehaviour
         // Note: we deliberately keep `overrides` so the user's tweaks are
         // remembered if they re-equip the same category. Clear via ClearOverride.
 
-        if (notify)
-        {
-            cameraFramer?.FrameCreature();
-            OnCreatureChanged?.Invoke();
-        }
+        if (notify) NotifyCreatureChanged();
     }
 
     public void ClearAll()
@@ -124,8 +134,7 @@ public class CreatureAssembler : MonoBehaviour
         foreach (var cat in new List<BodyPartCategory>(equippedParts.Keys))
             RemovePart(cat, notify: false);
         overrides.Clear();
-        cameraFramer?.FrameCreature();
-        OnCreatureChanged?.Invoke();
+        NotifyCreatureChanged();
     }
 
     public void Randomize(BodyPartDatabase database)
@@ -257,19 +266,27 @@ public class CreatureAssembler : MonoBehaviour
     /// </summary>
     public void RefreshOverride(BodyPartCategory cat, bool notify = true)
     {
-        ApplyTransform(cat);
-
-        // If we just changed the torso's scale and torso-link is on, propagate
-        if (cat == BodyPartCategory.Torso && linkPartsToTorsoScale)
+        if (!notify)
         {
-            foreach (var other in new List<BodyPartCategory>(equippedParts.Keys))
-            {
-                if (other == BodyPartCategory.Torso) continue;
-                ApplyTransform(other);
-            }
+            // Batch (load): reflect the override now; the final
+            // NotifyCreatureChanged runs the real layout once.
+            ApplyTransform(cat);
+            return;
         }
 
-        if (notify) NotifyCreatureChanged();
+        // Changing a socket-reference part (torso/head) moves sockets and
+        // therefore every dependent part — recompute the whole layout. Any
+        // other part only needs to re-apply its own transform.
+        if (CreatureSockets.IsSocketReference(cat))
+        {
+            NotifyCreatureChanged();
+        }
+        else
+        {
+            ApplyTransform(cat);
+            cameraFramer?.FrameCreature();
+            OnCreatureChanged?.Invoke();
+        }
     }
 
     public void ResetOverride(BodyPartCategory cat)
@@ -283,13 +300,105 @@ public class CreatureAssembler : MonoBehaviour
     // ----------------------------------------------------------------
 
     /// <summary>
-    /// Fires the creature-changed signals manually. Use after a batch of
-    /// EquipPart/SetOverride calls with notify:false (e.g. during load).
+    /// Recomputes the layout, then fires the creature-changed signals. Use after
+    /// a batch of EquipPart/SetOverride calls with notify:false (e.g. load), and
+    /// whenever the set of parts changes.
     /// </summary>
     public void NotifyCreatureChanged()
     {
+        RecomputeLayout();
         cameraFramer?.FrameCreature();
         OnCreatureChanged?.Invoke();
+    }
+
+    // ----------------------------------------------------------------
+    // LAYOUT: measured torso sockets + part placement
+    // ----------------------------------------------------------------
+
+    /// <summary>
+    /// Positions each attach point on the equipped torso (and horns on the head)
+    /// from measured bounds, then applies every part's transform so each seam
+    /// meets its socket. Measured with the root un-rotated so the result is the
+    /// same regardless of how the creature is spun — which keeps loads
+    /// deterministic (the same fix that cured the earlier reload-drift bug).
+    /// </summary>
+    public void RecomputeLayout()
+    {
+        CaptureDefaultAttachPositions(); // safe if Awake hasn't run (edit-time / tests)
+
+        Quaternion savedRotation = transform.rotation;
+        transform.rotation = Quaternion.identity;
+        try
+        {
+            // 1. Torso: apply its own transform, measure it, place torso sockets.
+            if (equippedParts.TryGetValue(BodyPartCategory.Torso, out var torso) && torso != null)
+            {
+                ApplyTransform(BodyPartCategory.Torso);
+                Bounds torsoBounds = PartScaleNormalizer.GetCompositeBounds(torso);
+                PositionSockets(SocketReference.Torso, torsoBounds);
+            }
+            else
+            {
+                // Nothing to measure against — fall back to the scene defaults.
+                RestoreDefaultAttachPositions();
+            }
+
+            // 2. Place every torso-referenced part on its (updated) socket. This
+            //    also positions the head, which the horns socket needs next.
+            foreach (var cat in new List<BodyPartCategory>(equippedParts.Keys))
+            {
+                if (cat == BodyPartCategory.Torso) continue;
+                if (ReferenceOf(cat) == SocketReference.Torso) ApplyTransform(cat);
+            }
+
+            // 3. Head: measure the now-placed head, position head sockets (horns).
+            if (equippedParts.TryGetValue(BodyPartCategory.Head, out var head) && head != null)
+            {
+                Bounds headBounds = PartScaleNormalizer.GetCompositeBounds(head);
+                PositionSockets(SocketReference.Head, headBounds);
+            }
+
+            // 4. Place head-referenced parts.
+            foreach (var cat in new List<BodyPartCategory>(equippedParts.Keys))
+            {
+                if (ReferenceOf(cat) == SocketReference.Head) ApplyTransform(cat);
+            }
+        }
+        finally
+        {
+            transform.rotation = savedRotation;
+        }
+    }
+
+    private SocketReference ReferenceOf(BodyPartCategory cat)
+        => CreatureSockets.TryGetRule(cat, out var rule) ? rule.reference : SocketReference.Torso;
+
+    /// <summary>
+    /// Moves the attach point of every category whose socket rule references the
+    /// given part onto the correct spot of that part's measured bounds.
+    /// </summary>
+    private void PositionSockets(SocketReference reference, Bounds refBounds)
+    {
+        foreach (BodyPartCategory cat in System.Enum.GetValues(typeof(BodyPartCategory)))
+        {
+            if (!CreatureSockets.TryGetRule(cat, out var rule)) continue;
+            if (rule.reference != reference) continue;
+
+            Transform attach = GetAttachPoint(cat);
+            if (attach == null || attach.parent == null) continue;
+
+            Vector3 worldPoint = refBounds.center + Vector3.Scale(refBounds.extents, rule.boxFraction);
+            attach.localPosition = attach.parent.InverseTransformPoint(worldPoint);
+        }
+    }
+
+    private void RestoreDefaultAttachPositions()
+    {
+        foreach (var kvp in defaultAttachLocalPos)
+        {
+            Transform a = GetAttachPoint(kvp.Key);
+            if (a != null) a.localPosition = kvp.Value;
+        }
     }
 
     // ----------------------------------------------------------------

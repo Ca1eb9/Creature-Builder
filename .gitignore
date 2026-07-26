@@ -105,3 +105,21 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+# Added by code-review-graph
+.code-review-graph/
+
+# AI assistant / editor tooling config (kept local, not committed)
+.claude/
+.cursorrules
+.gemini/
+.github/
+.kiro/
+.mcp.json
+.opencode.json
+.qoder/
+.vscode/
+.windsurfrules
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+QODER.md

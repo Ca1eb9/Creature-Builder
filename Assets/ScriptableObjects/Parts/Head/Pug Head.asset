@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Pug Head
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: dd3bd681-c360-462c-b989-0ca468ee37f9
+  partName: Pug Head
+  category: 0
+  prefab: {fileID: 6993626258225824513, guid: 8838210bb94f07b4abcb1cc30cf093cc, type: 3}
+  icon: {fileID: 21300000, guid: a1bb3406bbd78244c8f47c8d14a22310, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

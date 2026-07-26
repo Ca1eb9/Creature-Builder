@@ -7,13 +7,18 @@ using UnityEngine;
 public static class PartScaleNormalizer
 {
     /// <summary>
-    /// Rescales a part so its largest dimension fits within targetSize.
-    /// Preserves aspect ratio — the part will never be distorted.
+    /// Rescales a part so a chosen measure of its bounds matches targetSize.
+    /// Preserves aspect ratio — the part is never distorted.
+    ///
+    /// FitAxis.Diagonal fits the bounding-box diagonal, which tracks a part's
+    /// *overall* size regardless of shape — a long snout and a round head then
+    /// read as the same size. Prefer it for most categories; use a single axis
+    /// only where one dimension is the meaningful one (e.g. wing span on X).
     /// </summary>
     /// <param name="part">The instantiated part GameObject</param>
-    /// <param name="targetSize">The max size in Unity units this part should occupy</param>
-    /// <param name="axis">Which axis to constrain: 0=largest, 1=X, 2=Y, 3=Z</param>
-    public static void NormalizeToSize(GameObject part, float targetSize, FitAxis axis = FitAxis.Largest)
+    /// <param name="targetSize">The size in Unity units this part should occupy</param>
+    /// <param name="axis">Which measure to constrain</param>
+    public static void NormalizeToSize(GameObject part, float targetSize, FitAxis axis = FitAxis.Diagonal)
     {
         Bounds bounds = GetCompositeBounds(part);
 
@@ -25,6 +30,7 @@ public static class PartScaleNormalizer
             case FitAxis.X:        currentSize = bounds.size.x; break;
             case FitAxis.Y:        currentSize = bounds.size.y; break;
             case FitAxis.Z:        currentSize = bounds.size.z; break;
+            case FitAxis.Diagonal: currentSize = bounds.size.magnitude; break;
             default:               currentSize = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z); break;
         }
 
@@ -32,60 +38,6 @@ public static class PartScaleNormalizer
 
         float scaleFactor = targetSize / currentSize;
         part.transform.localScale *= scaleFactor;
-    }
-
-    /// <summary>
-    /// Rescales a part so it matches a reference part's size on a given axis.
-    /// Useful for: "make this head the same height as the current torso's neck."
-    /// </summary>
-    public static void NormalizeToMatch(GameObject partToScale, GameObject reference,
-                                        FitAxis axis = FitAxis.Y, float multiplier = 1f)
-    {
-        Bounds boundsA = GetCompositeBounds(partToScale);
-        Bounds boundsB = GetCompositeBounds(reference);
-
-        if (boundsA.size == Vector3.zero || boundsB.size == Vector3.zero) return;
-
-        float sizeA, sizeB;
-        switch (axis)
-        {
-            case FitAxis.X:
-                sizeA = boundsA.size.x;
-                sizeB = boundsB.size.x;
-                break;
-            case FitAxis.Z:
-                sizeA = boundsA.size.z;
-                sizeB = boundsB.size.z;
-                break;
-            default: // Y
-                sizeA = boundsA.size.y;
-                sizeB = boundsB.size.y;
-                break;
-        }
-
-        if (sizeA < 0.0001f) return;
-
-        float scaleFactor = (sizeB / sizeA) * multiplier;
-        partToScale.transform.localScale *= scaleFactor;
-    }
-
-    /// <summary>
-    /// After scaling, repositions the part so its bottom sits at the attachment point.
-    /// Prevents parts from floating above or sinking below where they should be.
-    /// </summary>
-    public static void AlignBottom(GameObject part, Transform attachPoint)
-    {
-        Bounds bounds = GetCompositeBounds(part);
-
-        // How far is the bottom of the mesh from the object's pivot?
-        float pivotToBottom = part.transform.position.y - bounds.min.y;
-
-        // Offset the part so its bottom is exactly at the attach point
-        part.transform.position = new Vector3(
-            attachPoint.position.x,
-            attachPoint.position.y + pivotToBottom,
-            attachPoint.position.z
-        );
     }
 
     /// <summary>
@@ -106,5 +58,5 @@ public static class PartScaleNormalizer
         return combined;
     }
 
-    public enum FitAxis { Largest, X, Y, Z }
+    public enum FitAxis { Largest, X, Y, Z, Diagonal }
 }

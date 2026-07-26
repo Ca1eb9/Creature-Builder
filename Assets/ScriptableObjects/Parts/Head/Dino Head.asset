@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Dino Head
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 5cda22e3-0c92-4045-9f14-d9ba926b6dc3
+  partName: Dino Head
+  category: 0
+  prefab: {fileID: 7258566831281805515, guid: 7d82f0718e1de9c4f9e3bb8013c9be2c, type: 3}
+  icon: {fileID: 21300000, guid: c4fb270f3d39f0a4f8bc4a57c919afa1, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

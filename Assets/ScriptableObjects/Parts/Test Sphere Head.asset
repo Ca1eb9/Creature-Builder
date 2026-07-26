@@ -16,8 +16,8 @@ MonoBehaviour:
   partName: Test Sphere Head
   category: 0
   prefab: {fileID: 235665554834631391, guid: 088ba07e0da386340b1b5b5200560dd4, type: 3}
-  icon: {fileID: 0}
-  description:
+  icon: {fileID: 21300000, guid: c82c77ad01403434b95fed114fe7f444, type: 3}
+  description: 
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
   scaleMultiplier: 1

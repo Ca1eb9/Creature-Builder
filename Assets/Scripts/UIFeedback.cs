@@ -55,7 +55,8 @@ public static class UIFeedback
         // unreadable overlapping pills in the same spot
         if (activeToast != null) Object.Destroy(activeToast);
 
-        GameObject toast = CreatePanel("Toast", overlayCanvas.transform, PanelColor);
+        // Transparent background — just floating white text.
+        GameObject toast = CreatePanel("Toast", overlayCanvas.transform, Color.clear);
         activeToast = toast;
         var rect = toast.GetComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0f);
@@ -63,10 +64,25 @@ public static class UIFeedback
         rect.pivot = new Vector2(0.5f, 0f);
         rect.anchoredPosition = new Vector2(0f, 60f);
 
-        TextMeshProUGUI label = CreateLabel(toast.transform, message, 26f);
-        label.margin = new Vector4(24f, 12f, 24f, 12f);
+        // Lay the label out with padding so the pill hugs the text on one line.
+        var layout = toast.AddComponent<HorizontalLayoutGroup>();
+        layout.padding = new RectOffset(30, 30, 14, 14);
+        layout.childAlignment = TextAnchor.MiddleCenter;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = false;
 
-        // Size the pill to its text
+        TextMeshProUGUI label = CreateLabel(toast.transform, message, 26f);
+        // Keep the message on one line — the pill grows to fit instead of wrapping.
+        label.textWrappingMode = TextWrappingModes.NoWrap;
+        // With no background, add a soft shadow so white text stays legible over
+        // bright parts of the scene.
+        var shadow = label.gameObject.AddComponent<Shadow>();
+        shadow.effectColor = new Color(0f, 0f, 0f, 0.8f);
+        shadow.effectDistance = new Vector2(1.5f, -1.5f);
+
+        // Size the pill to its (single-line) text
         var fitter = toast.AddComponent<ContentSizeFitter>();
         fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -234,19 +250,38 @@ public static class UIFeedback
         if (toast == null) yield break;
 
         const float fadeDuration = 0.35f;
+
+        // Fade each graphic (and any text shadow) from its OWN starting alpha, so
+        // a transparent background stays transparent instead of flashing in.
         var graphics = toast.GetComponentsInChildren<Graphic>();
+        var baseAlpha = new float[graphics.Length];
+        for (int i = 0; i < graphics.Length; i++)
+            baseAlpha[i] = graphics[i] != null ? graphics[i].color.a : 0f;
+
+        var shadows = toast.GetComponentsInChildren<Shadow>();
+        var shadowBaseAlpha = new float[shadows.Length];
+        for (int i = 0; i < shadows.Length; i++)
+            shadowBaseAlpha[i] = shadows[i] != null ? shadows[i].effectColor.a : 0f;
+
         float t = 0f;
         while (t < fadeDuration)
         {
             if (toast == null) yield break;
             t += Time.deltaTime;
-            float alpha = 1f - (t / fadeDuration);
-            foreach (var g in graphics)
+            float k = 1f - (t / fadeDuration);
+            for (int i = 0; i < graphics.Length; i++)
             {
-                if (g == null) continue;
-                Color c = g.color;
-                c.a = alpha * (g is Image ? PanelColor.a : 1f);
-                g.color = c;
+                if (graphics[i] == null) continue;
+                Color c = graphics[i].color;
+                c.a = baseAlpha[i] * k;
+                graphics[i].color = c;
+            }
+            for (int i = 0; i < shadows.Length; i++)
+            {
+                if (shadows[i] == null) continue;
+                Color c = shadows[i].effectColor;
+                c.a = shadowBaseAlpha[i] * k;
+                shadows[i].effectColor = c;
             }
             yield return null;
         }
