@@ -12,6 +12,7 @@ public class CreatureAssembler : MonoBehaviour
     public Transform tailAttach;
     public Transform wingsAttach;
     public Transform hornsAttach;
+    public Transform earsAttach;
     public Transform accessoriesAttach;
 
     [Header("Linked Systems")]
@@ -64,6 +65,7 @@ public class CreatureAssembler : MonoBehaviour
             case BodyPartCategory.Tail:        return tailAttach;
             case BodyPartCategory.Wings:       return wingsAttach;
             case BodyPartCategory.Horns:       return hornsAttach;
+            case BodyPartCategory.Ears:       return earsAttach;
             case BodyPartCategory.Accessories: return accessoriesAttach;
             default: return null;
         }

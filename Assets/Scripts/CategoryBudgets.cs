@@ -27,6 +27,7 @@ public static class CategoryBudgets
             case BodyPartCategory.Tail:       return 0.70f;
             case BodyPartCategory.Wings:      return 1.10f;  // wide
             case BodyPartCategory.Horns:      return 0.35f;
+            case BodyPartCategory.Ears:      return 0.35f;
             case BodyPartCategory.Accessories:return 0.30f;
             default:                          return 0.50f;
         }

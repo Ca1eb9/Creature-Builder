@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum BodyPartCategory
 {
-    Head, Torso, FrontLegs, BackLegs, Tail, Wings, Horns, Accessories
+    Head, Torso, FrontLegs, BackLegs, Tail, Wings, Horns, Ears, Accessories
 }
 
 [CreateAssetMenu(fileName = "NewBodyPart", menuName = "Creature Viewer/Body Part Data")]

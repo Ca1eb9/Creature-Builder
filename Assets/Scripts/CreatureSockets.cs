@@ -48,6 +48,7 @@ public static class CreatureSockets
 
             // On the head box:
             case BodyPartCategory.Horns:       rule = new SocketRule(SocketReference.Head,  new Vector3(0f,  0.90f,  0.00f)); return true; // top of head
+            case BodyPartCategory.Ears:        rule = new SocketRule(SocketReference.Head,  new Vector3(0f,  0.65f,  -0.10f)); return true; // top of head
 
             default:                           rule = default; return false; // Torso: no socket
         }

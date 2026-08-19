@@ -5,8 +5,10 @@ using System.Collections;
 
 /// <summary>
 /// Lightweight toasts and confirmation dialogs, built entirely from code at
-/// runtime — no scene setup or prefabs required. Creates its own overlay
-/// canvas the first time it's used.
+/// runtime — no scene setup or prefabs required. Styled with the Classical
+/// design system (see <see cref="DesignTokens"/>): a dark pill toast, and a
+/// surface-coloured dialog with an accent kicker, Cormorant title and outlined
+/// buttons.
 ///
 ///   UIFeedback.ShowToast("Saved!");
 ///   UIFeedback.ShowConfirm("Delete 'Fluffy'?", "This cannot be undone.",
@@ -19,146 +21,120 @@ public static class UIFeedback
     private static GameObject activeDialog;
     private static GameObject activeToast;
 
-    /// <summary>
-    /// True while a modal confirm dialog is on screen. World-input scripts
-    /// (creature rotation, scroll zoom) should check this and stand down —
-    /// the dialog's blocker only stops UI raycasts, not scene input.
-    /// </summary>
     public static bool IsDialogOpen => activeDialog != null;
 
-    /// <summary>
-    /// Hide/show the whole feedback overlay (used by the screenshot capture
-    /// so a lingering toast can never end up in the photo).
-    /// </summary>
     public static void SetOverlayVisible(bool visible)
     {
         if (overlayCanvas != null) overlayCanvas.enabled = visible;
     }
 
-    // Palette
-    private static readonly Color PanelColor = new Color(0.13f, 0.13f, 0.16f, 0.97f);
-    private static readonly Color DimColor = new Color(0f, 0f, 0f, 0.55f);
-    private static readonly Color ButtonColor = new Color(0.25f, 0.27f, 0.33f, 1f);
-    private static readonly Color DangerColor = new Color(0.65f, 0.22f, 0.22f, 1f);
-    private static readonly Color TextColor = new Color(0.94f, 0.94f, 0.94f, 1f);
-
     // ------------------------------------------------------------------
     // PUBLIC API
     // ------------------------------------------------------------------
 
-    /// <summary>Non-blocking notification, bottom-center, fades out.</summary>
+    /// <summary>Non-blocking notification, bottom-center — a dark pill that fades out.</summary>
     public static void ShowToast(string message, float seconds = 2.5f)
     {
         EnsureCanvas();
-
-        // One toast at a time — a rapid save+load would otherwise stack
-        // unreadable overlapping pills in the same spot
         if (activeToast != null) Object.Destroy(activeToast);
 
-        // Transparent background — just floating white text.
-        GameObject toast = CreatePanel("Toast", overlayCanvas.transform, Color.clear);
+        GameObject toast = CreatePanel("Toast", overlayCanvas.transform, DesignTokens.Neutral900,
+            DesignTokens.RoundedSprite);
         activeToast = toast;
+        AddShadow(toast, 0.35f);
+
         var rect = toast.GetComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0f);
         rect.anchorMax = new Vector2(0.5f, 0f);
         rect.pivot = new Vector2(0.5f, 0f);
-        rect.anchoredPosition = new Vector2(0f, 60f);
+        rect.anchoredPosition = new Vector2(0f, 70f);
 
-        // Lay the label out with padding so the pill hugs the text on one line.
         var layout = toast.AddComponent<HorizontalLayoutGroup>();
-        layout.padding = new RectOffset(30, 30, 14, 14);
+        layout.padding = new RectOffset(24, 24, 12, 12);
         layout.childAlignment = TextAnchor.MiddleCenter;
-        layout.childControlWidth = true;
-        layout.childControlHeight = true;
-        layout.childForceExpandWidth = false;
-        layout.childForceExpandHeight = false;
+        layout.childControlWidth = layout.childControlHeight = true;
+        layout.childForceExpandWidth = layout.childForceExpandHeight = false;
 
-        TextMeshProUGUI label = CreateLabel(toast.transform, message, 26f);
-        // Keep the message on one line — the pill grows to fit instead of wrapping.
+        TextMeshProUGUI label = CreateLabel(toast.transform, message, 17f, DesignTokens.Neutral100);
         label.textWrappingMode = TextWrappingModes.NoWrap;
-        // With no background, add a soft shadow so white text stays legible over
-        // bright parts of the scene.
-        var shadow = label.gameObject.AddComponent<Shadow>();
-        shadow.effectColor = new Color(0f, 0f, 0f, 0.8f);
-        shadow.effectDistance = new Vector2(1.5f, -1.5f);
 
-        // Size the pill to its (single-line) text
         var fitter = toast.AddComponent<ContentSizeFitter>();
-        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        // Toasts must never eat clicks
         toast.GetComponent<Image>().raycastTarget = false;
         label.raycastTarget = false;
 
         host.StartCoroutine(FadeOutAndDestroy(toast, seconds));
     }
 
-    /// <summary>
-    /// Modal yes/no dialog. Blocks clicks behind it until dismissed.
-    /// Only one dialog can be open at a time; a second request is ignored.
-    /// </summary>
+    /// <summary>Modal yes/no dialog. Blocks clicks behind it until dismissed.</summary>
     public static void ShowConfirm(string title, string message,
                                    string confirmLabel, string cancelLabel,
                                    System.Action onConfirm,
                                    System.Action onCancel = null,
-                                   bool dangerousConfirm = false)
+                                   bool dangerousConfirm = false,
+                                   string kicker = "Creature Builder")
     {
         EnsureCanvas();
         if (activeDialog != null) return;
 
-        // Full-screen dim layer that swallows clicks behind the dialog
-        GameObject blocker = CreatePanel("DialogBlocker", overlayCanvas.transform, DimColor);
+        // Dim backdrop that swallows clicks.
+        GameObject blocker = CreatePanel("DialogBlocker", overlayCanvas.transform,
+            DesignTokens.Alpha(DesignTokens.Neutral900, 0.5f));
         var blockerRect = blocker.GetComponent<RectTransform>();
         blockerRect.anchorMin = Vector2.zero;
         blockerRect.anchorMax = Vector2.one;
-        blockerRect.offsetMin = Vector2.zero;
-        blockerRect.offsetMax = Vector2.zero;
+        blockerRect.offsetMin = blockerRect.offsetMax = Vector2.zero;
         activeDialog = blocker;
 
-        // Centered panel
-        GameObject panel = CreatePanel("DialogPanel", blocker.transform, PanelColor);
+        // Centered surface panel.
+        GameObject panel = CreatePanel("DialogPanel", blocker.transform, DesignTokens.Surface,
+            DesignTokens.RoundedSprite);
+        AddBorder(panel, DesignTokens.Divider);
+        AddShadow(panel, 0.4f);
         var panelRect = panel.GetComponent<RectTransform>();
-        panelRect.anchorMin = new Vector2(0.5f, 0.5f);
-        panelRect.anchorMax = new Vector2(0.5f, 0.5f);
+        panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
         panelRect.pivot = new Vector2(0.5f, 0.5f);
-        panelRect.sizeDelta = new Vector2(520f, 240f);
+        panelRect.sizeDelta = new Vector2(460f, 230f);
 
         var layout = panel.AddComponent<VerticalLayoutGroup>();
-        layout.padding = new RectOffset(28, 28, 22, 22);
-        layout.spacing = 14f;
-        layout.childAlignment = TextAnchor.UpperCenter;
-        layout.childControlWidth = true;
-        layout.childControlHeight = false;
+        layout.padding = new RectOffset(26, 26, 22, 22);
+        layout.spacing = 12f;
+        layout.childAlignment = TextAnchor.UpperLeft;
+        layout.childControlWidth = layout.childControlHeight = true;
         layout.childForceExpandWidth = true;
         layout.childForceExpandHeight = false;
+        panel.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        TextMeshProUGUI titleText = CreateLabel(panel.transform, title, 32f);
-        titleText.fontStyle = FontStyles.Bold;
-        titleText.rectTransform.sizeDelta = new Vector2(0f, 44f);
+        // Accent kicker (uppercase), Cormorant title, muted body.
+        var kick = CreateLabel(panel.transform, kicker.ToUpperInvariant(), 12f, DesignTokens.Accent);
+        kick.characterSpacing = 8f;
 
-        TextMeshProUGUI msgText = CreateLabel(panel.transform, message, 24f);
-        msgText.rectTransform.sizeDelta = new Vector2(0f, 66f);
+        var titleText = CreateLabel(panel.transform, title, 24f, DesignTokens.Text);
+        titleText.font = DesignTokens.HeadingFont;
 
-        // Button row
+        var msgText = CreateLabel(panel.transform, message, 15f, DesignTokens.Alpha(DesignTokens.Text, 0.85f));
+        msgText.textWrappingMode = TextWrappingModes.Normal;
+
+        // Right-aligned button row.
         GameObject row = new GameObject("Buttons", typeof(RectTransform));
         row.transform.SetParent(panel.transform, false);
-        row.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 56f);
         var rowLayout = row.AddComponent<HorizontalLayoutGroup>();
-        rowLayout.spacing = 16f;
-        rowLayout.childAlignment = TextAnchor.MiddleCenter;
-        rowLayout.childControlWidth = true;
-        rowLayout.childControlHeight = true;
-        rowLayout.childForceExpandWidth = true;
-        rowLayout.childForceExpandHeight = true;
+        rowLayout.spacing = 10f;
+        rowLayout.padding = new RectOffset(0, 0, 8, 0);
+        rowLayout.childAlignment = TextAnchor.MiddleRight;
+        rowLayout.childControlWidth = rowLayout.childControlHeight = true;
+        rowLayout.childForceExpandWidth = false;
+        rowLayout.childForceExpandHeight = false;
+        row.AddComponent<LayoutElement>().minHeight = 40f;
 
-        CreateButton(row.transform, cancelLabel, ButtonColor, () =>
+        CreateButton(row.transform, cancelLabel, DesignTokens.Divider, DesignTokens.Text, () =>
         {
             CloseDialog();
             onCancel?.Invoke();
         });
-        CreateButton(row.transform, confirmLabel,
-            dangerousConfirm ? DangerColor : ButtonColor, () =>
+        Color confirmTint = dangerousConfirm ? DesignTokens.Danger : DesignTokens.Accent;
+        CreateButton(row.transform, confirmLabel, confirmTint, confirmTint, () =>
         {
             CloseDialog();
             onConfirm?.Invoke();
@@ -186,9 +162,8 @@ public static class UIFeedback
             typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         overlayCanvas = go.GetComponent<Canvas>();
         overlayCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        overlayCanvas.sortingOrder = 500;   // above the main UI
+        overlayCanvas.sortingOrder = 500;
 
-        // Match the main canvas's scaling so sizes are consistent
         var scaler = go.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
@@ -196,46 +171,84 @@ public static class UIFeedback
         host = go.AddComponent<UIFeedbackHost>();
     }
 
-    private static GameObject CreatePanel(string name, Transform parent, Color color)
+    private static GameObject CreatePanel(string name, Transform parent, Color color, Sprite sprite = null)
     {
         var go = new GameObject(name, typeof(RectTransform), typeof(Image));
         go.transform.SetParent(parent, false);
-        go.GetComponent<Image>().color = color;
+        var img = go.GetComponent<Image>();
+        img.color = color;
+        if (sprite != null) { img.sprite = sprite; img.type = Image.Type.Sliced; }
         return go;
     }
 
-    private static TextMeshProUGUI CreateLabel(Transform parent, string text, float size)
+    /// <summary>Adds a 1px hairline border as a stretched child using the outline sprite.</summary>
+    private static void AddBorder(GameObject go, Color color)
+    {
+        var b = new GameObject("Border", typeof(RectTransform), typeof(Image));
+        var rt = (RectTransform)b.transform;
+        rt.SetParent(go.transform, false);
+        rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero; rt.offsetMax = Vector2.zero;
+        var img = b.GetComponent<Image>();
+        img.sprite = DesignTokens.OutlineSprite;
+        img.type = Image.Type.Sliced;
+        img.color = color;
+        img.raycastTarget = false;
+    }
+
+    private static void AddShadow(GameObject go, float alpha)
+    {
+        var sh = go.AddComponent<Shadow>();
+        sh.effectColor = DesignTokens.Alpha(DesignTokens.Neutral900, alpha);
+        sh.effectDistance = new Vector2(0f, -3f);
+    }
+
+    private static TextMeshProUGUI CreateLabel(Transform parent, string text, float size, Color color)
     {
         var go = new GameObject("Label", typeof(RectTransform));
         go.transform.SetParent(parent, false);
         var tmp = go.AddComponent<TextMeshProUGUI>();
+        if (DesignTokens.BodyFont != null) tmp.font = DesignTokens.BodyFont;
         tmp.text = text;
         tmp.fontSize = size;
-        tmp.color = TextColor;
-        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.color = color;
+        tmp.alignment = TextAlignmentOptions.Left;
         return tmp;
     }
 
-    private static Button CreateButton(Transform parent, string label, Color color, System.Action onClick)
+    /// <summary>Outlined button: transparent fill, 1px tinted border, heading-font label.</summary>
+    private static Button CreateButton(Transform parent, string label, Color borderColor, Color textColor,
+                                       System.Action onClick)
     {
         var go = new GameObject("Button_" + label, typeof(RectTransform), typeof(Image), typeof(Button));
         go.transform.SetParent(parent, false);
+
         var image = go.GetComponent<Image>();
-        image.color = color;
+        image.sprite = DesignTokens.OutlineSprite;
+        image.type = Image.Type.Sliced;
+        image.color = borderColor;
+
+        var le = go.AddComponent<LayoutElement>();
+        le.minHeight = 40f; le.minWidth = 96f;
+
+        var padding = go.AddComponent<HorizontalLayoutGroup>();
+        padding.padding = new RectOffset(18, 18, 8, 8);
+        padding.childAlignment = TextAnchor.MiddleCenter;
+        padding.childControlWidth = padding.childControlHeight = true;
+        padding.childForceExpandWidth = padding.childForceExpandHeight = false;
 
         var button = go.GetComponent<Button>();
-        // Wire the tint target explicitly — AddComponent doesn't do it, and
-        // without it the button gives no hover/press feedback at all. The
-        // default ColorBlock then handles hover/press tinting.
         button.targetGraphic = image;
+        var colors = button.colors;
+        colors.normalColor = Color.white;
+        colors.highlightedColor = new Color(1f, 1f, 1f, 0.7f);
+        colors.pressedColor = new Color(1f, 1f, 1f, 0.5f);
+        button.colors = colors;
         button.onClick.AddListener(() => onClick());
 
-        TextMeshProUGUI text = CreateLabel(go.transform, label, 26f);
-        var textRect = text.rectTransform;
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = Vector2.zero;
-        textRect.offsetMax = Vector2.zero;
+        var text = CreateLabel(go.transform, label, 15f, textColor);
+        text.font = DesignTokens.HeadingFont;
+        text.alignment = TextAlignmentOptions.Center;
         text.raycastTarget = false;
 
         return button;
@@ -244,15 +257,9 @@ public static class UIFeedback
     private static IEnumerator FadeOutAndDestroy(GameObject toast, float visibleSeconds)
     {
         yield return new WaitForSeconds(visibleSeconds);
-
-        // The toast may have been destroyed already (a newer toast replaced
-        // it) — bail out instead of touching a dead object
         if (toast == null) yield break;
 
         const float fadeDuration = 0.35f;
-
-        // Fade each graphic (and any text shadow) from its OWN starting alpha, so
-        // a transparent background stays transparent instead of flashing in.
         var graphics = toast.GetComponentsInChildren<Graphic>();
         var baseAlpha = new float[graphics.Length];
         for (int i = 0; i < graphics.Length; i++)
@@ -272,22 +279,17 @@ public static class UIFeedback
             for (int i = 0; i < graphics.Length; i++)
             {
                 if (graphics[i] == null) continue;
-                Color c = graphics[i].color;
-                c.a = baseAlpha[i] * k;
-                graphics[i].color = c;
+                Color c = graphics[i].color; c.a = baseAlpha[i] * k; graphics[i].color = c;
             }
             for (int i = 0; i < shadows.Length; i++)
             {
                 if (shadows[i] == null) continue;
-                Color c = shadows[i].effectColor;
-                c.a = shadowBaseAlpha[i] * k;
-                shadows[i].effectColor = c;
+                Color c = shadows[i].effectColor; c.a = shadowBaseAlpha[i] * k; shadows[i].effectColor = c;
             }
             yield return null;
         }
         if (toast != null) Object.Destroy(toast);
     }
 
-    /// <summary>Hidden coroutine host living on the overlay canvas.</summary>
     private class UIFeedbackHost : MonoBehaviour { }
 }
