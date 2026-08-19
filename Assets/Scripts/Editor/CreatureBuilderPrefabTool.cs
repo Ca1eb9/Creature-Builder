@@ -88,6 +88,25 @@ public static class CreatureBuilderPrefabTool
         var eqt = eq.GetComponent<TextMeshProUGUI>(); eqt.characterSpacing = 8f; eqt.alignment = TextAlignmentOptions.Left;
         eq.SetActive(false);
 
+        // --- empty-slot dress (the "No head" card) ---
+        // A dashed frame and a big em-dash, both off by default; UIManager turns
+        // them on (and hides the icon area) for the "None" card in each category.
+        var dashBorder = Child("DashedBorder", root.transform);
+        Stretch((RectTransform)dashBorder.transform);
+        var dbi = dashBorder.AddComponent<Image>();
+        dbi.sprite = DesignTokens.DashedSprite;
+        dbi.type = Image.Type.Tiled;          // repeat the dashes rather than stretch them
+        dbi.color = DesignTokens.Neutral400;
+        dbi.raycastTarget = false;
+        dashBorder.SetActive(false);
+
+        var dash = Label("Dash", root.transform, "—", 24, DesignTokens.Neutral600, DesignTokens.HeadingFont);
+        var dr = (RectTransform)dash.transform;
+        dr.anchorMin = new Vector2(0, 0.5f); dr.anchorMax = new Vector2(1, 0.5f); dr.pivot = new Vector2(0.5f, 0.5f);
+        dr.sizeDelta = new Vector2(0, 34); dr.anchoredPosition = new Vector2(0, 16);
+        dash.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+        dash.SetActive(false);
+
         Save(root);
     }
 
@@ -99,7 +118,13 @@ public static class CreatureBuilderPrefabTool
         var btn = root.AddComponent<Button>(); btn.targetGraphic = bg;
         // UIManager repaints normalColor for the active category; hover is a light wash.
         TintFill(btn, new Color(1, 1, 1, 0), DesignTokens.Alpha(DesignTokens.Text, 0.06f));
-        Border(root, DesignTokens.Divider);
+
+        // The picker reads as a ruled grid, not boxed cells: a bottom rule on
+        // every cell and a left rule only on the right-hand column (toggled by
+        // UIManager, matching the mockup's border-bottom / border-left pattern).
+        EdgeLine(root, "BottomLine", new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1));
+        var leftLine = EdgeLine(root, "LeftLine", new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0));
+        leftLine.SetActive(false);
 
         var name = Label("Name", root.transform, "Category", 15.5f, DesignTokens.Text, DesignTokens.HeadingFont);
         var nr = (RectTransform)name.transform;
@@ -201,16 +226,38 @@ public static class CreatureBuilderPrefabTool
         pt.textWrappingMode = TextWrappingModes.Normal;
         pt.overflowMode = TextOverflowModes.Ellipsis;
 
-        // Footer: Load (accent) + Delete (danger).
+        // "Open" tag on the creature that's currently loaded (UIManager toggles it).
+        var tag = Child("OpenTag", root.transform);
+        var tgr = (RectTransform)tag.transform;
+        tgr.anchorMin = new Vector2(1, 1); tgr.anchorMax = new Vector2(1, 1); tgr.pivot = new Vector2(1, 1);
+        tgr.sizeDelta = new Vector2(52, 20); tgr.anchoredPosition = new Vector2(-16, -246);
+        var tagBg = tag.AddComponent<Image>();
+        tagBg.sprite = DesignTokens.RoundedSprite; tagBg.type = Image.Type.Sliced;
+        tagBg.color = DesignTokens.Accent100; tagBg.raycastTarget = false;
+        var tagLbl = Label("Label", tag.transform, "Open", 10, DesignTokens.Accent800, DesignTokens.BodyFont);
+        Stretch((RectTransform)tagLbl.transform);
+        tagLbl.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+        tag.SetActive(false);
+
+        // Footer row: saved date on the left, Load / Delete links on the right.
+        var date = Label("Date", root.transform, "", 11, DesignTokens.Neutral500, DesignTokens.BodyFont);
+        var dtr = (RectTransform)date.transform;
+        dtr.anchorMin = new Vector2(0, 0); dtr.anchorMax = new Vector2(0, 0); dtr.pivot = new Vector2(0, 0);
+        dtr.sizeDelta = new Vector2(140, 22); dtr.anchoredPosition = new Vector2(16, 16);
+        date.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
+
+        // Delete is a quiet neutral link here — red is reserved for the confirm dialog.
+        var del = TextButton("DeleteButton", root.transform, "Delete", DesignTokens.Neutral600);
+        var dr2 = (RectTransform)del.transform;
+        dr2.anchorMin = new Vector2(1, 0); dr2.anchorMax = new Vector2(1, 0); dr2.pivot = new Vector2(1, 0);
+        dr2.sizeDelta = new Vector2(58, 24); dr2.anchoredPosition = new Vector2(-14, 14);
+        Underline(del, DesignTokens.Neutral400);
+
         var load = TextButton("LoadButton", root.transform, "Load", DesignTokens.Accent);
         var lr = (RectTransform)load.transform;
-        lr.anchorMin = new Vector2(0, 0); lr.anchorMax = new Vector2(0, 0); lr.pivot = new Vector2(0, 0);
-        lr.sizeDelta = new Vector2(70, 28); lr.anchoredPosition = new Vector2(16, 14);
-
-        var del = TextButton("DeleteButton", root.transform, "Delete", DesignTokens.Danger);
-        var dr = (RectTransform)del.transform;
-        dr.anchorMin = new Vector2(1, 0); dr.anchorMax = new Vector2(1, 0); dr.pivot = new Vector2(1, 0);
-        dr.sizeDelta = new Vector2(80, 28); dr.anchoredPosition = new Vector2(-16, 14);
+        lr.anchorMin = new Vector2(1, 0); lr.anchorMax = new Vector2(1, 0); lr.pivot = new Vector2(1, 0);
+        lr.sizeDelta = new Vector2(48, 24); lr.anchoredPosition = new Vector2(-80, 14);
+        Underline(load, DesignTokens.Accent);
 
         Save(root);
     }
@@ -300,6 +347,29 @@ public static class CreatureBuilderPrefabTool
         slider.targetGraphic = hi;
         slider.direction = Slider.Direction.LeftToRight;
         return slider;
+    }
+
+    /// <summary>Underline a text link, the way the mockup's inline links read.</summary>
+    private static void Underline(GameObject linkRoot, Color color)
+    {
+        var ul = Child("Underline", linkRoot.transform);
+        var rt = (RectTransform)ul.transform;
+        rt.anchorMin = new Vector2(0, 0); rt.anchorMax = new Vector2(1, 0); rt.pivot = new Vector2(0.5f, 0);
+        rt.sizeDelta = new Vector2(-4, 1); rt.anchoredPosition = new Vector2(0, 3);
+        var img = ul.AddComponent<Image>();
+        img.color = color; img.raycastTarget = false;
+    }
+
+    /// <summary>A hairline on one edge (anchors pick the edge, size picks thickness).</summary>
+    private static GameObject EdgeLine(GameObject go, string name, Vector2 aMin, Vector2 aMax, Vector2 size)
+    {
+        var line = Child(name, go.transform);
+        var rt = (RectTransform)line.transform;
+        rt.anchorMin = aMin; rt.anchorMax = aMax; rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = size; rt.anchoredPosition = Vector2.zero;
+        var img = line.AddComponent<Image>();
+        img.color = DesignTokens.Divider; img.raycastTarget = false;
+        return line;
     }
 
     private static void Border(GameObject go, Color color)

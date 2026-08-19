@@ -61,6 +61,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Search")]
     public TMP_InputField searchInput;
+    public TMP_InputField librarySearchInput;
+
+    [Header("Gutter context labels")]
+    public TextMeshProUGUI railGutterLabel;
+    public TextMeshProUGUI inspectorGutterLabel;
 
     [Header("Status / footers")]
     public TextMeshProUGUI statusLabel;         // "N parts"
@@ -69,6 +74,7 @@ public class UIManager : MonoBehaviour
     [Header("Save state (inspector, under the name field)")]
     public TextMeshProUGUI savedStateLabel;     // "Saved as ..." / "Not saved yet"
     public TextMeshProUGUI unsavedLabel;        // "Unsaved changes" — shown only when dirty
+    public TextMeshProUGUI spinStateLabel;      // status bar, right side
 
     private BodyPartCategory? currentCategory = null;
     private RotateCreature cachedRotator;
@@ -100,7 +106,16 @@ public class UIManager : MonoBehaviour
         assembler.OnCreatureChanged += OnCreatureChanged;
 
         if (searchInput != null)
+        {
             searchInput.onValueChanged.AddListener(_ => { if (currentCategory.HasValue) SelectCategory(currentCategory.Value); });
+            // "Search all 78 parts…" — the mockup advertises the library size here.
+            int total = database.allParts != null ? database.allParts.Count : 0;
+            if (searchInput.placeholder is TextMeshProUGUI ph) ph.text = $"Search all {total} parts…";
+        }
+        if (librarySearchInput != null)
+            librarySearchInput.onValueChanged.AddListener(_ => RefreshLoadList());
+
+        UpdateSpinState();
 
         SetRailCollapsed(false);
         SetInspectorCollapsed(false);
@@ -142,11 +157,16 @@ public class UIManager : MonoBehaviour
         if (categoryButtonContainer == null || categoryButtonPrefab == null) return;
         foreach (Transform child in categoryButtonContainer) Destroy(child.gameObject);
 
+        int index = 0;
         foreach (BodyPartCategory cat in database.GetAvailableCategories())
         {
             GameObject cell = Instantiate(categoryButtonPrefab, categoryButtonContainer);
-            SetChildText(cell, "Name", cat.ToString());
+            SetChildText(cell, "Name", Prettify(cat.ToString()));
             SetChildText(cell, "Count", database.GetPartsInCategory(cat).Count.ToString());
+
+            // Ruled grid: only the right-hand column carries a left hairline.
+            SetActiveChild(cell, "LeftLine", index % 2 == 1);
+            index++;
 
             BodyPartCategory capturedCat = cat;
             var btn = cell.GetComponent<Button>();
@@ -163,10 +183,27 @@ public class UIManager : MonoBehaviour
         if (partGridContainer == null || partButtonPrefab == null) return;
         foreach (Transform child in partGridContainer) Destroy(child.gameObject);
 
-        // "None" card
+        // The empty slot: a dashed card with a big em-dash and "No head" —
+        // deliberately different from a part card, per the mockup.
         GameObject noneCard = Instantiate(partButtonPrefab, partGridContainer);
-        SetChildText(noneCard, "Name", "None");
-        SetActiveChild(noneCard, "Equipped", !assembler.IsCategoryEquipped(category));
+        SetChildText(noneCard, "Name", "No " + Singular(category).ToLower());
+        SetActiveChild(noneCard, "Equipped", false);
+        SetActiveChild(noneCard, "IconArea", false);
+        SetActiveChild(noneCard, "Icon", false);
+        SetActiveChild(noneCard, "DashedBorder", true);
+        SetActiveChild(noneCard, "Dash", true);
+        SetActiveChild(noneCard, "Border", false);
+        // Centre the caption under the dash instead of the card's usual top-left slot.
+        var noneName = noneCard.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
+        if (noneName != null)
+        {
+            noneName.alignment = TextAlignmentOptions.Center;
+            noneName.color = DesignTokens.Neutral600;
+            noneName.fontSize = 13;
+            var nrt = (RectTransform)noneName.transform;
+            nrt.offsetMin = new Vector2(10, 6); nrt.offsetMax = new Vector2(-10, -110);
+        }
+        SetButtonBase(noneCard.GetComponent<Button>(), new Color(1, 1, 1, 0));
         var noneBtn = noneCard.GetComponent<Button>();
         if (noneBtn != null) noneBtn.onClick.AddListener(() =>
         {
@@ -221,6 +258,10 @@ public class UIManager : MonoBehaviour
                 ? $"{allParts.Count} {label}"
                 : $"Showing {parts.Count} of {allParts.Count} {label}";
         }
+
+        // Collapsed rail keeps its context, like the mockup's "Parts · Head 32".
+        if (railGutterLabel != null)
+            railGutterLabel.text = $"PARTS · {Prettify(category.ToString()).ToUpper()} {allParts.Count}";
 
         UpdateAdjustmentPanelTarget();
     }
@@ -463,6 +504,16 @@ public class UIManager : MonoBehaviour
         cachedRotator.autoRotate = !cachedRotator.autoRotate;
         var label = autoRotateButton.GetComponentInChildren<TextMeshProUGUI>();
         if (label != null) label.text = cachedRotator.autoRotate ? "Stop spin" : "Auto-spin";
+        UpdateSpinState();
+    }
+
+    /// <summary>Right-hand status-bar indicator: "Auto-spin on" / "Auto-spin off".</summary>
+    void UpdateSpinState()
+    {
+        if (spinStateLabel == null) return;
+        bool on = cachedRotator != null && cachedRotator.autoRotate;
+        spinStateLabel.text = on ? "Auto-spin on" : "Auto-spin off";
+        spinStateLabel.color = on ? DesignTokens.Accent700 : DesignTokens.Neutral600;
     }
 
     void OnExit()
@@ -566,6 +617,10 @@ public class UIManager : MonoBehaviour
         foreach (Transform child in loadListContainer) Destroy(child.gameObject);
 
         var saved = saveLoad.ListSavedCreatures();
+        string libQuery = librarySearchInput != null ? librarySearchInput.text : "";
+        if (!string.IsNullOrWhiteSpace(libQuery))
+            saved = saved.FindAll(n => n.IndexOf(libQuery.Trim(), System.StringComparison.OrdinalIgnoreCase) >= 0);
+
         if (librarySubtitle != null)
             librarySubtitle.text = saved.Count == 1
                 ? "1 specimen · stored in your user folder"
@@ -577,6 +632,9 @@ public class UIManager : MonoBehaviour
             GameObject card = Instantiate(loadListEntryPrefab, loadListContainer);
             SetChildText(card, "Name", entryName);
             SetChildText(card, "Parts", saveLoad.GetPartsSummary(entryName));
+            SetChildText(card, "Date", saveLoad.GetSavedDate(entryName));
+            // The creature currently on the stage is tagged "Open".
+            SetActiveChild(card, "OpenTag", entryName == currentLoadedName);
 
             var thumb = card.transform.Find("Thumbnail")?.GetComponent<RawImage>();
             if (thumb != null)
@@ -643,6 +701,12 @@ public class UIManager : MonoBehaviour
             savedStateLabel.text = string.IsNullOrWhiteSpace(currentLoadedName)
                 ? "Not saved yet"
                 : $"Saved as “{currentLoadedName}”";
+
+        // Collapsed inspector keeps its context, like "Inspector · Doomcow".
+        if (inspectorGutterLabel != null)
+            inspectorGutterLabel.text = string.IsNullOrWhiteSpace(currentLoadedName)
+                ? "INSPECTOR"
+                : $"INSPECTOR · {currentLoadedName.ToUpper()}";
     }
 
     // -------- helpers --------
@@ -665,6 +729,10 @@ public class UIManager : MonoBehaviour
         var btn = c != null ? c.GetComponent<Button>() : null;
         if (btn != null) btn.onClick.AddListener(action);
     }
+
+    /// <summary>"BackLegs" → "Back legs" → caption "No back legs"; "Head" → "head".</summary>
+    static string Singular(string categoryName) => Prettify(categoryName);
+    static string Singular(BodyPartCategory cat) => Prettify(cat.ToString());
 
     static string Prettify(string enumName)
     {

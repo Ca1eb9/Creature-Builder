@@ -60,6 +60,7 @@ public static class CreatureBuilderThemeTool
 
         MakeOutlineSprite($"{SpriteDir}/ui-outline.png");
         MakeRoundedSprite($"{SpriteDir}/ui-rounded.png", 8);
+        MakeDashedSprite($"{SpriteDir}/ui-dashed.png");
         AssetDatabase.SaveAssets();
 
         return $"Generated {fonts} font asset(s); default font {(defaultSet ? "set to Lora" : "unchanged")}; baked outline + rounded sprites.";
@@ -134,6 +135,28 @@ public static class CreatureBuilderThemeTool
             {
                 bool edge = x < b || y < b || x >= s - b || y >= s - b;
                 tex.SetPixel(x, y, edge ? Color.white : new Color(1, 1, 1, 0));
+            }
+        tex.Apply();
+        WriteSprite(tex, path, new Vector4(1, 1, 1, 1));
+    }
+
+    /// <summary>
+    /// 1px dashed white frame for the empty-slot card. Drawn on a 12px tile with
+    /// a 6-on/6-off rhythm; used with Image.Type.Tiled so the dashes repeat
+    /// along an edge instead of being stretched.
+    /// </summary>
+    private static void MakeDashedSprite(string path)
+    {
+        const int s = 12, dash = 6;
+        var tex = new Texture2D(s, s, TextureFormat.RGBA32, false);
+        for (int y = 0; y < s; y++)
+            for (int x = 0; x < s; x++)
+            {
+                bool onEdge = x == 0 || y == 0 || x == s - 1 || y == s - 1;
+                // Along the run of each edge, draw for the first half of the tile.
+                bool inDash = (x == 0 || x == s - 1) ? (y % (dash * 2) < dash)
+                                                     : (x % (dash * 2) < dash);
+                tex.SetPixel(x, y, onEdge && inDash ? Color.white : new Color(1, 1, 1, 0));
             }
         tex.Apply();
         WriteSprite(tex, path, new Vector4(1, 1, 1, 1));

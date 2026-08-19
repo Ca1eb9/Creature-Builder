@@ -53,6 +53,7 @@ public static class CreatureBuilderUIAudit
             sb.AppendLine($"  assembler={N(ui.assembler)} database={(ui.database ? ui.database.name : "NULL")} saveLoad={N(ui.saveLoad)}");
             sb.AppendLine($"  closeLib={N(ui.closeLibraryButton)} subtitle={N(ui.librarySubtitle)} empty={N(ui.libraryEmptyState)} search={N(ui.searchInput)}");
             sb.AppendLine($"  newCreature={N(ui.newCreatureButton)} save={N(ui.saveButton)} nameInput={N(ui.saveNameInput)}");
+            sb.AppendLine($"  spin={N(ui.spinStateLabel)} railGutLbl={N(ui.railGutterLabel)} inspGutLbl={N(ui.inspectorGutterLabel)} libSearch={N(ui.librarySearchInput)}");
             sb.AppendLine($"  tooltips in scene={Object.FindObjectsByType<UITooltipTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length}");
         }
         var adj = Object.FindAnyObjectByType<PartAdjustmentPanel>();

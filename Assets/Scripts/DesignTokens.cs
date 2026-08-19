@@ -48,11 +48,16 @@ public static class DesignTokens
 
     // ---- Fonts (TMP assets live under a Resources folder so runtime UI can load them) ----
     public const string HeadingFontResource = "Fonts/CormorantGaramond-SemiBold SDF";
+    public const string DisplayFontResource = "Fonts/CormorantGaramond-Regular SDF";
     public const string BodyFontResource    = "Fonts/Lora-Regular SDF";
 
-    private static TMPro.TMP_FontAsset _heading, _body;
+    private static TMPro.TMP_FontAsset _heading, _display, _body;
+    /// <summary>Cormorant SemiBold (600) — interface headings.</summary>
     public static TMPro.TMP_FontAsset HeadingFont =>
         _heading != null ? _heading : (_heading = Resources.Load<TMPro.TMP_FontAsset>(HeadingFontResource));
+    /// <summary>Cormorant Regular (400) — large display text goes lighter, per the design notes.</summary>
+    public static TMPro.TMP_FontAsset DisplayFont =>
+        _display != null ? _display : (_display = Resources.Load<TMPro.TMP_FontAsset>(DisplayFontResource));
     public static TMPro.TMP_FontAsset BodyFont =>
         _body != null ? _body : (_body = Resources.Load<TMPro.TMP_FontAsset>(BodyFontResource));
 
@@ -64,6 +69,12 @@ public static class DesignTokens
     /// <summary>Rounded-rect fill — tint for panel/card/dialog backgrounds.</summary>
     public static Sprite RoundedSprite =>
         _rounded != null ? _rounded : (_rounded = Resources.Load<Sprite>("UI/ui-rounded"));
+
+    private static Sprite _dashed;
+    /// <summary>Dashed 1px frame — the empty "No head" slot card. Use Image.Type.Tiled
+    /// so the dash rhythm repeats instead of stretching.</summary>
+    public static Sprite DashedSprite =>
+        _dashed != null ? _dashed : (_dashed = Resources.Load<Sprite>("UI/ui-dashed"));
 
     // ---- helpers ----
     public static Color Hex(string hex)

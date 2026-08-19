@@ -197,6 +197,22 @@ public class CreatureSaveLoad : MonoBehaviour
         catch { return null; }
     }
 
+    /// <summary>"Saved 31 May" style stamp for a library card, from the save's own timestamp.</summary>
+    public string GetSavedDate(string creatureName)
+    {
+        string path = GetSavePath(creatureName);
+        if (!File.Exists(path)) return "";
+        try
+        {
+            var data = JsonUtility.FromJson<CreatureSaveData>(File.ReadAllText(path));
+            if (data != null && !string.IsNullOrEmpty(data.savedAt) &&
+                System.DateTime.TryParse(data.savedAt, out var when))
+                return "Saved " + when.ToString("d MMM");
+        }
+        catch { /* fall through to the file stamp */ }
+        return "Saved " + File.GetLastWriteTime(path).ToString("d MMM");
+    }
+
     /// <summary>"Cthulhu · Cow · Spider · …" — the equipped part names of a save, in category order.</summary>
     public string GetPartsSummary(string creatureName)
     {
