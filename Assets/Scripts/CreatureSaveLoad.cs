@@ -166,6 +166,57 @@ public class CreatureSaveLoad : MonoBehaviour
         catch (System.Exception e) { Debug.LogError($"Delete failed: {e}"); return false; }
     }
 
+    // ---- Library card support: thumbnails + parts summary ----
+
+    private string GetThumbnailPath(string creatureName)
+        => Path.Combine(SaveDir, SanitizeFilename(creatureName) + ".png");
+
+    /// <summary>Writes a PNG thumbnail next to the save file.</summary>
+    public void SaveThumbnail(string creatureName, Texture2D tex)
+    {
+        if (tex == null) return;
+        try
+        {
+            Directory.CreateDirectory(SaveDir);
+            File.WriteAllBytes(GetThumbnailPath(creatureName), tex.EncodeToPNG());
+        }
+        catch (System.Exception e) { Debug.LogWarning($"Thumbnail save failed: {e.Message}"); }
+    }
+
+    /// <summary>Loads the saved thumbnail, or null if there isn't one.</summary>
+    public Texture2D LoadThumbnail(string creatureName)
+    {
+        string p = GetThumbnailPath(creatureName);
+        if (!File.Exists(p)) return null;
+        try
+        {
+            var tex = new Texture2D(2, 2, TextureFormat.RGB24, false);
+            tex.LoadImage(File.ReadAllBytes(p));
+            return tex;
+        }
+        catch { return null; }
+    }
+
+    /// <summary>"Cthulhu · Cow · Spider · …" — the equipped part names of a save, in category order.</summary>
+    public string GetPartsSummary(string creatureName)
+    {
+        string path = GetSavePath(creatureName);
+        if (!File.Exists(path)) return "";
+        try
+        {
+            var data = JsonUtility.FromJson<CreatureSaveData>(File.ReadAllText(path));
+            var names = data.parts
+                .OrderBy(p => p.category)
+                .Select(e =>
+                {
+                    var pd = database != null ? database.GetPartByID(e.partID) : null;
+                    return pd != null ? pd.partName : "?";
+                });
+            return string.Join(" · ", names);
+        }
+        catch { return ""; }
+    }
+
     // Windows reserved device names — illegal as filenames even with an extension.
     private static readonly HashSet<string> ReservedNames = new HashSet<string>(
         System.StringComparer.OrdinalIgnoreCase)

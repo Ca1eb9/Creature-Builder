@@ -25,6 +25,11 @@ public class PartAdjustmentPanel : MonoBehaviour
     public Slider scaleSlider;
     public Button resetButton;
 
+    [Header("UI — value labels (SliderRow 'Value' chips)")]
+    public TextMeshProUGUI posXValue, posYValue, posZValue;
+    public TextMeshProUGUI rotXValue, rotYValue, rotZValue;
+    public TextMeshProUGUI scaleValue;
+
     [Header("Ranges")]
     public float positionRange = 0.5f;     // ± from baseline, in Unity units
     public float rotationRange = 180f;     // ± degrees from baseline
@@ -38,11 +43,20 @@ public class PartAdjustmentPanel : MonoBehaviour
     // UIManager.Start calls SetActiveCategory on us. With Start, execution
     // order was undefined and this could reset the panel to "No part
     // selected" AFTER UIManager had already pointed it at a category.
+    // When there's no toggle button (the Studio inspector shows the transform
+    // controls permanently), the panel is always expanded.
+    private bool AlwaysExpanded => toggleButton == null;
+
     void Awake()
     {
         ConfigureSliderRanges();
         WireUp();
-        SetExpanded(false);
+        if (AlwaysExpanded)
+        {
+            expanded = true;
+            if (contentRoot != null) contentRoot.SetActive(true);
+        }
+        else SetExpanded(false);
         SetActiveCategory(null);
 
         if (assembler != null)
@@ -94,9 +108,13 @@ public class PartAdjustmentPanel : MonoBehaviour
         bool valid = cat.HasValue && assembler != null && assembler.IsCategoryEquipped(cat.Value);
 
         if (toggleButton != null) toggleButton.interactable = valid;
-        if (titleLabel != null) titleLabel.text = valid ? $"Adjusting: {cat.Value}" : "No part selected";
+        if (titleLabel != null) titleLabel.text = cat.HasValue ? $"{cat.Value} transform" : "No part selected";
 
-        if (!valid) SetExpanded(false);
+        if (AlwaysExpanded)
+        {
+            if (valid) LoadSlidersFromOverride();
+        }
+        else if (!valid) SetExpanded(false);
         else if (expanded) LoadSlidersFromOverride();
     }
 
@@ -123,6 +141,18 @@ public class PartAdjustmentPanel : MonoBehaviour
         if (rotZSlider != null) rotZSlider.value = ov.rotationDelta.z;
         if (scaleSlider != null) scaleSlider.value = ov.scaleMultiplier;
         suppressEvents = false;
+        UpdateValueLabels();
+    }
+
+    private void UpdateValueLabels()
+    {
+        if (posXValue != null && posXSlider != null) posXValue.text = posXSlider.value.ToString("+0.00;-0.00;0.00");
+        if (posYValue != null && posYSlider != null) posYValue.text = posYSlider.value.ToString("+0.00;-0.00;0.00");
+        if (posZValue != null && posZSlider != null) posZValue.text = posZSlider.value.ToString("+0.00;-0.00;0.00");
+        if (rotXValue != null && rotXSlider != null) rotXValue.text = Mathf.RoundToInt(rotXSlider.value).ToString();
+        if (rotYValue != null && rotYSlider != null) rotYValue.text = Mathf.RoundToInt(rotYSlider.value).ToString();
+        if (rotZValue != null && rotZSlider != null) rotZValue.text = Mathf.RoundToInt(rotZSlider.value).ToString();
+        if (scaleValue != null && scaleSlider != null) scaleValue.text = scaleSlider.value.ToString("0.00");
     }
 
     private void OnSliderChanged()
@@ -144,6 +174,7 @@ public class PartAdjustmentPanel : MonoBehaviour
         ov.scaleMultiplier = scaleSlider != null ? scaleSlider.value : 1f;
 
         assembler.RefreshOverride(activeCategory.Value);
+        UpdateValueLabels();
     }
 
     private void OnReset()
