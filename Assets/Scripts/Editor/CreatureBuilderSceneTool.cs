@@ -83,13 +83,13 @@ public static class CreatureBuilderSceneTool
         var openBuild = NavLink(top, "Build", true);
         var openLib = NavLink(top, "Library", false);
         Spacer(top);
-        var randomize = Btn(top.transform, "Randomize", false);
-        var clear = Btn(top.transform, "Clear", false);
-        var autospin = Btn(top.transform, "Auto-spin", false);
-        var screenshot = Btn(top.transform, "Screenshot", false);
-        var save = Btn(top.transform, "Save creature", true);
+        var randomize = Btn(top.transform, "Randomize", false, "Roll a brand-new creature from every category");
+        var clear = Btn(top.transform, "Clear", false, "Remove every part and start from nothing");
+        var autospin = Btn(top.transform, "Auto-spin", false, "Turn the slow turntable rotation on or off");
+        var screenshot = Btn(top.transform, "Screenshot", false, "Save a clean picture to your Downloads folder");
+        var save = Btn(top.transform, "Save creature", true, "Save this creature to your library");
         VDivider(top);
-        var exit = Btn(top.transform, "Exit", false);
+        var exit = Btn(top.transform, "Exit", false, "Close Creature Builder");
 
         // ---- STATUS BAR ----
         var status = Panel("StatusBar", root, DesignTokens.Bg);
@@ -113,12 +113,13 @@ public static class CreatureBuilderSceneTool
         var pKick = Label(railHead.transform, "PARTS", 10, DesignTokens.Accent, DesignTokens.BodyFont); Fit(pKick);
         ((TextMeshProUGUI)pKick.GetComponent<TextMeshProUGUI>()).characterSpacing = 10;
         Spacer(railHead);
-        var railHide = TextLink(railHead, "Hide ‹", DesignTokens.Neutral600);
+        var railHide = TextLink(railHead, "Hide «", DesignTokens.Neutral600, "Collapse the parts rail");
 
         // search (visual stub)
         var searchWrap = Panel("Search", rail.transform, new Color(0, 0, 0, 0)); RowH(searchWrap, 46);
         HBar(searchWrap, 18, 18, 8, 8, 0, TextAnchor.MiddleCenter);
-        Input(searchWrap.transform, "Search parts…");
+        var searchInput = Input(searchWrap.transform, "Search parts…");
+        searchInput.gameObject.AddComponent<UITooltipTrigger>().text = "Filter the parts below by name";
 
         // category grid (2-col CategoryCell)
         var catGrid = Panel("CategoryGrid", rail.transform, new Color(0, 0, 0, 0));
@@ -142,12 +143,11 @@ public static class CreatureBuilderSceneTool
         HBar(railFoot, 18, 18, 0, 0, 0, TextAnchor.MiddleLeft); TopHairline(railFoot);
         var railFooter = Label(railFoot.transform, "", 11.5f, DesignTokens.Neutral600, DesignTokens.BodyFont); Fit(railFooter);
 
-        // rail gutter (collapsed)
-        var railGutter = Panel("RailGutter", root, DesignTokens.Bg);
-        DockSide(railGutter, left: true, width: GutterW); RightHairline(railGutter);
-        VBar(railGutter.gameObject, 0, 0, 14, 0, 16, TextAnchor.UpperCenter);
-        var railShow = TextLink(railGutter, "|▶", DesignTokens.Accent);
-        railGutter.SetActive(false);
+        // rail gutter (collapsed) — the WHOLE strip is the reopen button, with a
+        // vertical label. The old version was a tiny glyph link that was
+        // effectively invisible and impossible to hit.
+        var railGutter = Gutter("RailGutter", root, left: true, label: "PARTS", chevron: "»",
+                                out Button railShow);
 
         // ---- INSPECTOR ----
         var insp = Panel("InspectorPanel", root, DesignTokens.Bg);
@@ -156,7 +156,7 @@ public static class CreatureBuilderSceneTool
 
         var inspHead = Panel("Header", insp.transform, new Color(0, 0, 0, 0)); RowH(inspHead, 44);
         HBar(inspHead, 20, 20, 0, 0, 8, TextAnchor.MiddleLeft); BottomHairline(inspHead);
-        var inspHide = TextLink(inspHead, "› Hide", DesignTokens.Neutral600);
+        var inspHide = TextLink(inspHead, "» Hide", DesignTokens.Neutral600, "Collapse the inspector");
         Spacer(inspHead);
         var iKick = Label(inspHead.transform, "INSPECTOR", 10, DesignTokens.Accent, DesignTokens.BodyFont); Fit(iKick);
         iKick.GetComponent<TextMeshProUGUI>().characterSpacing = 10;
@@ -198,11 +198,8 @@ public static class CreatureBuilderSceneTool
         var (sSc, vSc) = MakeSliderRow(xfWrap.transform, "×");
 
         // inspector gutter
-        var inspGutter = Panel("InspectorGutter", root, DesignTokens.Bg);
-        DockSide(inspGutter, left: false, width: GutterW); LeftHairline(inspGutter);
-        VBar(inspGutter.gameObject, 0, 0, 14, 0, 16, TextAnchor.UpperCenter);
-        var inspShow = TextLink(inspGutter, "◀|", DesignTokens.Accent);
-        inspGutter.SetActive(false);
+        var inspGutter = Gutter("InspectorGutter", root, left: false, label: "INSPECTOR", chevron: "«",
+                                out Button inspShow);
 
         // ---- LIBRARY SHEET ----
         var library = Panel("LibraryScreen", root, DesignTokens.Alpha(DesignTokens.Neutral900, 0.45f));
@@ -211,11 +208,20 @@ public static class CreatureBuilderSceneTool
         Dock(sheet, new Vector2(0, 0), new Vector2(1, 1), new Vector2(220, 112), new Vector2(-220, -112), new Vector2(0.5f, 0.5f));
         Border(sheet, DesignTokens.Divider);
         VBar(sheet, 0, 0, 0, 0, 0, TextAnchor.UpperLeft);
-        var libHead = Panel("Header", sheet.transform, new Color(0, 0, 0, 0)); RowH(libHead, 90);
-        VBar(libHead, 32, 32, 24, 18, 4, TextAnchor.UpperLeft); BottomHairline(libHead);
-        Label(libHead.transform, "LIBRARY", 10, DesignTokens.Accent, DesignTokens.BodyFont).GetComponent<TextMeshProUGUI>().characterSpacing = 10;
-        var libTitle = Label(libHead.transform, "Saved creatures", 30, DesignTokens.Text, DesignTokens.HeadingFont); Fit(libTitle);
-        var newBtn = Btn(libHead.transform, "New creature", true);
+        // Header: title block on the left, actions + close on the right.
+        var libHead = Panel("Header", sheet.transform, new Color(0, 0, 0, 0)); RowH(libHead, 104);
+        HBar(libHead, 32, 32, 24, 18, 16, TextAnchor.LowerLeft); BottomHairline(libHead);
+
+        var libTitleBlock = Panel("TitleBlock", libHead.transform, new Color(0, 0, 0, 0));
+        VBar(libTitleBlock, 0, 0, 0, 0, 2, TextAnchor.UpperLeft);
+        libTitleBlock.AddComponent<LayoutElement>().flexibleWidth = 1;
+        Label(libTitleBlock.transform, "LIBRARY", 10, DesignTokens.Accent, DesignTokens.BodyFont)
+            .GetComponent<TextMeshProUGUI>().characterSpacing = 10;
+        var libTitle = Label(libTitleBlock.transform, "Saved creatures", 30, DesignTokens.Text, DesignTokens.HeadingFont); Fit(libTitle);
+        var libSubtitle = Label(libTitleBlock.transform, "", 13, DesignTokens.Neutral600, DesignTokens.BodyFont); Fit(libSubtitle);
+
+        var newBtn = Btn(libHead.transform, "New creature", true, "Clear the stage and start fresh");
+        var closeLib = Btn(libHead.transform, "Close", false, "Back to the build screen  (Esc)");
 
         var (libViewport, libContent) = ScrollArea(sheet.transform);
         var libGL = libContent.AddComponent<GridLayoutGroup>();
@@ -224,6 +230,17 @@ public static class CreatureBuilderSceneTool
         libGL.constraint = GridLayoutGroup.Constraint.FixedColumnCount; libGL.constraintCount = 4;
         libContent.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         var libScrollLE = libViewport.transform.parent.gameObject.AddComponent<LayoutElement>(); libScrollLE.flexibleHeight = 1;
+
+        // Empty state, shown by UIManager when there are no saves yet.
+        var empty = Panel("EmptyState", sheet.transform, new Color(0, 0, 0, 0));
+        Dock(empty, new Vector2(0, 0), new Vector2(1, 1), new Vector2(0, 0), new Vector2(0, -104), new Vector2(0.5f, 0.5f));
+        VBar(empty, 40, 40, 0, 0, 6, TextAnchor.MiddleCenter);
+        var e1 = Label(empty.transform, "No creatures saved yet", 22, DesignTokens.Neutral700, DesignTokens.HeadingFont);
+        e1.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center; Fit(e1);
+        var e2 = Label(empty.transform, "Build something on the Build screen, then press “Save creature”.", 14, DesignTokens.Neutral600, DesignTokens.BodyFont);
+        e2.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center; Fit(e2);
+        empty.SetActive(false);
+
         library.SetActive(false);
 
         // ================= WIRE UIManager =================
@@ -244,6 +261,10 @@ public static class CreatureBuilderSceneTool
         uiMgr.inspectorHideButton = inspHide; uiMgr.inspectorShowButton = inspShow;
         uiMgr.libraryScreen = library; uiMgr.openLibraryButton = openLib; uiMgr.openBuildButton = openBuild;
         uiMgr.newCreatureButton = newBtn;
+        uiMgr.closeLibraryButton = closeLib;
+        uiMgr.librarySubtitle = libSubtitle.GetComponent<TextMeshProUGUI>();
+        uiMgr.libraryEmptyState = empty;
+        uiMgr.searchInput = searchInput;
         uiMgr.statusLabel = statusLabel.GetComponent<TextMeshProUGUI>();
         uiMgr.railFooterLabel = railFooter.GetComponent<TextMeshProUGUI>();
         uiMgr.partNameLabel = null; uiMgr.partDescLabel = null;
@@ -391,46 +412,145 @@ public static class CreatureBuilderSceneTool
         var le = go.AddComponent<LayoutElement>(); le.minWidth = 1; le.minHeight = 24;
     }
 
-    private static Button Btn(Transform parent, string label, bool primary)
+    /// <summary>
+    /// Toolbar button: the root fill is the tint target (so the whole button
+    /// washes on hover), with the hairline border as a child on top.
+    /// </summary>
+    private static Button Btn(Transform parent, string label, bool primary, string tooltip = null)
     {
         var go = new GameObject("Btn_" + label, typeof(RectTransform), typeof(Image), typeof(Button));
         go.transform.SetParent(parent, false);
-        var img = go.GetComponent<Image>(); img.sprite = DesignTokens.OutlineSprite; img.type = Image.Type.Sliced;
-        img.color = primary ? DesignTokens.Accent : DesignTokens.Divider;
+        var img = go.GetComponent<Image>();
+        img.sprite = DesignTokens.RoundedSprite; img.type = Image.Type.Sliced;
+
         var le = go.AddComponent<LayoutElement>(); le.minHeight = 34;
         var h = go.AddComponent<HorizontalLayoutGroup>();
         h.padding = new RectOffset(14, 14, 6, 6); h.childAlignment = TextAnchor.MiddleCenter;
         h.childControlWidth = h.childControlHeight = true; h.childForceExpandWidth = h.childForceExpandHeight = false;
+
         var btn = go.GetComponent<Button>(); btn.targetGraphic = img;
+        Hover(btn, primary ? DesignTokens.Alpha(DesignTokens.Accent, 0.14f)
+                           : DesignTokens.Alpha(DesignTokens.Text, 0.07f));
+
+        Border(go, primary ? DesignTokens.Accent : DesignTokens.Divider);
         var lbl = Label(go.transform, label, 13.5f, primary ? DesignTokens.Accent : DesignTokens.Text, DesignTokens.HeadingFont);
         lbl.GetComponent<TextMeshProUGUI>().raycastTarget = false;
+        lbl.transform.SetAsLastSibling();
+        if (!string.IsNullOrEmpty(tooltip)) go.AddComponent<UITooltipTrigger>().text = tooltip;
         return btn;
     }
 
+    /// <summary>Top-bar nav link with an accent underline when it's the active screen.</summary>
     private static Button NavLink(GameObject parent, string label, bool active)
     {
         var go = new GameObject("Nav_" + label, typeof(RectTransform), typeof(Image), typeof(Button));
         go.transform.SetParent(parent.transform, false);
-        var img = go.GetComponent<Image>(); img.color = new Color(0, 0, 0, 0);
-        var le = go.AddComponent<LayoutElement>(); le.minHeight = 24;
+        var img = go.GetComponent<Image>();
+        img.sprite = DesignTokens.RoundedSprite; img.type = Image.Type.Sliced;
+
+        var le = go.AddComponent<LayoutElement>(); le.minHeight = 28;
         var h = go.AddComponent<HorizontalLayoutGroup>();
+        h.padding = new RectOffset(6, 6, 2, 2);
         h.childControlWidth = h.childControlHeight = true; h.childForceExpandWidth = h.childForceExpandHeight = false;
+
+        var btn = go.GetComponent<Button>(); btn.targetGraphic = img;
+        Hover(btn, DesignTokens.Alpha(DesignTokens.Accent, 0.10f));
+
         var lbl = Label(go.transform, label, 14, active ? DesignTokens.Accent : DesignTokens.Neutral700, DesignTokens.BodyFont);
         lbl.GetComponent<TextMeshProUGUI>().raycastTarget = false;
-        return go.GetComponent<Button>();
+
+        // Accent underline, toggled by UIManager.SetNavActive
+        var ul = Panel("Underline", go.transform, DesignTokens.Accent);
+        ul.GetComponent<Image>().raycastTarget = false;
+        var ur = (RectTransform)ul.transform;
+        ur.anchorMin = new Vector2(0, 0); ur.anchorMax = new Vector2(1, 0); ur.pivot = new Vector2(0.5f, 0);
+        ur.sizeDelta = new Vector2(0, 1); ur.anchoredPosition = Vector2.zero;
+        ul.SetActive(active);
+        return btn;
     }
 
-    private static Button TextLink(GameObject parent, string label, Color color)
+    private static Button TextLink(GameObject parent, string label, Color color, string tooltip = null)
     {
         var go = new GameObject("Link_" + label, typeof(RectTransform), typeof(Image), typeof(Button));
         go.transform.SetParent(parent.transform, false);
-        var img = go.GetComponent<Image>(); img.color = new Color(0, 0, 0, 0);
-        var le = go.AddComponent<LayoutElement>(); le.minHeight = 20; le.minWidth = 40;
+        var img = go.GetComponent<Image>();
+        img.sprite = DesignTokens.RoundedSprite; img.type = Image.Type.Sliced;
+
+        var le = go.AddComponent<LayoutElement>(); le.minHeight = 24;
         var h = go.AddComponent<HorizontalLayoutGroup>();
+        h.padding = new RectOffset(8, 8, 3, 3);
         h.childControlWidth = h.childControlHeight = true; h.childForceExpandWidth = h.childForceExpandHeight = false;
+
+        var btn = go.GetComponent<Button>(); btn.targetGraphic = img;
+        Hover(btn, DesignTokens.Alpha(color, 0.14f));
+
         var lbl = Label(go.transform, label, 12, color, DesignTokens.BodyFont);
         lbl.GetComponent<TextMeshProUGUI>().raycastTarget = false;
-        return go.GetComponent<Button>();
+        if (!string.IsNullOrEmpty(tooltip)) go.AddComponent<UITooltipTrigger>().text = tooltip;
+        return btn;
+    }
+
+    /// <summary>
+    /// A collapsed-panel strip: the entire 40px column is one button carrying a
+    /// rotated label, so reopening a panel is a big obvious target.
+    /// </summary>
+    private static GameObject Gutter(string name, Transform parent, bool left, string label,
+                                     string chevron, out Button button)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
+        go.transform.SetParent(parent, false);
+        DockSide(go, left, GutterW);
+
+        var img = go.GetComponent<Image>();
+        img.sprite = DesignTokens.RoundedSprite; img.type = Image.Type.Sliced;
+        button = go.GetComponent<Button>(); button.targetGraphic = img;
+        var c = button.colors;
+        c.normalColor = DesignTokens.Bg;
+        c.highlightedColor = Color.Lerp(DesignTokens.Bg, DesignTokens.Accent, 0.16f);
+        c.pressedColor = Color.Lerp(DesignTokens.Bg, DesignTokens.Accent, 0.28f);
+        c.selectedColor = DesignTokens.Bg;
+        c.fadeDuration = 0.12f;
+        button.colors = c;
+
+        if (left) RightHairline(go); else LeftHairline(go);
+
+        // Chevron near the top.
+        var chev = Label(go.transform, chevron, 16, DesignTokens.Accent, DesignTokens.BodyFont);
+        var cr = (RectTransform)chev.transform;
+        cr.anchorMin = new Vector2(0.5f, 1); cr.anchorMax = new Vector2(0.5f, 1); cr.pivot = new Vector2(0.5f, 1);
+        cr.sizeDelta = new Vector2(GutterW, 24); cr.anchoredPosition = new Vector2(0, -12);
+        var ct = chev.GetComponent<TextMeshProUGUI>();
+        ct.alignment = TextAlignmentOptions.Center; ct.raycastTarget = false;
+
+        // Vertical label below it (rotated 90°).
+        var vert = Label(go.transform, label, 11, DesignTokens.Neutral600, DesignTokens.BodyFont);
+        var vr = (RectTransform)vert.transform;
+        vr.anchorMin = new Vector2(0.5f, 1); vr.anchorMax = new Vector2(0.5f, 1); vr.pivot = new Vector2(0.5f, 1);
+        vr.sizeDelta = new Vector2(220, GutterW);
+        vr.anchoredPosition = new Vector2(0, -46);
+        vr.localRotation = Quaternion.Euler(0, 0, -90);
+        var vt = vert.GetComponent<TextMeshProUGUI>();
+        vt.alignment = TextAlignmentOptions.TopRight; vt.characterSpacing = 10; vt.raycastTarget = false;
+        // After rotating, the label's own top-right corner reads downward from the chevron.
+        vr.pivot = new Vector2(1f, 0.5f);
+        vr.anchoredPosition = new Vector2(0, -44);
+
+        go.AddComponent<UITooltipTrigger>().text = $"Show {label.ToLower()}";
+        go.SetActive(false);
+        return go;
+    }
+
+    /// <summary>Ghost hover wash: transparent at rest, tinted under the pointer.</summary>
+    private static void Hover(Button btn, Color hoverTint)
+    {
+        if (btn.targetGraphic != null) btn.targetGraphic.color = Color.white;
+        var c = btn.colors;
+        c.normalColor = new Color(1, 1, 1, 0);
+        c.highlightedColor = hoverTint;
+        c.pressedColor = DesignTokens.Alpha(hoverTint, Mathf.Min(1f, hoverTint.a * 1.9f));
+        c.selectedColor = new Color(1, 1, 1, 0);
+        c.fadeDuration = 0.12f;
+        btn.colors = c;
     }
 
     private static TMP_InputField Input(Transform parent, string placeholder)

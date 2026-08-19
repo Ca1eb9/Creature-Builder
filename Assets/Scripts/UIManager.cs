@@ -55,6 +55,12 @@ public class UIManager : MonoBehaviour
     public Button openLibraryButton;
     public Button openBuildButton;
     public Button newCreatureButton;
+    public Button closeLibraryButton;
+    public TextMeshProUGUI librarySubtitle;
+    public GameObject libraryEmptyState;
+
+    [Header("Search")]
+    public TMP_InputField searchInput;
 
     [Header("Status / footers")]
     public TextMeshProUGUI statusLabel;         // "N parts · M in library"
@@ -83,7 +89,10 @@ public class UIManager : MonoBehaviour
         WireNav();
         RefreshLoadList();
 
-        assembler.OnCreatureChanged += UpdateSockets;
+        assembler.OnCreatureChanged += OnCreatureChanged;
+
+        if (searchInput != null)
+            searchInput.onValueChanged.AddListener(_ => { if (currentCategory.HasValue) SelectCategory(currentCategory.Value); });
 
         SetRailCollapsed(false);
         SetInspectorCollapsed(false);
@@ -99,7 +108,14 @@ public class UIManager : MonoBehaviour
 
     void OnDestroy()
     {
-        if (assembler != null) assembler.OnCreatureChanged -= UpdateSockets;
+        if (assembler != null) assembler.OnCreatureChanged -= OnCreatureChanged;
+    }
+
+    /// <summary>The creature changed — keep the sockets list and the part count live.</summary>
+    void OnCreatureChanged()
+    {
+        UpdateSockets();
+        UpdateStatus();
     }
 
     // -------- CATEGORY + PART GRID --------
@@ -143,7 +159,13 @@ public class UIManager : MonoBehaviour
             SelectCategory(category);
         });
 
-        var parts = database.GetPartsInCategory(category);
+        var allParts = database.GetPartsInCategory(category);
+        string query = searchInput != null ? searchInput.text : "";
+        var parts = string.IsNullOrWhiteSpace(query)
+            ? allParts
+            : allParts.FindAll(p => p != null && !string.IsNullOrEmpty(p.partName) &&
+                                    p.partName.IndexOf(query.Trim(), System.StringComparison.OrdinalIgnoreCase) >= 0);
+
         foreach (BodyPartData part in parts)
         {
             GameObject card = Instantiate(partButtonPrefab, partGridContainer);
@@ -175,7 +197,12 @@ public class UIManager : MonoBehaviour
         }
 
         if (railFooterLabel != null)
-            railFooterLabel.text = $"Showing {parts.Count} {category.ToString().ToLower()}";
+        {
+            string label = Prettify(category.ToString()).ToLower();
+            railFooterLabel.text = parts.Count == allParts.Count
+                ? $"{allParts.Count} {label}"
+                : $"Showing {parts.Count} of {allParts.Count} {label}";
+        }
 
         UpdateAdjustmentPanelTarget();
     }
@@ -271,6 +298,7 @@ public class UIManager : MonoBehaviour
     {
         if (openLibraryButton != null) openLibraryButton.onClick.AddListener(() => ShowLibrary(true));
         if (openBuildButton != null) openBuildButton.onClick.AddListener(() => ShowLibrary(false));
+        if (closeLibraryButton != null) closeLibraryButton.onClick.AddListener(() => ShowLibrary(false));
         if (newCreatureButton != null) newCreatureButton.onClick.AddListener(() =>
         {
             OnClear();
@@ -281,7 +309,34 @@ public class UIManager : MonoBehaviour
     void ShowLibrary(bool show)
     {
         if (libraryScreen != null) libraryScreen.SetActive(show);
+        SetNavActive(show);
         if (show) RefreshLoadList();
+    }
+
+    /// <summary>Underline/tint whichever nav link matches the current screen.</summary>
+    void SetNavActive(bool libraryActive)
+    {
+        TintNav(openBuildButton, !libraryActive);
+        TintNav(openLibraryButton, libraryActive);
+    }
+
+    static void TintNav(Button b, bool active)
+    {
+        if (b == null) return;
+        var t = b.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (t != null) t.color = active ? DesignTokens.Accent : DesignTokens.Neutral700;
+        var underline = b.transform.Find("Underline");
+        if (underline != null) underline.gameObject.SetActive(active);
+    }
+
+    void Update()
+    {
+        // Esc closes the library sheet. (New Input System — the project is set to
+        // "Input System Package (New)", so the legacy Input class would throw.)
+        var keyboard = UnityEngine.InputSystem.Keyboard.current;
+        if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame &&
+            libraryScreen != null && libraryScreen.activeSelf && !UIFeedback.IsDialogOpen)
+            ShowLibrary(false);
     }
 
     // -------- ACTION BUTTONS --------
@@ -440,7 +495,14 @@ public class UIManager : MonoBehaviour
 
         foreach (Transform child in loadListContainer) Destroy(child.gameObject);
 
-        foreach (string entryName in saveLoad.ListSavedCreatures())
+        var saved = saveLoad.ListSavedCreatures();
+        if (librarySubtitle != null)
+            librarySubtitle.text = saved.Count == 1
+                ? "1 specimen · stored in your user folder"
+                : $"{saved.Count} specimens · stored in your user folder";
+        if (libraryEmptyState != null) libraryEmptyState.SetActive(saved.Count == 0);
+
+        foreach (string entryName in saved)
         {
             GameObject card = Instantiate(loadListEntryPrefab, loadListContainer);
             SetChildText(card, "Name", entryName);

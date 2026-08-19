@@ -52,11 +52,11 @@ public static class CreatureBuilderPrefabTool
     private static void BuildPartCard()
     {
         var root = Root("PartCard", 160, 184);
-        // Card fill + border; Button for click. Default (unequipped) look.
+        // Card fill IS the tint target so hover washes the whole card.
         var bg = root.AddComponent<Image>();
         bg.sprite = DesignTokens.RoundedSprite; bg.type = Image.Type.Sliced; bg.color = DesignTokens.Bg;
         var btn = root.AddComponent<Button>(); btn.targetGraphic = bg;
-        Tint(btn);
+        TintFill(btn, DesignTokens.Bg, DesignTokens.Accent100);
         Border(root, DesignTokens.Divider);
 
         // Icon area (top 140px) with its own ground + bottom hairline.
@@ -95,8 +95,10 @@ public static class CreatureBuilderPrefabTool
     {
         var root = Root("CategoryCell", 160, 40);
         var bg = root.AddComponent<Image>();
-        bg.color = new Color(0, 0, 0, 0); bg.raycastTarget = true; // transparent hit area
-        var btn = root.AddComponent<Button>(); btn.targetGraphic = bg; Tint(btn);
+        bg.raycastTarget = true;
+        var btn = root.AddComponent<Button>(); btn.targetGraphic = bg;
+        // UIManager repaints normalColor for the active category; hover is a light wash.
+        TintFill(btn, new Color(1, 1, 1, 0), DesignTokens.Alpha(DesignTokens.Text, 0.06f));
         Border(root, DesignTokens.Divider);
 
         var name = Label("Name", root.transform, "Category", 15.5f, DesignTokens.Text, DesignTokens.HeadingFont);
@@ -117,6 +119,9 @@ public static class CreatureBuilderPrefabTool
     private static void BuildSliderRow()
     {
         var root = Root("SliderRow", 300, 30);
+        // Without this the parent VerticalLayoutGroup resolves the row to 0 height.
+        var rowLE = root.AddComponent<LayoutElement>();
+        rowLE.minHeight = 28; rowLE.preferredHeight = 28; rowLE.flexibleWidth = 1;
         var h = root.AddComponent<HorizontalLayoutGroup>();
         h.spacing = 10; h.childAlignment = TextAnchor.MiddleLeft;
         h.childControlWidth = true; h.childControlHeight = true;
@@ -141,6 +146,11 @@ public static class CreatureBuilderPrefabTool
     private static void BuildSocketRow()
     {
         var root = Root("SocketRow", 300, 24);
+        // THE spacing fix: a layout-controlled row with no LayoutElement resolves
+        // to zero height, which made every socket line pile onto the same spot.
+        var rowLE = root.AddComponent<LayoutElement>();
+        rowLE.minHeight = 24; rowLE.preferredHeight = 24; rowLE.flexibleWidth = 1;
+
         var name = Label("Name", root.transform, "Head", 13.5f, DesignTokens.Neutral700, DesignTokens.BodyFont);
         var nr = (RectTransform)name.transform;
         nr.anchorMin = new Vector2(0, 0); nr.anchorMax = new Vector2(0.5f, 1); nr.offsetMin = Vector2.zero; nr.offsetMax = Vector2.zero;
@@ -181,12 +191,15 @@ public static class CreatureBuilderPrefabTool
         nr.sizeDelta = new Vector2(-32, 28); nr.anchoredPosition = new Vector2(16, -244);
         name.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
 
-        // Parts line.
+        // Parts line — wraps to two lines and ellipsises rather than overflowing.
         var parts = Label("Parts", root.transform, "—", 12.5f, DesignTokens.Neutral600, DesignTokens.BodyFont);
         var pr = (RectTransform)parts.transform;
         pr.anchorMin = new Vector2(0, 1); pr.anchorMax = new Vector2(1, 1); pr.pivot = new Vector2(0, 1);
-        pr.sizeDelta = new Vector2(-32, 20); pr.anchoredPosition = new Vector2(16, -276);
-        parts.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
+        pr.sizeDelta = new Vector2(-32, 36); pr.anchoredPosition = new Vector2(16, -276);
+        var pt = parts.GetComponent<TextMeshProUGUI>();
+        pt.alignment = TextAlignmentOptions.TopLeft;
+        pt.textWrappingMode = TextWrappingModes.Normal;
+        pt.overflowMode = TextOverflowModes.Ellipsis;
 
         // Footer: Load (accent) + Delete (danger).
         var load = TextButton("LoadButton", root.transform, "Load", DesignTokens.Accent);
@@ -239,16 +252,18 @@ public static class CreatureBuilderPrefabTool
         return go;
     }
 
-    /// <summary>An outlined text-only button (transparent fill, accent/danger label).</summary>
+    /// <summary>A text-only button that washes in its own tint on hover.</summary>
     private static GameObject TextButton(string name, Transform parent, string text, Color color)
     {
         var go = Child(name, parent);
-        var img = go.AddComponent<Image>(); img.color = new Color(0, 0, 0, 0); // invisible hit area
-        var btn = go.AddComponent<Button>(); btn.targetGraphic = img; Tint(btn);
+        var img = go.AddComponent<Image>();
+        img.sprite = DesignTokens.RoundedSprite; img.type = Image.Type.Sliced;
+        var btn = go.AddComponent<Button>(); btn.targetGraphic = img;
+        TintGhost(btn, DesignTokens.Alpha(color, 0.14f));
         var lbl = Label("Label", go.transform, text, 13, color, DesignTokens.BodyFont);
         Stretch((RectTransform)lbl.transform);
-        lbl.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-        lbl.GetComponent<TextMeshProUGUI>().raycastTarget = false;
+        var t = lbl.GetComponent<TextMeshProUGUI>();
+        t.alignment = TextAlignmentOptions.Center; t.raycastTarget = false;
         return go;
     }
 
@@ -303,6 +318,38 @@ public static class CreatureBuilderPrefabTool
         c.highlightedColor = new Color(1, 1, 1, 0.92f);
         c.pressedColor = new Color(1, 1, 1, 0.8f);
         c.fadeDuration = 0.08f;
+        btn.colors = c;
+    }
+
+    /// <summary>
+    /// ColorTint multiplies the graphic's colour by the state colour, so for an
+    /// opaque fill we express hover/press as ratios of the base colour. Gives the
+    /// CSS-like wash the mockups use, with a smooth fade.
+    /// </summary>
+    private static void TintFill(Button btn, Color baseColor, Color hoverColor)
+    {
+        // graphic stays white; the ColorBlock supplies the actual colours
+        if (btn.targetGraphic != null) btn.targetGraphic.color = Color.white;
+        var c = btn.colors;
+        c.normalColor = baseColor;
+        c.highlightedColor = hoverColor;
+        c.pressedColor = Color.Lerp(hoverColor, DesignTokens.Text, 0.12f);
+        c.selectedColor = baseColor;
+        c.disabledColor = DesignTokens.Alpha(baseColor, 0.4f);
+        c.fadeDuration = 0.12f;
+        btn.colors = c;
+    }
+
+    /// <summary>Transparent control that only washes in on hover (links, icon buttons).</summary>
+    private static void TintGhost(Button btn, Color hoverTint)
+    {
+        if (btn.targetGraphic != null) btn.targetGraphic.color = Color.white;
+        var c = btn.colors;
+        c.normalColor = new Color(1, 1, 1, 0);
+        c.highlightedColor = hoverTint;
+        c.pressedColor = DesignTokens.Alpha(hoverTint, Mathf.Min(1f, hoverTint.a * 1.8f));
+        c.selectedColor = new Color(1, 1, 1, 0);
+        c.fadeDuration = 0.12f;
         btn.colors = c;
     }
 

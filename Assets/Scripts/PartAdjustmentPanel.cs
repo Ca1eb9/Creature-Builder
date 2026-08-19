@@ -157,6 +157,10 @@ public class PartAdjustmentPanel : MonoBehaviour
 
     private void OnSliderChanged()
     {
+        // Numbers always track the handles, even when there's no part to apply
+        // them to — otherwise the readouts look broken while nothing is equipped.
+        UpdateValueLabels();
+
         if (suppressEvents || !activeCategory.HasValue || assembler == null) return;
         if (!assembler.IsCategoryEquipped(activeCategory.Value)) return;
 
