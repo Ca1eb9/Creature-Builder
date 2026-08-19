@@ -162,10 +162,21 @@ public static class CreatureBuilderSceneTool
         iKick.GetComponent<TextMeshProUGUI>().characterSpacing = 10;
 
         // name + status
-        var nameWrap = Panel("NameWrap", insp.transform, new Color(0, 0, 0, 0)); RowH(nameWrap, 60);
-        VBar(nameWrap, 20, 20, 12, 8, 4, TextAnchor.UpperLeft); BottomHairline(nameWrap);
+        var nameWrap = Panel("NameWrap", insp.transform, new Color(0, 0, 0, 0)); RowH(nameWrap, 78);
+        VBar(nameWrap, 20, 20, 12, 10, 5, TextAnchor.UpperLeft); BottomHairline(nameWrap);
         var nameInput = Input(nameWrap.transform, "Creature name");
         nameInput.textComponent.font = DesignTokens.HeadingFont; nameInput.pointSize = 22;
+
+        // Save-state row, right under the name: "Saved as …"  /  "Unsaved changes"
+        var stateRow = Panel("SaveState", nameWrap.transform, new Color(0, 0, 0, 0));
+        RowH(stateRow, 16);
+        HBar(stateRow, 0, 0, 0, 0, 8, TextAnchor.MiddleLeft);
+        var savedState = Label(stateRow.transform, "Not saved yet", 12, DesignTokens.Neutral600, DesignTokens.BodyFont);
+        Fit(savedState);
+        Spacer(stateRow);
+        var unsaved = Label(stateRow.transform, "Unsaved changes", 12, DesignTokens.Accent700, DesignTokens.BodyFont);
+        Fit(unsaved);
+        unsaved.SetActive(false);
 
         // sockets
         var sockWrap = Panel("Sockets", insp.transform, new Color(0, 0, 0, 0));
@@ -267,6 +278,8 @@ public static class CreatureBuilderSceneTool
         uiMgr.searchInput = searchInput;
         uiMgr.statusLabel = statusLabel.GetComponent<TextMeshProUGUI>();
         uiMgr.railFooterLabel = railFooter.GetComponent<TextMeshProUGUI>();
+        uiMgr.savedStateLabel = savedState.GetComponent<TextMeshProUGUI>();
+        uiMgr.unsavedLabel = unsaved.GetComponent<TextMeshProUGUI>();
         uiMgr.partNameLabel = null; uiMgr.partDescLabel = null;
         if (saveLoad != null) uiMgr.saveLoad = saveLoad;
         if (assembler != null) uiMgr.assembler = assembler;

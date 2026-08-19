@@ -63,15 +63,23 @@ public class UIManager : MonoBehaviour
     public TMP_InputField searchInput;
 
     [Header("Status / footers")]
-    public TextMeshProUGUI statusLabel;         // "N parts · M in library"
+    public TextMeshProUGUI statusLabel;         // "N parts"
     public TextMeshProUGUI railFooterLabel;     // "Showing X of Y"
+
+    [Header("Save state (inspector, under the name field)")]
+    public TextMeshProUGUI savedStateLabel;     // "Saved as ..." / "Not saved yet"
+    public TextMeshProUGUI unsavedLabel;        // "Unsaved changes" — shown only when dirty
 
     private BodyPartCategory? currentCategory = null;
     private RotateCreature cachedRotator;
     private string currentLoadedName = null;
 
-    // category -> its SocketRow value label, built once
+    // category -> its SocketRow labels, built once
     private readonly Dictionary<BodyPartCategory, TextMeshProUGUI> socketValues = new();
+    private readonly Dictionary<BodyPartCategory, TextMeshProUGUI> socketNames = new();
+
+    // True when the creature has changed since the last save/load.
+    private bool hasUnsavedChanges;
 
     void Start()
     {
@@ -116,6 +124,15 @@ public class UIManager : MonoBehaviour
     {
         UpdateSockets();
         UpdateStatus();
+        SetUnsaved(true);
+
+        // Re-assert the current selection. Resetting a transform (or any other
+        // creature change) must never look like it cleared what you had picked.
+        if (currentCategory.HasValue)
+        {
+            HighlightActiveCategory(currentCategory.Value);
+            HighlightActiveSocket(currentCategory.Value);
+        }
     }
 
     // -------- CATEGORY + PART GRID --------
@@ -141,6 +158,7 @@ public class UIManager : MonoBehaviour
     {
         currentCategory = category;
         HighlightActiveCategory(category);
+        HighlightActiveSocket(category);
 
         if (partGridContainer == null || partButtonPrefab == null) return;
         foreach (Transform child in partGridContainer) Destroy(child.gameObject);
@@ -216,20 +234,36 @@ public class UIManager : MonoBehaviour
             if (i >= categoryButtonContainer.childCount) break;
             Transform cell = categoryButtonContainer.GetChild(i);
             bool active = cat == category;
-            var bg = cell.GetComponent<Image>();
-            if (bg != null) bg.color = active ? DesignTokens.Accent100 : new Color(0, 0, 0, 0);
+
+            // Set the ColorBlock, not Image.color — a Button's ColorTint
+            // transition rewrites targetGraphic.color from colors.normalColor,
+            // so painting the Image directly gets wiped immediately.
+            SetButtonBase(cell.GetComponent<Button>(),
+                          active ? DesignTokens.Accent100 : new Color(1, 1, 1, 0));
+
             var name = cell.Find("Name")?.GetComponent<TextMeshProUGUI>();
             if (name != null) name.color = active ? DesignTokens.Accent700 : DesignTokens.Text;
+            var count = cell.Find("Count")?.GetComponent<TextMeshProUGUI>();
+            if (count != null) count.color = active ? DesignTokens.Accent700 : DesignTokens.Neutral600;
             i++;
         }
     }
 
     void MarkCardEquipped(GameObject card)
     {
-        var bg = card.GetComponent<Image>();
-        if (bg != null) bg.color = DesignTokens.Accent100;
+        SetButtonBase(card.GetComponent<Button>(), DesignTokens.Accent100);
         var border = card.transform.Find("Border")?.GetComponent<Image>();
         if (border != null) border.color = DesignTokens.Accent;
+    }
+
+    /// <summary>Repaint a button's resting colour without fighting its ColorTint transition.</summary>
+    static void SetButtonBase(Button btn, Color baseColor)
+    {
+        if (btn == null) return;
+        var c = btn.colors;
+        c.normalColor = baseColor;
+        c.selectedColor = baseColor;
+        btn.colors = c; // assigning re-applies the tint immediately
     }
 
     void UpdateAdjustmentPanelTarget()
@@ -249,6 +283,7 @@ public class UIManager : MonoBehaviour
     void BuildSocketRows()
     {
         socketValues.Clear();
+        socketNames.Clear();
         if (socketsContainer == null || socketRowPrefab == null) return;
         foreach (Transform child in socketsContainer) Destroy(child.gameObject);
 
@@ -258,6 +293,8 @@ public class UIManager : MonoBehaviour
             SetChildText(row, "Name", Prettify(cat.ToString()));
             var val = row.transform.Find("Value")?.GetComponent<TextMeshProUGUI>();
             if (val != null) socketValues[cat] = val;
+            var nm = row.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
+            if (nm != null) socketNames[cat] = nm;
         }
     }
 
@@ -266,7 +303,39 @@ public class UIManager : MonoBehaviour
         foreach (var kv in socketValues)
         {
             var data = assembler.GetEquippedData(kv.Key);
-            if (kv.Value != null) kv.Value.text = data != null ? data.partName : "—";
+            if (kv.Value != null)
+                kv.Value.text = data != null ? ShortPartName(data.partName, kv.Key) : "—";
+        }
+    }
+
+    /// <summary>
+    /// "Badger Head" in the Head row is redundant — the row is already labelled
+    /// Head. Drop the trailing category words so it reads just "Badger".
+    /// </summary>
+    static string ShortPartName(string partName, BodyPartCategory cat)
+    {
+        if (string.IsNullOrWhiteSpace(partName)) return "—";
+        string suffix = Prettify(cat.ToString());               // "Front Legs"
+        string trimmed = partName.Trim();
+
+        if (trimmed.Length > suffix.Length &&
+            trimmed.EndsWith(suffix, System.StringComparison.OrdinalIgnoreCase))
+        {
+            string shortened = trimmed.Substring(0, trimmed.Length - suffix.Length).Trim();
+            if (shortened.Length > 0) return shortened;
+        }
+        return trimmed;
+    }
+
+    /// <summary>Tint the socket row matching the category being edited.</summary>
+    void HighlightActiveSocket(BodyPartCategory category)
+    {
+        foreach (var kv in socketNames)
+        {
+            bool active = kv.Key == category;
+            if (kv.Value != null) kv.Value.color = active ? DesignTokens.Accent700 : DesignTokens.Neutral700;
+            if (socketValues.TryGetValue(kv.Key, out var val) && val != null)
+                val.color = active ? DesignTokens.Accent700 : DesignTokens.Text;
         }
     }
 
@@ -443,6 +512,7 @@ public class UIManager : MonoBehaviour
         if (saveLoad.SaveCreature(creatureName))
         {
             currentLoadedName = creatureName;
+            SetUnsaved(false);
             StartCoroutine(CaptureThumbnail(creatureName));
             RefreshLoadList();
             UIFeedback.ShowToast($"Saved \"{creatureName}\"!");
@@ -529,6 +599,9 @@ public class UIManager : MonoBehaviour
             ShowLibrary(false);
             if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
             UpdateSockets();
+            // Loading brings in an already-saved creature, so it starts clean.
+            SetUnsaved(false);
+            if (saveNameInput != null) saveNameInput.text = creatureName;
             UIFeedback.ShowToast($"Loaded \"{creatureName}\"");
         }
         else UIFeedback.ShowToast("Couldn't load that creature — see log for details");
@@ -558,8 +631,18 @@ public class UIManager : MonoBehaviour
         if (statusLabel == null || assembler == null) return;
         int equipped = 0;
         foreach (var _ in assembler.EquippedCategories) equipped++;
-        int library = saveLoad != null ? saveLoad.ListSavedCreatures().Count : 0;
-        statusLabel.text = $"{equipped} parts · {library} in library";
+        statusLabel.text = equipped == 1 ? "1 part" : $"{equipped} parts";
+    }
+
+    /// <summary>Reflects the dirty flag in the inspector, next to the creature name.</summary>
+    void SetUnsaved(bool unsaved)
+    {
+        hasUnsavedChanges = unsaved;
+        if (unsavedLabel != null) unsavedLabel.gameObject.SetActive(unsaved);
+        if (savedStateLabel != null)
+            savedStateLabel.text = string.IsNullOrWhiteSpace(currentLoadedName)
+                ? "Not saved yet"
+                : $"Saved as “{currentLoadedName}”";
     }
 
     // -------- helpers --------
