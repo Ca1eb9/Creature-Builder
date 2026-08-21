@@ -39,6 +39,16 @@ public static class UITooltip
         bubble.transform.position = pos;
     }
 
+    /// <summary>
+    /// Hide/show the whole tooltip layer. It has its own canvas, so the
+    /// screenshot code has to stand it down explicitly or a bubble that was
+    /// on screen when you clicked ends up baked into the picture.
+    /// </summary>
+    public static void SetLayerVisible(bool visible)
+    {
+        if (canvas != null) canvas.enabled = visible;
+    }
+
     public static void Hide()
     {
         if (bubble != null) bubble.SetActive(false);

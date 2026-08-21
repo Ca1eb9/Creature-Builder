@@ -576,12 +576,15 @@ public class UIManager : MonoBehaviour
         Canvas canvas = GetComponentInParent<Canvas>();
         if (canvas != null) canvas.enabled = false;
         UIFeedback.SetOverlayVisible(false);
+        UITooltip.Hide();
+        UITooltip.SetLayerVisible(false);
         yield return new WaitForEndOfFrame();
 
         Texture2D grabbed = ScreenCapture.CaptureScreenshotAsTexture();
 
         if (canvas != null) canvas.enabled = true;
         UIFeedback.SetOverlayVisible(true);
+        UITooltip.SetLayerVisible(true);
 
         // Crop to the stage so the picture is just the creature, with none of
         // the empty margin the inset viewport leaves where the panels sit.
@@ -687,12 +690,15 @@ public class UIManager : MonoBehaviour
         Canvas canvas = GetComponentInParent<Canvas>();
         if (canvas != null) canvas.enabled = false;
         UIFeedback.SetOverlayVisible(false);
+        UITooltip.Hide();
+        UITooltip.SetLayerVisible(false);
         yield return new WaitForEndOfFrame();
 
         Texture2D full = ScreenCapture.CaptureScreenshotAsTexture();
 
         if (canvas != null) canvas.enabled = true;
         UIFeedback.SetOverlayVisible(true);
+        UITooltip.SetLayerVisible(true);
 
         Texture2D stage = CropToStage(full);
         Texture2D small = Downscale(stage, 480);
