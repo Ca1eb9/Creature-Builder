@@ -199,7 +199,7 @@ public static class CreatureBuilderPrefabTool
 
     private static void BuildCreatureCard()
     {
-        var root = Root("CreatureCard", 300, 330);
+        var root = Root("CreatureCard", 300, 372);
         var bg = root.AddComponent<Image>();
         bg.sprite = DesignTokens.RoundedSprite; bg.type = Image.Type.Sliced; bg.color = DesignTokens.Bg;
         Border(root, DesignTokens.Divider);
@@ -230,7 +230,7 @@ public static class CreatureBuilderPrefabTool
         var parts = Label("Parts", root.transform, "—", 12.5f, DesignTokens.Neutral600, DesignTokens.BodyFont);
         var pr = (RectTransform)parts.transform;
         pr.anchorMin = new Vector2(0, 1); pr.anchorMax = new Vector2(1, 1); pr.pivot = new Vector2(0, 1);
-        pr.sizeDelta = new Vector2(-32, 36); pr.anchoredPosition = new Vector2(16, -276);
+        pr.sizeDelta = new Vector2(-32, 40); pr.anchoredPosition = new Vector2(16, -278);
         var pt = parts.GetComponent<TextMeshProUGUI>();
         pt.alignment = TextAlignmentOptions.TopLeft;
         pt.textWrappingMode = TextWrappingModes.Normal;
@@ -253,20 +253,20 @@ public static class CreatureBuilderPrefabTool
         var date = Label("Date", root.transform, "", 11, DesignTokens.Neutral500, DesignTokens.BodyFont);
         var dtr = (RectTransform)date.transform;
         dtr.anchorMin = new Vector2(0, 0); dtr.anchorMax = new Vector2(0, 0); dtr.pivot = new Vector2(0, 0);
-        dtr.sizeDelta = new Vector2(140, 22); dtr.anchoredPosition = new Vector2(16, 16);
+        dtr.sizeDelta = new Vector2(150, 22); dtr.anchoredPosition = new Vector2(16, 17);
         date.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
 
         // Delete is a quiet neutral link here — red is reserved for the confirm dialog.
         var del = TextButton("DeleteButton", root.transform, "Delete", DesignTokens.Neutral600);
         var dr2 = (RectTransform)del.transform;
         dr2.anchorMin = new Vector2(1, 0); dr2.anchorMax = new Vector2(1, 0); dr2.pivot = new Vector2(1, 0);
-        dr2.sizeDelta = new Vector2(58, 24); dr2.anchoredPosition = new Vector2(-14, 14);
+        dr2.sizeDelta = new Vector2(58, 26); dr2.anchoredPosition = new Vector2(-14, 15);
         Underline(del, DesignTokens.Neutral400);
 
         var load = TextButton("LoadButton", root.transform, "Load", DesignTokens.Accent);
         var lr = (RectTransform)load.transform;
         lr.anchorMin = new Vector2(1, 0); lr.anchorMax = new Vector2(1, 0); lr.pivot = new Vector2(1, 0);
-        lr.sizeDelta = new Vector2(48, 24); lr.anchoredPosition = new Vector2(-80, 14);
+        lr.sizeDelta = new Vector2(48, 26); lr.anchoredPosition = new Vector2(-82, 15);
         Underline(load, DesignTokens.Accent);
 
         Save(root);

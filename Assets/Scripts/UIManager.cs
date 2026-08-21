@@ -111,10 +111,8 @@ public class UIManager : MonoBehaviour
 
         if (searchInput != null)
         {
-            searchInput.onValueChanged.AddListener(_ => { if (currentCategory.HasValue) SelectCategory(currentCategory.Value); });
-            // "Search all 78 parts…" — the mockup advertises the library size here.
-            int total = database.allParts != null ? database.allParts.Count : 0;
-            if (searchInput.placeholder is TextMeshProUGUI ph) ph.text = $"Search all {total} parts…";
+            searchInput.onValueChanged.AddListener(_ => RefreshPartGrid());
+            UpdateSearchPlaceholder();
         }
         if (librarySearchInput != null)
             librarySearchInput.onValueChanged.AddListener(_ => RefreshLoadList());
@@ -181,50 +179,57 @@ public class UIManager : MonoBehaviour
     void SelectCategory(BodyPartCategory category)
     {
         currentCategory = category;
-        HighlightActiveCategory(category);
-        HighlightActiveSocket(category);
+        // Picking a category is an explicit "browse this drawer" action, so it
+        // clears any global search that was narrowing the grid.
+        if (searchInput != null && !string.IsNullOrEmpty(searchInput.text))
+        {
+            searchInput.SetTextWithoutNotify("");
+            UpdateSearchPlaceholder();
+        }
+        RefreshPartGrid();
+    }
+
+    /// <summary>True while the search box is narrowing the grid across every category.</summary>
+    private bool IsSearching =>
+        searchInput != null && !string.IsNullOrWhiteSpace(searchInput.text);
+
+    /// <summary>
+    /// Rebuilds the part grid. Normally it shows the selected category (with its
+    /// empty "No head" slot first); while searching it ignores the category and
+    /// lists every matching part in the whole database, so "badger" turns up the
+    /// badger head AND the badger legs.
+    /// </summary>
+    void RefreshPartGrid()
+    {
+        bool searching = IsSearching;
+
+        HighlightActiveCategory(searching ? (BodyPartCategory?)null : currentCategory);
+        if (!searching && currentCategory.HasValue) HighlightActiveSocket(currentCategory.Value);
 
         if (partGridContainer == null || partButtonPrefab == null) return;
         foreach (Transform child in partGridContainer) Destroy(child.gameObject);
 
-        // The empty slot: a dashed card with a big em-dash and "No head" —
-        // deliberately different from a part card, per the mockup.
-        GameObject noneCard = Instantiate(partButtonPrefab, partGridContainer);
-        SetChildText(noneCard, "Name", "No " + Singular(category).ToLower());
-        SetActiveChild(noneCard, "Equipped", false);
-        SetActiveChild(noneCard, "IconArea", false);
-        SetActiveChild(noneCard, "Icon", false);
-        SetActiveChild(noneCard, "IconRule", false);
-        SetActiveChild(noneCard, "DashedBorder", true);
-        SetActiveChild(noneCard, "Dash", true);
-        SetActiveChild(noneCard, "Border", false);
-        // Centre the caption under the dash instead of the card's usual top-left slot.
-        var noneName = noneCard.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
-        if (noneName != null)
-        {
-            noneName.alignment = TextAlignmentOptions.Center;
-            noneName.color = DesignTokens.Neutral600;
-            noneName.fontSize = 13;
-            var nrt = (RectTransform)noneName.transform;
-            nrt.offsetMin = new Vector2(10, 6); nrt.offsetMax = new Vector2(-10, -110);
-        }
-        SetButtonBase(noneCard.GetComponent<Button>(), new Color(1, 1, 1, 0));
-        var noneBtn = noneCard.GetComponent<Button>();
-        if (noneBtn != null) noneBtn.onClick.AddListener(() =>
-        {
-            assembler.RemovePart(category);
-            currentLoadedName = null;
-            UpdateInfoDisplay(null);
-            UpdateAdjustmentPanelTarget();
-            SelectCategory(category);
-        });
+        List<BodyPartData> parts;
+        int poolSize;
 
-        var allParts = database.GetPartsInCategory(category);
-        string query = searchInput != null ? searchInput.text : "";
-        var parts = string.IsNullOrWhiteSpace(query)
-            ? allParts
-            : allParts.FindAll(p => p != null && !string.IsNullOrEmpty(p.partName) &&
-                                    p.partName.IndexOf(query.Trim(), System.StringComparison.OrdinalIgnoreCase) >= 0);
+        if (searching)
+        {
+            string q = searchInput.text.Trim();
+            parts = database.allParts.FindAll(bp =>
+                bp != null && !string.IsNullOrEmpty(bp.partName) &&
+                bp.partName.IndexOf(q, System.StringComparison.OrdinalIgnoreCase) >= 0);
+            parts.Sort((a, b) => a.category != b.category
+                ? a.category.CompareTo(b.category)
+                : string.Compare(a.partName, b.partName, System.StringComparison.OrdinalIgnoreCase));
+            poolSize = database.allParts.Count;
+        }
+        else
+        {
+            if (!currentCategory.HasValue) return;
+            BuildEmptySlotCard(currentCategory.Value);
+            parts = database.GetPartsInCategory(currentCategory.Value);
+            poolSize = parts.Count;
+        }
 
         foreach (BodyPartData part in parts)
         {
@@ -238,7 +243,6 @@ public class UIManager : MonoBehaviour
                 if (hasIcon) { iconImage.sprite = part.icon; iconImage.preserveAspect = true; }
             }
 
-            // Name is ALWAYS shown on a PartCard now.
             SetChildText(card, "Name", part.partName);
 
             bool equipped = assembler.IsEquipped(part);
@@ -251,27 +255,87 @@ public class UIManager : MonoBehaviour
             {
                 assembler.EquipPart(capturedPart);
                 UpdateInfoDisplay(capturedPart);
+                // Equipping from a search result focuses that part's own category.
+                currentCategory = capturedPart.category;
                 UpdateAdjustmentPanelTarget();
-                SelectCategory(category);
+                RefreshPartGrid();
+                HighlightActiveSocket(capturedPart.category);
             });
         }
 
         if (railFooterLabel != null)
         {
-            string label = Prettify(category.ToString()).ToLower();
-            railFooterLabel.text = parts.Count == allParts.Count
-                ? $"{allParts.Count} {label}"
-                : $"Showing {parts.Count} of {allParts.Count} {label}";
+            if (searching)
+                railFooterLabel.text = $"Showing {parts.Count} of {poolSize} parts";
+            else
+                railFooterLabel.text = $"{parts.Count} {Prettify(currentCategory.Value.ToString()).ToLower()}";
         }
 
-        // Collapsed rail keeps its context, like the mockup's "Parts · Head 32".
+        // Collapsed rail keeps its context, like the mockup's "Parts | Head 32".
         if (railGutterLabel != null)
-            railGutterLabel.text = $"PARTS · {Prettify(category.ToString()).ToUpper()} {allParts.Count}";
+            railGutterLabel.text = searching
+                ? $"PARTS - SEARCH {parts.Count}"
+                : $"PARTS - {Prettify(currentCategory.Value.ToString()).ToUpper()} {poolSize}";
 
         UpdateAdjustmentPanelTarget();
     }
 
-    void HighlightActiveCategory(BodyPartCategory category)
+    /// <summary>
+    /// The dashed "No head" slot. It carries the selected tint whenever that
+    /// category is genuinely empty, so "nothing equipped" reads as a real choice.
+    /// </summary>
+    void BuildEmptySlotCard(BodyPartCategory category)
+    {
+        GameObject noneCard = Instantiate(partButtonPrefab, partGridContainer);
+        SetChildText(noneCard, "Name", "No " + Singular(category).ToLower());
+        SetActiveChild(noneCard, "IconArea", false);
+        SetActiveChild(noneCard, "Icon", false);
+        SetActiveChild(noneCard, "IconRule", false);
+        SetActiveChild(noneCard, "DashedBorder", true);
+        SetActiveChild(noneCard, "Dash", true);
+        SetActiveChild(noneCard, "Border", false);
+
+        // Selected = this category genuinely has nothing equipped. The accent
+        // tint carries that; the "EQUIPPED" kicker would read wrong on an empty slot.
+        bool isSelected = !assembler.IsCategoryEquipped(category);
+        SetActiveChild(noneCard, "Equipped", false);
+
+        // Centre the caption under the dash instead of the card's usual top-left slot.
+        var noneName = noneCard.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
+        if (noneName != null)
+        {
+            noneName.alignment = TextAlignmentOptions.Center;
+            noneName.color = isSelected ? DesignTokens.Accent700 : DesignTokens.Neutral600;
+            noneName.fontSize = 13;
+            var nrt = (RectTransform)noneName.transform;
+            nrt.offsetMin = new Vector2(10, 18); nrt.offsetMax = new Vector2(-10, -110);
+        }
+        var dashLbl = noneCard.transform.Find("Dash")?.GetComponent<TextMeshProUGUI>();
+        if (dashLbl != null) dashLbl.color = isSelected ? DesignTokens.Accent : DesignTokens.Neutral600;
+        var dashed = noneCard.transform.Find("DashedBorder")?.GetComponent<Image>();
+        if (dashed != null) dashed.color = isSelected ? DesignTokens.Accent : DesignTokens.Neutral400;
+
+        SetButtonBase(noneCard.GetComponent<Button>(),
+                      isSelected ? DesignTokens.Accent100 : new Color(1, 1, 1, 0));
+
+        var noneBtn = noneCard.GetComponent<Button>();
+        if (noneBtn != null) noneBtn.onClick.AddListener(() =>
+        {
+            assembler.RemovePart(category);
+            UpdateInfoDisplay(null);
+            UpdateAdjustmentPanelTarget();
+            RefreshPartGrid();
+        });
+    }
+
+    void UpdateSearchPlaceholder()
+    {
+        if (searchInput == null || database == null) return;
+        int total = database.allParts != null ? database.allParts.Count : 0;
+        if (searchInput.placeholder is TextMeshProUGUI ph) ph.text = $"Search all {total} parts...";
+    }
+
+    void HighlightActiveCategory(BodyPartCategory? category)
     {
         if (categoryButtonContainer == null) return;
         int i = 0;
@@ -495,14 +559,14 @@ public class UIManager : MonoBehaviour
     {
         currentLoadedName = null;
         assembler.Randomize(database);
-        if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
+        RefreshPartGrid();
     }
 
     void OnClear()
     {
         currentLoadedName = null;
         assembler.ClearAll();
-        if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
+        RefreshPartGrid();
     }
 
     void OnScreenshot() => StartCoroutine(CaptureCleanScreenshot());
@@ -514,16 +578,31 @@ public class UIManager : MonoBehaviour
         UIFeedback.SetOverlayVisible(false);
         yield return new WaitForEndOfFrame();
 
+        Texture2D grabbed = ScreenCapture.CaptureScreenshotAsTexture();
+
+        if (canvas != null) canvas.enabled = true;
+        UIFeedback.SetOverlayVisible(true);
+
+        // Crop to the stage so the picture is just the creature, with none of
+        // the empty margin the inset viewport leaves where the panels sit.
+        Texture2D stage = CropToStage(grabbed);
+
         string downloadsPath = System.IO.Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads");
         string filename = $"Creature_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
         string fullPath = System.IO.Path.Combine(downloadsPath, filename);
-        ScreenCapture.CaptureScreenshot(fullPath);
-        Debug.Log($"Screenshot saved: {fullPath}");
-
-        yield return new WaitForEndOfFrame();
-        if (canvas != null) canvas.enabled = true;
-        UIFeedback.SetOverlayVisible(true);
+        try
+        {
+            System.IO.Directory.CreateDirectory(downloadsPath);
+            System.IO.File.WriteAllBytes(fullPath, stage.EncodeToPNG());
+            Debug.Log($"Screenshot saved: {fullPath}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Screenshot failed: {e}");
+        }
+        if (stage != grabbed) Destroy(stage);
+        Destroy(grabbed);
 
         yield return null;
         UIFeedback.ShowToast("Screenshot saved to your Downloads folder");
@@ -615,12 +694,38 @@ public class UIManager : MonoBehaviour
         if (canvas != null) canvas.enabled = true;
         UIFeedback.SetOverlayVisible(true);
 
-        Texture2D small = Downscale(full, 480);
+        Texture2D stage = CropToStage(full);
+        Texture2D small = Downscale(stage, 480);
         saveLoad.SaveThumbnail(creatureName, small);
+        if (stage != full) Destroy(stage);
         Destroy(full);
         Destroy(small);
 
         RefreshLoadList(); // so the new thumbnail shows on its card
+    }
+
+    /// <summary>
+    /// Trims a full-window grab down to the stage camera's viewport. Without
+    /// this every saved picture carries pale bars where the rail, inspector and
+    /// bars sit, because the camera no longer renders the whole window.
+    /// </summary>
+    private Texture2D CropToStage(Texture2D full)
+    {
+        if (full == null) return null;
+        Camera cam = cachedFramer != null ? cachedFramer.Cam : Camera.main;
+        if (cam == null) return full;
+
+        Rect r = cam.pixelRect;
+        int x = Mathf.Clamp(Mathf.RoundToInt(r.x), 0, full.width - 1);
+        int y = Mathf.Clamp(Mathf.RoundToInt(r.y), 0, full.height - 1);
+        int w = Mathf.Clamp(Mathf.RoundToInt(r.width), 1, full.width - x);
+        int h = Mathf.Clamp(Mathf.RoundToInt(r.height), 1, full.height - y);
+        if (w == full.width && h == full.height) return full;
+
+        var cropped = new Texture2D(w, h, TextureFormat.RGB24, false);
+        cropped.SetPixels(full.GetPixels(x, y, w, h));
+        cropped.Apply();
+        return cropped;
     }
 
     private static Texture2D Downscale(Texture2D src, int targetWidth)
@@ -686,7 +791,7 @@ public class UIManager : MonoBehaviour
         {
             currentLoadedName = creatureName;
             ShowLibrary(false);
-            if (currentCategory.HasValue) SelectCategory(currentCategory.Value);
+            RefreshPartGrid();
             UpdateSockets();
             // Loading brings in an already-saved creature, so it starts clean.
             SetUnsaved(false);

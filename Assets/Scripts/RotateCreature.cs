@@ -64,7 +64,9 @@ public class RotateCreature : MonoBehaviour
             Vector2 delta = currentPos - lastMousePos;
 
             currentYRotation -= delta.x * rotationSpeed;
-            currentXRotation += delta.y * rotationSpeed;
+            // Drag up tips the creature's top toward you — dragging up used to pitch
+            // it the wrong way, so this axis is negated to match the horizontal one.
+            currentXRotation -= delta.y * rotationSpeed;
             currentXRotation = Mathf.Clamp(currentXRotation, -verticalLimit, verticalLimit);
 
             transform.localRotation = Quaternion.Euler(currentXRotation, currentYRotation, 0f);

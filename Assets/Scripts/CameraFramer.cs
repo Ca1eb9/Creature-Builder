@@ -8,6 +8,8 @@ public class CameraFramer : MonoBehaviour
 {
     [Header("References")]
     public Camera targetCamera;
+    /// <summary>The stage camera, for callers that need its viewport (screenshot cropping).</summary>
+    public Camera Cam => targetCamera;
     public Transform creatureRoot;
 
     [Header("Framing")]

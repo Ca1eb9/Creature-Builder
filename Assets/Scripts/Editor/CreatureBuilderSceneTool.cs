@@ -256,7 +256,7 @@ public static class CreatureBuilderSceneTool
 
         var (libViewport, libContent) = ScrollArea(sheet.transform);
         var libGL = libContent.AddComponent<GridLayoutGroup>();
-        libGL.cellSize = new Vector2(300, 330); libGL.spacing = new Vector2(24, 24);
+        libGL.cellSize = new Vector2(300, 372); libGL.spacing = new Vector2(24, 24);
         libGL.padding = new RectOffset(32, 32, 24, 24);
         libGL.constraint = GridLayoutGroup.Constraint.FixedColumnCount; libGL.constraintCount = 4;
         libContent.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;

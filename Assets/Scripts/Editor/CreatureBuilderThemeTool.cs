@@ -147,7 +147,7 @@ public static class CreatureBuilderThemeTool
     /// </summary>
     private static void MakeDashedSprite(string path)
     {
-        const int s = 12, dash = 6;
+        const int s = 16, dash = 8;
         var tex = new Texture2D(s, s, TextureFormat.RGBA32, false);
         for (int y = 0; y < s; y++)
             for (int x = 0; x < s; x++)
