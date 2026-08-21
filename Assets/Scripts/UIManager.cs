@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
 
     private BodyPartCategory? currentCategory = null;
     private RotateCreature cachedRotator;
+    private CameraFramer cachedFramer;
+    private Canvas rootCanvas;
     private string currentLoadedName = null;
 
     // category -> its SocketRow labels, built once
@@ -93,6 +95,8 @@ public class UIManager : MonoBehaviour
         if (assembler == null) { Debug.LogError("UIManager: no CreatureAssembler assigned.", this); return; }
 
         cachedRotator = FindAnyObjectByType<RotateCreature>();
+        cachedFramer = FindAnyObjectByType<CameraFramer>();
+        rootCanvas = GetComponentInParent<Canvas>();
         if (saveNameInput != null) saveNameInput.characterLimit = 24;
 
         BuildCategoryTabs();
@@ -190,6 +194,7 @@ public class UIManager : MonoBehaviour
         SetActiveChild(noneCard, "Equipped", false);
         SetActiveChild(noneCard, "IconArea", false);
         SetActiveChild(noneCard, "Icon", false);
+        SetActiveChild(noneCard, "IconRule", false);
         SetActiveChild(noneCard, "DashedBorder", true);
         SetActiveChild(noneCard, "Dash", true);
         SetActiveChild(noneCard, "Border", false);
@@ -295,6 +300,9 @@ public class UIManager : MonoBehaviour
         SetButtonBase(card.GetComponent<Button>(), DesignTokens.Accent100);
         var border = card.transform.Find("Border")?.GetComponent<Image>();
         if (border != null) border.color = DesignTokens.Accent;
+        // the rule under the icon well goes accent too, as in the mockup
+        var iconRule = card.transform.Find("IconRule")?.GetComponent<Image>();
+        if (iconRule != null) iconRule.color = DesignTokens.Accent;
     }
 
     /// <summary>Repaint a button's resting colour without fighting its ColorTint transition.</summary>
@@ -392,14 +400,37 @@ public class UIManager : MonoBehaviour
 
     public void SetRailCollapsed(bool collapsed)
     {
+        railCollapsed = collapsed;
         if (railPanel != null) railPanel.SetActive(!collapsed);
         if (railGutter != null) railGutter.SetActive(collapsed);
+        UpdateStageViewport();
     }
 
     public void SetInspectorCollapsed(bool collapsed)
     {
+        inspectorCollapsed = collapsed;
         if (inspectorPanel != null) inspectorPanel.SetActive(!collapsed);
         if (inspectorGutter != null) inspectorGutter.SetActive(collapsed);
+        UpdateStageViewport();
+    }
+
+    private bool railCollapsed, inspectorCollapsed;
+
+    // Chrome sizes in canvas reference units, mirroring CreatureBuilderSceneTool.
+    private const float TopBarH = 56f, StatusBarH = 40f, PanelW = 340f, GutterW = 40f;
+
+    /// <summary>
+    /// Insets the 3D stage to the free area between the chrome, so the creature
+    /// is framed in what you can actually see instead of hiding behind the rail
+    /// and inspector (the mockup insets the stage to left:340 / top:56 / …).
+    /// </summary>
+    private void UpdateStageViewport()
+    {
+        if (cachedFramer == null) return;
+        float s = rootCanvas != null ? rootCanvas.scaleFactor : 1f;
+        float left  = (railCollapsed ? GutterW : PanelW) * s;
+        float right = (inspectorCollapsed ? GutterW : PanelW) * s;
+        cachedFramer.SetViewportInsets(left, right, TopBarH * s, StatusBarH * s);
     }
 
     // -------- NAV / LIBRARY --------

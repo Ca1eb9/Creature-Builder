@@ -71,6 +71,8 @@ public static class CreatureBuilderSceneTool
         // uiMgr sits under the Canvas so its screenshot hide works.
         uiMgr.transform.SetParent(canvas.transform, false);
 
+        EnsureBackgroundCamera();
+
         var root = canvas.transform;
 
         // ---- TOP BAR ----
@@ -78,7 +80,7 @@ public static class CreatureBuilderSceneTool
         Dock(top, new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, -TopH), new Vector2(0, 0), new Vector2(0.5f, 1));
         HBar(top, 20, 20, 0, 0, 18, TextAnchor.MiddleLeft);
         BottomHairline(top);
-        Head(top, "Creature Builder", 18);
+        Head(top, "Creature Builder", 17);
         VDivider(top);
         var openBuild = NavLink(top, "Build", true);
         var openLib = NavLink(top, "Library", false);
@@ -124,7 +126,7 @@ public static class CreatureBuilderSceneTool
         // search (visual stub)
         var searchWrap = Panel("Search", rail.transform, new Color(0, 0, 0, 0)); RowH(searchWrap, 46);
         HBar(searchWrap, 18, 18, 8, 8, 0, TextAnchor.MiddleCenter);
-        var searchInput = Input(searchWrap.transform, "Search parts…");
+        var searchInput = Input(searchWrap.transform, "Search parts…", 34f, 13f);
         searchInput.gameObject.AddComponent<UITooltipTrigger>().text = "Filter the parts below by name";
 
         // category grid (2-col CategoryCell)
@@ -138,7 +140,7 @@ public static class CreatureBuilderSceneTool
         // part grid inside a scroll view
         var (partViewport, partContent) = ScrollArea(rail.transform);
         var pGL = partContent.AddComponent<GridLayoutGroup>();
-        pGL.cellSize = new Vector2(146, 184); pGL.spacing = new Vector2(12, 14);
+        pGL.cellSize = new Vector2(145, 184); pGL.spacing = new Vector2(14, 14);
         pGL.padding = new RectOffset(18, 18, 16, 16);
         pGL.constraint = GridLayoutGroup.Constraint.FixedColumnCount; pGL.constraintCount = 2;
         var pFit = partContent.AddComponent<ContentSizeFitter>(); pFit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -190,7 +192,7 @@ public static class CreatureBuilderSceneTool
         var sKick = Label(sockWrap.transform, "SOCKETS", 10, DesignTokens.Neutral600, DesignTokens.BodyFont); Fit(sKick);
         sKick.GetComponent<TextMeshProUGUI>().characterSpacing = 10;
         var socketsContainer = Panel("SocketList", sockWrap.transform, new Color(0, 0, 0, 0));
-        VBar(socketsContainer, 0, 0, 0, 0, 5, TextAnchor.UpperLeft);
+        VBar(socketsContainer, 0, 0, 0, 0, 8, TextAnchor.UpperLeft);
         socketsContainer.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
         // transform section
@@ -247,7 +249,7 @@ public static class CreatureBuilderSceneTool
         var libSearchWrap = Panel("LibrarySearch", libHead.transform, new Color(0, 0, 0, 0));
         libSearchWrap.AddComponent<LayoutElement>().preferredWidth = 260;
         HBar(libSearchWrap, 0, 0, 0, 0, 0, TextAnchor.MiddleCenter);
-        var librarySearch = Input(libSearchWrap.transform, "Search saved creatures…");
+        var librarySearch = Input(libSearchWrap.transform, "Search saved creatures…", 36f, 13f);
 
         var newBtn = Btn(libHead.transform, "New creature", true, "Clear the stage and start fresh");
         var closeLib = Btn(libHead.transform, "Close", false, "Back to the build screen  (Esc)");
@@ -323,6 +325,28 @@ public static class CreatureBuilderSceneTool
         }
 
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    }
+
+    /// <summary>
+    /// The main camera is inset to the stage area, so it only clears its own
+    /// rect. This full-screen camera sits behind it and clears everything else,
+    /// which keeps the region under the panels from smearing on resize/collapse.
+    /// </summary>
+    private static void EnsureBackgroundCamera()
+    {
+        var existing = GameObject.Find("BackgroundCamera");
+        if (existing != null) return;
+
+        var go = new GameObject("BackgroundCamera", typeof(Camera));
+        var cam = go.GetComponent<Camera>();
+        cam.clearFlags = CameraClearFlags.SolidColor;
+        cam.backgroundColor = DesignTokens.Bg;
+        cam.cullingMask = 0;              // renders nothing — it only clears
+        cam.depth = -100;                 // behind the main camera
+        cam.rect = new Rect(0, 0, 1, 1);
+        cam.allowHDR = false; cam.allowMSAA = false;
+        var listener = go.GetComponent<AudioListener>();
+        if (listener != null) Object.DestroyImmediate(listener);
     }
 
     // ==================================================================
@@ -611,12 +635,12 @@ public static class CreatureBuilderSceneTool
         btn.colors = c;
     }
 
-    private static TMP_InputField Input(Transform parent, string placeholder)
+    private static TMP_InputField Input(Transform parent, string placeholder, float height = 36f, float fontSize = 14f)
     {
         var go = new GameObject("Input", typeof(RectTransform), typeof(Image));
         go.transform.SetParent(parent, false);
         var img = go.GetComponent<Image>(); img.sprite = DesignTokens.OutlineSprite; img.type = Image.Type.Sliced; img.color = DesignTokens.Divider;
-        var le = go.AddComponent<LayoutElement>(); le.minHeight = 36; le.flexibleWidth = 1;
+        var le = go.AddComponent<LayoutElement>(); le.minHeight = height; le.preferredHeight = height; le.flexibleWidth = 1;
         var input = go.AddComponent<TMP_InputField>();
 
         var textArea = new GameObject("Text Area", typeof(RectTransform), typeof(RectMask2D));
@@ -624,9 +648,9 @@ public static class CreatureBuilderSceneTool
         var tar = (RectTransform)textArea.transform; tar.anchorMin = Vector2.zero; tar.anchorMax = Vector2.one;
         tar.offsetMin = new Vector2(10, 4); tar.offsetMax = new Vector2(-10, -4);
 
-        var ph = Label(textArea.transform, placeholder, 14, DesignTokens.Neutral500, DesignTokens.BodyFont);
+        var ph = Label(textArea.transform, placeholder, fontSize, DesignTokens.Neutral500, DesignTokens.BodyFont);
         Stretch((RectTransform)ph.transform);
-        var text = Label(textArea.transform, "", 14, DesignTokens.Text, DesignTokens.BodyFont);
+        var text = Label(textArea.transform, "", fontSize, DesignTokens.Text, DesignTokens.BodyFont);
         Stretch((RectTransform)text.transform);
 
         input.textViewport = tar;

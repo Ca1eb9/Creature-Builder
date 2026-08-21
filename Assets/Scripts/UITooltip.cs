@@ -13,6 +13,8 @@ public static class UITooltip
     private static GameObject bubble;
     private static TextMeshProUGUI label;
     private static RectTransform rect;
+    private static LayoutElement labelLayout;
+    private const float MaxWidth = 220f; // the mockup caps the bubble at 220px
     private static Canvas canvas;
 
     private const float Delay = 0.35f;
@@ -22,6 +24,9 @@ public static class UITooltip
         if (string.IsNullOrEmpty(text)) return;
         EnsureBubble();
         label.text = text;
+        // Cap at the mockup's 220px; short tips stay on one line, long ones wrap.
+        if (labelLayout != null)
+            labelLayout.preferredWidth = Mathf.Min(MaxWidth, label.GetPreferredValues(text).x);
         bubble.SetActive(true);
 
         // Place just below-right of the cursor, flipped near screen edges.
@@ -66,7 +71,7 @@ public static class UITooltip
         img.raycastTarget = false;
 
         var h = bubble.GetComponent<HorizontalLayoutGroup>();
-        h.padding = new RectOffset(12, 12, 8, 8);
+        h.padding = new RectOffset(12, 12, 9, 9);
         h.childControlWidth = h.childControlHeight = true;
         h.childForceExpandWidth = h.childForceExpandHeight = false;
 
@@ -77,10 +82,11 @@ public static class UITooltip
         lgo.transform.SetParent(bubble.transform, false);
         label = lgo.AddComponent<TextMeshProUGUI>();
         if (DesignTokens.BodyFont != null) label.font = DesignTokens.BodyFont;
-        label.fontSize = 13f;
+        label.fontSize = 12.5f;
         label.color = DesignTokens.Neutral100;
         label.raycastTarget = false;
-        label.textWrappingMode = TextWrappingModes.NoWrap;
+        label.textWrappingMode = TextWrappingModes.Normal;
+        labelLayout = lgo.AddComponent<LayoutElement>();
 
         bubble.SetActive(false);
     }

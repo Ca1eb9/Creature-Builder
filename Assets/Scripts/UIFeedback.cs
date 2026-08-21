@@ -50,12 +50,12 @@ public static class UIFeedback
         rect.anchoredPosition = new Vector2(0f, 70f);
 
         var layout = toast.AddComponent<HorizontalLayoutGroup>();
-        layout.padding = new RectOffset(24, 24, 12, 12);
+        layout.padding = new RectOffset(20, 20, 11, 11);
         layout.childAlignment = TextAnchor.MiddleCenter;
         layout.childControlWidth = layout.childControlHeight = true;
         layout.childForceExpandWidth = layout.childForceExpandHeight = false;
 
-        TextMeshProUGUI label = CreateLabel(toast.transform, message, 17f, DesignTokens.Neutral100);
+        TextMeshProUGUI label = CreateLabel(toast.transform, message, 15f, DesignTokens.Neutral100);
         label.textWrappingMode = TextWrappingModes.NoWrap;
 
         var fitter = toast.AddComponent<ContentSizeFitter>();
@@ -95,7 +95,7 @@ public static class UIFeedback
         var panelRect = panel.GetComponent<RectTransform>();
         panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
         panelRect.pivot = new Vector2(0.5f, 0.5f);
-        panelRect.sizeDelta = new Vector2(460f, 230f);
+        panelRect.sizeDelta = new Vector2(480f, 230f);
 
         var layout = panel.AddComponent<VerticalLayoutGroup>();
         layout.padding = new RectOffset(26, 26, 22, 22);
@@ -110,10 +110,10 @@ public static class UIFeedback
         var kick = CreateLabel(panel.transform, kicker.ToUpperInvariant(), 12f, DesignTokens.Accent);
         kick.characterSpacing = 8f;
 
-        var titleText = CreateLabel(panel.transform, title, 24f, DesignTokens.Text);
+        var titleText = CreateLabel(panel.transform, title, 23f, DesignTokens.Text);
         titleText.font = DesignTokens.HeadingFont;
 
-        var msgText = CreateLabel(panel.transform, message, 15f, DesignTokens.Alpha(DesignTokens.Text, 0.85f));
+        var msgText = CreateLabel(panel.transform, message, 14.5f, DesignTokens.Alpha(DesignTokens.Text, 0.85f));
         msgText.textWrappingMode = TextWrappingModes.Normal;
 
         // Right-aligned button row.

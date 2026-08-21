@@ -65,6 +65,14 @@ public static class CreatureBuilderPrefabTool
         var iconBg = iconArea.AddComponent<Image>(); iconBg.color = DesignTokens.Neutral100;
         iconBg.sprite = DesignTokens.RoundedSprite; iconBg.type = Image.Type.Sliced; iconBg.raycastTarget = false;
 
+        // Hairline under the icon well (turns accent on the equipped card).
+        var iconRule = Child("IconRule", root.transform);
+        var irr = (RectTransform)iconRule.transform;
+        irr.anchorMin = new Vector2(0, 1); irr.anchorMax = new Vector2(1, 1); irr.pivot = new Vector2(0.5f, 1);
+        irr.sizeDelta = new Vector2(0, 1); irr.anchoredPosition = new Vector2(0, -140);
+        var iri = iconRule.AddComponent<Image>();
+        iri.color = DesignTokens.Divider; iri.raycastTarget = false;
+
         // The Icon Image — MUST be a direct child named "Icon" (UIManager finds it).
         var icon = Child("Icon", root.transform);
         var ir = (RectTransform)icon.transform;
@@ -77,14 +85,14 @@ public static class CreatureBuilderPrefabTool
         var name = Label("Name", root.transform, "Name", 15, DesignTokens.Text, DesignTokens.HeadingFont);
         var nr = (RectTransform)name.transform;
         nr.anchorMin = new Vector2(0, 0); nr.anchorMax = new Vector2(1, 1);
-        nr.offsetMin = new Vector2(10, 6); nr.offsetMax = new Vector2(-10, -146);
+        nr.offsetMin = new Vector2(10, 18); nr.offsetMax = new Vector2(-10, -146);
         name.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
 
         // "Equipped" kicker (hidden by default; UIManager shows it on the equipped card).
         var eq = Label("Equipped", root.transform, "EQUIPPED", 9.5f, DesignTokens.Accent700, DesignTokens.BodyFont);
         var er = (RectTransform)eq.transform;
         er.anchorMin = new Vector2(0, 0); er.anchorMax = new Vector2(1, 0); er.pivot = new Vector2(0, 0);
-        er.sizeDelta = new Vector2(-20, 14); er.anchoredPosition = new Vector2(10, 6);
+        er.sizeDelta = new Vector2(-20, 14); er.anchoredPosition = new Vector2(10, 4);
         var eqt = eq.GetComponent<TextMeshProUGUI>(); eqt.characterSpacing = 8f; eqt.alignment = TextAlignmentOptions.Left;
         eq.SetActive(false);
 
@@ -201,7 +209,9 @@ public static class CreatureBuilderPrefabTool
         var tr = (RectTransform)thumb.transform;
         tr.anchorMin = new Vector2(0, 1); tr.anchorMax = new Vector2(1, 1); tr.pivot = new Vector2(0.5f, 1);
         tr.sizeDelta = new Vector2(0, 230); tr.anchoredPosition = Vector2.zero;
-        var raw = thumb.AddComponent<RawImage>(); raw.color = Color.white;
+        var raw = thumb.AddComponent<RawImage>();
+        // sepia(0.22) saturate(0.82) — approximated as a warm tint on the texture
+        raw.color = new Color(1f, 0.97f, 0.92f, 1f);
         var thumbBg = Child("ThumbBg", root.transform); // ground behind empty thumbnails
         var tbr = (RectTransform)thumbBg.transform;
         tbr.anchorMin = new Vector2(0, 1); tbr.anchorMax = new Vector2(1, 1); tbr.pivot = new Vector2(0.5f, 1);

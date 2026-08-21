@@ -60,6 +60,12 @@ public class CameraFramer : MonoBehaviour
 
     void Update()
     {
+        // Keep the stage inset correct when the window is resized.
+        if (viewportInsets != Vector4.zero &&
+            (!Mathf.Approximately(lastScreenSize.x, Screen.width) ||
+             !Mathf.Approximately(lastScreenSize.y, Screen.height)))
+            ApplyViewportInsets();
+
         var mouse = UnityEngine.InputSystem.Mouse.current;
 
         // Input is gated (no zooming over UI or under a dialog), but the
@@ -120,10 +126,18 @@ public class CameraFramer : MonoBehaviour
             // is roughly rotation-invariant
             float radius = b.size.magnitude * 0.5f;
 
-            // Distance needed so the bounding sphere fits in the camera's vertical FOV
+            // Distance needed so the bounding sphere fits the camera's view. Check
+            // BOTH axes: once the stage is inset between the panels the viewport
+            // is much narrower than the window, and fitting only the vertical FOV
+            // would crop a wide creature left and right.
             float fovRad = targetCamera.fieldOfView * Mathf.Deg2Rad;
-            baseDistance = radius / Mathf.Sin(fovRad * 0.5f);
-            baseDistance *= framePadding;
+            float distV = radius / Mathf.Sin(fovRad * 0.5f);
+
+            float aspect = Mathf.Max(0.01f, targetCamera.aspect);
+            float hFovRad = 2f * Mathf.Atan(Mathf.Tan(fovRad * 0.5f) * aspect);
+            float distH = radius / Mathf.Sin(hFovRad * 0.5f);
+
+            baseDistance = Mathf.Max(distV, distH) * framePadding;
         }
 
         ApplyCameraPosition();
@@ -136,6 +150,45 @@ public class CameraFramer : MonoBehaviour
         float finalDist = baseDistance * userZoomMultiplier;
         targetCamera.transform.position = creatureRoot.position + cameraOffsetDirection * finalDist;
         // Don't change rotation — preserve whatever viewing angle the camera had originally
+    }
+
+    // ----------------------------------------------------------------
+    // STAGE VIEWPORT
+    // ----------------------------------------------------------------
+
+    private Vector4 viewportInsets;   // left, right, top, bottom — in pixels
+    private Vector2 lastScreenSize;
+
+    /// <summary>
+    /// Restricts the camera to the free area between the UI panels, the way the
+    /// mockup insets the stage (left:340 top:56 …). Without this the creature is
+    /// rendered full-screen and its edges hide behind the rail and inspector.
+    /// Values are in screen pixels; re-applied automatically on resize.
+    /// </summary>
+    public void SetViewportInsets(float left, float right, float top, float bottom)
+    {
+        viewportInsets = new Vector4(left, right, top, bottom);
+        ApplyViewportInsets();
+    }
+
+    private void ApplyViewportInsets()
+    {
+        if (targetCamera == null) return;
+
+        float w = Mathf.Max(1f, Screen.width);
+        float h = Mathf.Max(1f, Screen.height);
+        lastScreenSize = new Vector2(w, h);
+
+        float x = Mathf.Clamp01(viewportInsets.x / w);
+        float y = Mathf.Clamp01(viewportInsets.w / h);
+        float width = Mathf.Clamp01(1f - (viewportInsets.x + viewportInsets.y) / w);
+        float height = Mathf.Clamp01(1f - (viewportInsets.z + viewportInsets.w) / h);
+
+        // Never collapse the stage to nothing if the panels ever exceed the window.
+        if (width < 0.05f || height < 0.05f) { targetCamera.rect = new Rect(0, 0, 1, 1); return; }
+
+        targetCamera.rect = new Rect(x, y, width, height);
+        FrameCreature(); // the visible aspect changed, so re-fit
     }
 
     public void ResetZoom()
