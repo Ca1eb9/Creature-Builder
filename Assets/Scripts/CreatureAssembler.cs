@@ -18,6 +18,11 @@ public class CreatureAssembler : MonoBehaviour
     [Header("Linked Systems")]
     public CameraFramer cameraFramer;
 
+    [Header("Randomize")]
+    [Tooltip("Chance that a socket is rolled empty instead of getting a part. 0 = always fill every socket.")]
+    [Range(0f, 1f)]
+    public float emptySocketChance = 0.15f;
+
     [Header("Smart Scaling")]
     [Tooltip("When ON, non-torso parts inherit the torso's scale multiplier so proportions stay consistent.")]
     public bool linkPartsToTorsoScale = true;
@@ -151,8 +156,18 @@ public class CreatureAssembler : MonoBehaviour
         foreach (var cat in categories)
         {
             var parts = database.GetPartsInCategory(cat);
-            if (parts.Count > 0)
-                EquipPart(parts[Random.Range(0, parts.Count)], notify: false);
+            if (parts.Count == 0) continue;
+
+            // "None" isn't a part — it's the absence of one. ClearAll() above
+            // already emptied every socket, so simply skipping the equip IS the
+            // removed-part state, and nothing downstream needs to know: saves
+            // only record equipped parts, the sockets list shows an em dash, and
+            // the part count only counts what's there.
+            // The torso is exempt: it's the reference every socket is measured
+            // from, so a creature without one has nothing to hang parts on.
+            if (cat != BodyPartCategory.Torso && Random.value < emptySocketChance) continue;
+
+            EquipPart(parts[Random.Range(0, parts.Count)], notify: false);
         }
 
         NotifyCreatureChanged();
@@ -359,6 +374,12 @@ public class CreatureAssembler : MonoBehaviour
                 Bounds headBounds = PartScaleNormalizer.GetCompositeBounds(head);
                 PositionSockets(SocketReference.Head, headBounds);
             }
+            else
+            {
+                // No head to measure — send its dependents (horns) back to their
+                // authored spot instead of leaving them at the last head's socket.
+                RestoreDefaultAttachPositions(SocketReference.Head);
+            }
 
             // 4. Place head-referenced parts.
             foreach (var cat in new List<BodyPartCategory>(equippedParts.Keys))
@@ -398,6 +419,18 @@ public class CreatureAssembler : MonoBehaviour
     {
         foreach (var kvp in defaultAttachLocalPos)
         {
+            Transform a = GetAttachPoint(kvp.Key);
+            if (a != null) a.localPosition = kvp.Value;
+        }
+    }
+
+    /// <summary>Restore only the sockets measured against the given reference part.</summary>
+    private void RestoreDefaultAttachPositions(SocketReference reference)
+    {
+        foreach (var kvp in defaultAttachLocalPos)
+        {
+            if (!CreatureSockets.TryGetRule(kvp.Key, out var rule)) continue;
+            if (rule.reference != reference) continue;
             Transform a = GetAttachPoint(kvp.Key);
             if (a != null) a.localPosition = kvp.Value;
         }

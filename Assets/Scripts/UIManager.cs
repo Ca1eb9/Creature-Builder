@@ -270,13 +270,6 @@ public class UIManager : MonoBehaviour
             else
                 railFooterLabel.text = $"{parts.Count} {Prettify(currentCategory.Value.ToString()).ToLower()}";
         }
-
-        // Collapsed rail keeps its context, like the mockup's "Parts | Head 32".
-        if (railGutterLabel != null)
-            railGutterLabel.text = searching
-                ? $"PARTS - SEARCH {parts.Count}"
-                : $"PARTS - {Prettify(currentCategory.Value.ToString()).ToUpper()} {poolSize}";
-
         UpdateAdjustmentPanelTarget();
     }
 
@@ -765,8 +758,8 @@ public class UIManager : MonoBehaviour
 
         if (librarySubtitle != null)
             librarySubtitle.text = saved.Count == 1
-                ? "1 specimen · stored in your user folder"
-                : $"{saved.Count} specimens · stored in your user folder";
+                ? "1 creature · stored in your user folder"
+                : $"{saved.Count} creatures · stored in your user folder";
         if (libraryEmptyState != null) libraryEmptyState.SetActive(saved.Count == 0);
 
         foreach (string entryName in saved)

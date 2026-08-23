@@ -531,7 +531,7 @@ public static class CreatureBuilderSceneTool
 
         var le = go.AddComponent<LayoutElement>(); le.minHeight = 28;
         var h = go.AddComponent<HorizontalLayoutGroup>();
-        h.padding = new RectOffset(6, 6, 2, 2);
+        h.padding = new RectOffset(8, 8, 6, 6);
         h.childControlWidth = h.childControlHeight = true; h.childForceExpandWidth = h.childForceExpandHeight = false;
 
         var btn = go.GetComponent<Button>(); btn.targetGraphic = img;
@@ -559,7 +559,7 @@ public static class CreatureBuilderSceneTool
 
         var le = go.AddComponent<LayoutElement>(); le.minHeight = 24;
         var h = go.AddComponent<HorizontalLayoutGroup>();
-        h.padding = new RectOffset(8, 8, 3, 3);
+        h.padding = new RectOffset(12, 12, 6, 6);
         h.childControlWidth = h.childControlHeight = true; h.childForceExpandWidth = h.childForceExpandHeight = false;
 
         var btn = go.GetComponent<Button>(); btn.targetGraphic = img;
