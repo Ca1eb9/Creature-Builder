@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wasp Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 523064b0-d36a-40d0-a2af-23d63b1bf130
+  partID: 4c3a1082-8364-4144-93d2-e17fea41d262
   partName: Wasp Front Legs
   category: 2
-  prefab: {fileID: 9221185210484467114, guid: b9f353188f4438e4299604b374b71390, type: 3}
+  prefab: {fileID: 1430761701195262946, guid: b9f353188f4438e4299604b374b71390, type: 3}
   icon: {fileID: 21300000, guid: f309fc5ee9cfb114bbebe5c95844b6cc, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -134,6 +134,7 @@ public class UIManager : MonoBehaviour
     void OnDestroy()
     {
         if (assembler != null) assembler.OnCreatureChanged -= OnCreatureChanged;
+        ClearLibraryCache();
     }
 
     /// <summary>The creature changed — keep the sockets list and the part count live.</summary>
@@ -268,7 +269,7 @@ public class UIManager : MonoBehaviour
             if (searching)
                 railFooterLabel.text = $"Showing {parts.Count} of {poolSize} parts";
             else
-                railFooterLabel.text = $"{parts.Count} {Prettify(currentCategory.Value.ToString()).ToLower()}";
+                railFooterLabel.text = "";
         }
         UpdateAdjustmentPanelTarget();
     }
@@ -410,7 +411,7 @@ public class UIManager : MonoBehaviour
         {
             var data = assembler.GetEquippedData(kv.Key);
             if (kv.Value != null)
-                kv.Value.text = data != null ? ShortPartName(data.partName, kv.Key) : "—";
+                kv.Value.text = data != null ? ShortPartName(data.partName, kv.Key) : "None";
         }
     }
 
@@ -420,7 +421,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     static string ShortPartName(string partName, BodyPartCategory cat)
     {
-        if (string.IsNullOrWhiteSpace(partName)) return "—";
+        if (string.IsNullOrWhiteSpace(partName)) return "None";
         string suffix = Prettify(cat.ToString());               // "Front Legs"
         string trimmed = partName.Trim();
 
@@ -441,7 +442,11 @@ public class UIManager : MonoBehaviour
             bool active = kv.Key == category;
             if (kv.Value != null) kv.Value.color = active ? DesignTokens.Accent700 : DesignTokens.Neutral700;
             if (socketValues.TryGetValue(kv.Key, out var val) && val != null)
-                val.color = active ? DesignTokens.Accent700 : DesignTokens.Text;
+            {
+                bool empty = assembler.GetEquippedData(kv.Key) == null;
+                val.color = active ? DesignTokens.Accent700
+                                   : (empty ? DesignTokens.Neutral500 : DesignTokens.Text);
+            }
         }
     }
 
@@ -671,8 +676,6 @@ public class UIManager : MonoBehaviour
             currentLoadedName = creatureName;
             SetUnsaved(false);
             StartCoroutine(CaptureThumbnail(creatureName));
-            RefreshLoadList();
-            UIFeedback.ShowToast($"Saved \"{creatureName}\"!");
         }
         else UIFeedback.ShowToast("Save failed — see log for details");
     }
@@ -700,7 +703,10 @@ public class UIManager : MonoBehaviour
         Destroy(full);
         Destroy(small);
 
+        // The save file and its thumbnail just changed on disk.
+        InvalidateLibraryEntry(creatureName);
         RefreshLoadList(); // so the new thumbnail shows on its card
+        UIFeedback.ShowToast($"Saved \"{creatureName}\"!");
     }
 
     /// <summary>
@@ -744,6 +750,52 @@ public class UIManager : MonoBehaviour
         return dst;
     }
 
+    // -------- LIBRARY CARD CACHE --------
+
+    /// <summary>Everything a library card needs about one save.</summary>
+    private class LibraryEntry
+    {
+        public string partsSummary;
+        public string savedDate;
+        public Texture2D thumbnail;
+    }
+
+    // RefreshLoadList runs on every library-search keystroke, and each card
+    // otherwise costs three disk hits (the save JSON twice, plus a PNG decode).
+    // Caching also fixes a leak: a Texture2D is a native object that is NOT
+    // freed when the card referencing it is destroyed, so the cache owns them
+    // and disposes them explicitly.
+    private readonly Dictionary<string, LibraryEntry> libraryCache = new();
+
+    private LibraryEntry GetLibraryEntry(string creatureName)
+    {
+        if (libraryCache.TryGetValue(creatureName, out var entry)) return entry;
+
+        entry = new LibraryEntry
+        {
+            partsSummary = saveLoad.GetPartsSummary(creatureName),
+            savedDate = saveLoad.GetSavedDate(creatureName),
+            thumbnail = saveLoad.LoadThumbnail(creatureName)
+        };
+        libraryCache[creatureName] = entry;
+        return entry;
+    }
+
+    /// <summary>Drop one save's cached card after it is re-saved or deleted.</summary>
+    private void InvalidateLibraryEntry(string creatureName)
+    {
+        if (!libraryCache.TryGetValue(creatureName, out var entry)) return;
+        if (entry != null && entry.thumbnail != null) Destroy(entry.thumbnail);
+        libraryCache.Remove(creatureName);
+    }
+
+    private void ClearLibraryCache()
+    {
+        foreach (var entry in libraryCache.Values)
+            if (entry != null && entry.thumbnail != null) Destroy(entry.thumbnail);
+        libraryCache.Clear();
+    }
+
     void RefreshLoadList()
     {
         UpdateStatus();
@@ -752,31 +804,31 @@ public class UIManager : MonoBehaviour
         foreach (Transform child in loadListContainer) Destroy(child.gameObject);
 
         var saved = saveLoad.ListSavedCreatures();
+        int savedLen = saved.Count;
         string libQuery = librarySearchInput != null ? librarySearchInput.text : "";
         if (!string.IsNullOrWhiteSpace(libQuery))
             saved = saved.FindAll(n => n.IndexOf(libQuery.Trim(), System.StringComparison.OrdinalIgnoreCase) >= 0);
 
         if (librarySubtitle != null)
             librarySubtitle.text = saved.Count == 1
-                ? "1 creature · stored in your user folder"
-                : $"{saved.Count} creatures · stored in your user folder";
-        if (libraryEmptyState != null) libraryEmptyState.SetActive(saved.Count == 0);
+                ? "1 creature · saved"
+                : $"{saved.Count} creatures · saved";
+        if ((libraryEmptyState != null) && (savedLen == 0)) libraryEmptyState.SetActive(saved.Count == 0);
 
         foreach (string entryName in saved)
         {
+            LibraryEntry entry = GetLibraryEntry(entryName);
+
             GameObject card = Instantiate(loadListEntryPrefab, loadListContainer);
             SetChildText(card, "Name", entryName);
-            SetChildText(card, "Parts", saveLoad.GetPartsSummary(entryName));
-            SetChildText(card, "Date", saveLoad.GetSavedDate(entryName));
+            SetChildText(card, "Parts", entry.partsSummary);
+            SetChildText(card, "Date", entry.savedDate);
             // The creature currently on the stage is tagged "Open".
             SetActiveChild(card, "OpenTag", entryName == currentLoadedName);
 
+            // The cache owns this texture, so the card is free to be destroyed.
             var thumb = card.transform.Find("Thumbnail")?.GetComponent<RawImage>();
-            if (thumb != null)
-            {
-                var tex = saveLoad.LoadThumbnail(entryName);
-                if (tex != null) thumb.texture = tex;
-            }
+            if (thumb != null) thumb.texture = entry.thumbnail;
 
             string capturedName = entryName;
             WireChildButton(card, "LoadButton", () => OnLoadCreature(capturedName));
@@ -811,6 +863,7 @@ public class UIManager : MonoBehaviour
                 if (saveLoad.DeleteCreature(creatureName))
                 {
                     if (creatureName == currentLoadedName) currentLoadedName = null;
+                    InvalidateLibraryEntry(creatureName);
                     RefreshLoadList();
                     UIFeedback.ShowToast($"Deleted \"{creatureName}\"");
                 }

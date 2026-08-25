@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cat Monster Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 26a989ff-603d-409e-8de7-1fe06b552aca
+  partID: 0ccf0d3a-7356-46ec-ab6c-8a10a264078e
   partName: Cat Monster Head
   category: 0
-  prefab: {fileID: 4288658661227789954, guid: 96f8857d64b467242b7c7db8afeaa736, type: 3}
+  prefab: {fileID: 4481499708898551090, guid: 96f8857d64b467242b7c7db8afeaa736, type: 3}
   icon: {fileID: 21300000, guid: d81e520aca5c68548a00154bf2478df3, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

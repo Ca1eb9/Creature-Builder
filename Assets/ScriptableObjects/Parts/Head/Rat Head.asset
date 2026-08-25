@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Rat Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 677c4888-3230-4a30-a6e1-ff18f3d9d103
+  partID: 276ccc86-055a-40ea-bbad-e71f7802c5c5
   partName: Rat Head
   category: 0
-  prefab: {fileID: 346916904241320947, guid: dfa4e815d299b5148897371ea35f7667, type: 3}
+  prefab: {fileID: 7068162809871108556, guid: dfa4e815d299b5148897371ea35f7667, type: 3}
   icon: {fileID: 21300000, guid: fe36a31e008110145a7e8599f6c5509c, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pig Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 49edaebd-c7cf-41fb-a22f-ba991fb22f00
+  partID: 16563f63-96ca-4bdb-bc32-b1d7a833580d
   partName: Pig Torso
   category: 1
-  prefab: {fileID: 886856149701485014, guid: d519d282a298161438652e62d7da8781, type: 3}
+  prefab: {fileID: 4076520812466878746, guid: d519d282a298161438652e62d7da8781, type: 3}
   icon: {fileID: 21300000, guid: 05431dc6b65a77a4fabc0691b4b9d966, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pig Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 1f23f8d8-13c2-4608-90e2-1327d53f9e74
+  partID: 2bf12ed1-185b-4bbc-97ee-846dd35e8141
   partName: Pig Head
   category: 0
-  prefab: {fileID: 7518489387580682003, guid: 40c476d13303c7240a13c92bd15cac6d, type: 3}
+  prefab: {fileID: 1001668423082617829, guid: 40c476d13303c7240a13c92bd15cac6d, type: 3}
   icon: {fileID: 21300000, guid: 8574b4b8e2d3f6146ae837c5745f1b3b, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Demon Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 34a163d7-09b9-4b21-aa1b-074bf6a0ba80
+  partID: 9e4c77e2-1963-4bb1-9c6e-f51c4b5e0fba
   partName: Demon Head
   category: 0
-  prefab: {fileID: 136482788797641923, guid: aca66aa53a29be14aae7ce0f299ebe2e, type: 3}
+  prefab: {fileID: 4344815426920711812, guid: aca66aa53a29be14aae7ce0f299ebe2e, type: 3}
   icon: {fileID: 21300000, guid: 6b965d28f63a4ca408a3fbe7fbde0941, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

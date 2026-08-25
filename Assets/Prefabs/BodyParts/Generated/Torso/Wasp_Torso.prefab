@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1810832218586629707
+--- !u!1 &3607734281971305981
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6790059547503429304}
-  - component: {fileID: 8642952252248653292}
-  - component: {fileID: 8274258411113958923}
+  - component: {fileID: 5314918667674911850}
+  - component: {fileID: 7424289819480621240}
+  - component: {fileID: 953435471605130523}
   m_Layer: 0
   m_Name: Torso(Clone)
   m_TagString: Untagged
@@ -18,36 +18,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6790059547503429304
+--- !u!4 &5314918667674911850
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810832218586629707}
+  m_GameObject: {fileID: 3607734281971305981}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5023098, y: 0.49767953, z: 0.49768424, w: 0.5023051}
+  m_LocalRotation: {x: -0.49872693, y: 0.5012699, z: 0.5012523, w: 0.49874452}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100.00001, y: 100.00001, z: 100.00003}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7428450378750260959}
+  m_Father: {fileID: 1024827015613061999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8642952252248653292
+--- !u!33 &7424289819480621240
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810832218586629707}
+  m_GameObject: {fileID: 3607734281971305981}
   m_Mesh: {fileID: 2346716986137308042, guid: 5bf1cee54b0226442a1ce7c21d5aa158, type: 3}
---- !u!23 &8274258411113958923
+--- !u!23 &953435471605130523
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810832218586629707}
+  m_GameObject: {fileID: 3607734281971305981}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2866240094502722339
+--- !u!1 &5915961942426135017
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7428450378750260959}
+  - component: {fileID: 1024827015613061999}
   m_Layer: 0
   m_Name: Wasp_Torso
   m_TagString: Untagged
@@ -107,19 +107,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7428450378750260959
+--- !u!4 &1024827015613061999
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2866240094502722339}
+  m_GameObject: {fileID: 5915961942426135017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6790059547503429304}
+  - {fileID: 5314918667674911850}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

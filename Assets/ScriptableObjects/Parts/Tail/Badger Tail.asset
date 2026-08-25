@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Badger Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c8003cb2-8e20-4fdf-81b0-65412bd36d05
+  partID: 28cff36e-895b-4bc2-bd6e-78b6512e9ca1
   partName: Badger Tail
   category: 4
-  prefab: {fileID: 6414327425424398914, guid: b309c6dfaedde0944abd4cfba2b209dd, type: 3}
+  prefab: {fileID: 71096901413661726, guid: b309c6dfaedde0944abd4cfba2b209dd, type: 3}
   icon: {fileID: 21300000, guid: 1096794c9f6207c498568725a2ba2b0a, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

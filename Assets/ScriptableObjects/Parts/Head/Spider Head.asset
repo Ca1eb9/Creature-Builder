@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Spider Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: f8fd401f-ce85-41a8-84f3-affbaa7a14ab
+  partID: 16ff47a8-9ee2-40e3-85f5-308e8d2ac98a
   partName: Spider Head
   category: 0
-  prefab: {fileID: 9127667187192445364, guid: 81a626cde6bc1244c8a878fe4bc36862, type: 3}
+  prefab: {fileID: 605780264991332993, guid: 81a626cde6bc1244c8a878fe4bc36862, type: 3}
   icon: {fileID: 21300000, guid: 8815b14b235e7354cb08ea43d5f93a33, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

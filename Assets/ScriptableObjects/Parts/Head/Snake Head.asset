@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Snake Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 3e36f6c9-f9dd-4577-a5fc-45259b3ddd4f
+  partID: d20702b6-401e-471b-a94c-bdd44ecbc569
   partName: Snake Head
   category: 0
-  prefab: {fileID: 3233342827558090159, guid: f3e2127094820924ba3e4830bece5ca9, type: 3}
+  prefab: {fileID: 3356565280884451723, guid: f3e2127094820924ba3e4830bece5ca9, type: 3}
   icon: {fileID: 21300000, guid: 03afa4dd56977804ba04981e404f14c4, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

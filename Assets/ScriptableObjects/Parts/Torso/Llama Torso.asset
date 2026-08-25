@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Llama Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5c3684de-cdd8-4a97-ae44-9c221db73a51
+  partID: 6a2eef97-b20b-4d8b-94e8-54c2816b636b
   partName: Llama Torso
   category: 1
-  prefab: {fileID: 4085677778876178858, guid: aa263e8b3bb6acb43b7191faae139788, type: 3}
+  prefab: {fileID: 784604344573865436, guid: aa263e8b3bb6acb43b7191faae139788, type: 3}
   icon: {fileID: 21300000, guid: 9db5696dbc7692947812444f5702353b, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

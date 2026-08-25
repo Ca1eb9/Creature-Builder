@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Bee Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: cab20032-3dd3-4dde-8c99-8e57cf77b0a6
+  partID: 16bbc504-e237-4bb1-8f64-995b754fbbcc
   partName: Bee Head
   category: 0
-  prefab: {fileID: 7629209675455505681, guid: b4cd0322a9fe2ee42a4823455ab79939, type: 3}
+  prefab: {fileID: 5755593371443334445, guid: b4cd0322a9fe2ee42a4823455ab79939, type: 3}
   icon: {fileID: 21300000, guid: f249d3d60ccf31c4c9af7e6749a03fca, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Badger Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5215a602-9860-422d-9348-0fa49a46f37d
+  partID: 48e1d1bf-69e3-4362-9d4e-6e5e4d05022b
   partName: Badger Torso
   category: 1
-  prefab: {fileID: 3337876573277461563, guid: 21a3de14449d5fe409bc916a6bf168c8, type: 3}
+  prefab: {fileID: 787896372271312051, guid: 21a3de14449d5fe409bc916a6bf168c8, type: 3}
   icon: {fileID: 21300000, guid: 1744400e10d2f15429f0470124256433, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

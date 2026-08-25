@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Velociraptor Tail
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 07b1556a-ad2d-4913-aa0d-80a989fa89b6
+  partName: Velociraptor Tail
+  category: 4
+  prefab: {fileID: 7112829753486892657, guid: f08bafaf2358dfd41881deae28f0429c, type: 3}
+  icon: {fileID: 21300000, guid: 312f22808c8dd2f4c9d690d35dfbe0a6, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

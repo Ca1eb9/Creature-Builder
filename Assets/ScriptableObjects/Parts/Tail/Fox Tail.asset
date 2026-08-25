@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Fox Tail
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 47c4c34d-7eca-4e57-ad78-d88f01385054
+  partName: Fox Tail
+  category: 4
+  prefab: {fileID: 2130240198928742303, guid: 4e102f78302c15e42ae95b5045e3745d, type: 3}
+  icon: {fileID: 21300000, guid: dec9ab9ef4066b045977c5e9e5859965, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

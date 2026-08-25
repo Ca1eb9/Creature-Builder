@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Fox Back Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: e4d27b8b-05b2-43eb-81dc-6eb405eec26f
+  partName: Fox Back Legs
+  category: 3
+  prefab: {fileID: 748401684812380511, guid: f3d8d871cdb10854b8fe7400a5806a0f, type: 3}
+  icon: {fileID: 21300000, guid: 97dbe5ec8bab4494c85ed208ad237e73, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

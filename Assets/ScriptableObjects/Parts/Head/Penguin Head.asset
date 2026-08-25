@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Penguin Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d6f4b20c-0ade-4b4f-b678-e4d3e6330b65
+  partID: 3e70d785-6bd0-4fa7-b303-5ca51276f670
   partName: Penguin Head
   category: 0
-  prefab: {fileID: 1526087310907326358, guid: 602cdcda1e52b244d88cd1dee0a6dd61, type: 3}
+  prefab: {fileID: 5667016097602845982, guid: 602cdcda1e52b244d88cd1dee0a6dd61, type: 3}
   icon: {fileID: 21300000, guid: 202933eedfd97d643aebdd81f3296df5, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

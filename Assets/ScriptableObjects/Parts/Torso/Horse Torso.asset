@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Horse Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: eef7dd6f-1bc7-40b5-bed7-03177f2a7484
+  partID: f977625b-e5a5-4408-a487-0cd244b42865
   partName: Horse Torso
   category: 1
-  prefab: {fileID: 1084406596955269181, guid: b6c117ba5813cb943a6c664db450507b, type: 3}
+  prefab: {fileID: 8946830616594861031, guid: b6c117ba5813cb943a6c664db450507b, type: 3}
   icon: {fileID: 21300000, guid: bcc9f9546729aac4db3b83fd2526eae6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cactus Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: cc00914e-9af7-4613-8a42-917f3bb82986
+  partID: 8b7b8281-2eee-47f8-aeaa-8cd92dba74d3
   partName: Cactus Head
   category: 0
-  prefab: {fileID: 3292863769572158718, guid: 169d987c4415f3044896fee7a2e83f04, type: 3}
+  prefab: {fileID: 6865852107446489922, guid: 169d987c4415f3044896fee7a2e83f04, type: 3}
   icon: {fileID: 21300000, guid: b1cf2e833dbdaf844bade855deecb722, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

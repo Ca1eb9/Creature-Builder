@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Yeti Horns
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: e4c56366-8e1d-4ed8-8d0e-1c976f2e211c
+  partName: Yeti Horns
+  category: 6
+  prefab: {fileID: 426958873699464322, guid: 7ee909e1409b1554c8928ec632253a32, type: 3}
+  icon: {fileID: 21300000, guid: 5c45680b0a231114cbcaf9fc47090e1c, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

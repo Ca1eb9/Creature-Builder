@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Ferret Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: caaca435-5dca-477a-849b-a168019a1ec3
+  partID: 2553a95f-0a7f-4ff3-b904-bd42e7d0ae1e
   partName: Ferret Torso
   category: 1
-  prefab: {fileID: 3242110172576966379, guid: 82f98660e2eed1f4eb1be8e79aa6fbbe, type: 3}
+  prefab: {fileID: 6491994787162023807, guid: 82f98660e2eed1f4eb1be8e79aa6fbbe, type: 3}
   icon: {fileID: 21300000, guid: 63c9d7881fed08f48b55cc50858a97e0, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

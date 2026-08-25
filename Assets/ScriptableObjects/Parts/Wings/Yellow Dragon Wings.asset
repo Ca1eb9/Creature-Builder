@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Yellow Dragon Wings
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 7b60cf60-10d5-4949-a1d5-bc3cfbbfc025
+  partName: Yellow Dragon Wings
+  category: 5
+  prefab: {fileID: 9113215618600765361, guid: 843d850f289f65c4cbf0c5571fc0022a, type: 3}
+  icon: {fileID: 21300000, guid: 4077080c3978d924f8caddb8e0e69a67, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

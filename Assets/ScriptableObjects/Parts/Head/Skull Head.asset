@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Skull Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8d477436-c0aa-4286-887c-c1eca4846df7
+  partID: e0a6e9fb-f3f5-47d4-86f5-33defb69a30e
   partName: Skull Head
   category: 0
-  prefab: {fileID: 5441845529774334687, guid: 9fc9ff3e771cb0e4f8c78e0e6e2334d2, type: 3}
+  prefab: {fileID: 7388453221409336679, guid: 9fc9ff3e771cb0e4f8c78e0e6e2334d2, type: 3}
   icon: {fileID: 21300000, guid: 0e9415525d4bb7347855b52400615f7e, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

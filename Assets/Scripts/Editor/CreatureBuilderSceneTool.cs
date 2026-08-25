@@ -171,7 +171,7 @@ public static class CreatureBuilderSceneTool
 
         // name + status
         var nameWrap = Panel("NameWrap", insp.transform, new Color(0, 0, 0, 0)); RowH(nameWrap, 78);
-        VBar(nameWrap, 20, 20, 12, 10, 5, TextAnchor.UpperLeft); BottomHairline(nameWrap);
+        VBar(nameWrap, 20, 20, 12, 10, 5, TextAnchor.UpperLeft); SectionRule(nameWrap);
         var nameInput = Input(nameWrap.transform, "Creature name");
         nameInput.textComponent.font = DesignTokens.HeadingFont; nameInput.pointSize = 22;
 
@@ -188,7 +188,7 @@ public static class CreatureBuilderSceneTool
 
         // sockets
         var sockWrap = Panel("Sockets", insp.transform, new Color(0, 0, 0, 0));
-        VBar(sockWrap, 20, 20, 14, 14, 6, TextAnchor.UpperLeft); BottomHairline(sockWrap);
+        VBar(sockWrap, 20, 20, 14, 14, 6, TextAnchor.UpperLeft); SectionRule(sockWrap);
         var sKick = Label(sockWrap.transform, "SOCKETS", 10, DesignTokens.Neutral600, DesignTokens.BodyFont); Fit(sKick);
         sKick.GetComponent<TextMeshProUGUI>().characterSpacing = 10;
         var socketsContainer = Panel("SocketList", sockWrap.transform, new Color(0, 0, 0, 0));
@@ -468,14 +468,19 @@ public static class CreatureBuilderSceneTool
     private static void VDivider(GameObject parent)
     {
         var go = Panel("Divider", parent.transform, DesignTokens.Divider);
-        var le = go.AddComponent<LayoutElement>(); le.minWidth = 1; le.minHeight = 24;
+        // 2px, not 1: the canvas scales by screenWidth/1920, so a 1px rule lands
+        // under one device pixel and disappears (same reason the transform rules
+        // and the socket em dash were vanishing).
+        var le = go.AddComponent<LayoutElement>();
+        le.minWidth = 2; le.preferredWidth = 2; le.flexibleWidth = 0; le.minHeight = 24;
     }
 
     /// <summary>Shorter rule used between status-bar segments (18px in the mockup).</summary>
     private static void VDividerThin(GameObject parent)
     {
         var go = Panel("Divider", parent.transform, DesignTokens.Divider);
-        var le = go.AddComponent<LayoutElement>(); le.minWidth = 1; le.minHeight = 18;
+        var le = go.AddComponent<LayoutElement>();
+        le.minWidth = 2; le.preferredWidth = 2; le.flexibleWidth = 0; le.minHeight = 18;
     }
 
     /// <summary>Horizontal rule inside a vertical stack (the mockup's .hr).</summary>
@@ -485,7 +490,12 @@ public static class CreatureBuilderSceneTool
         go.transform.SetParent(parent, false);
         go.GetComponent<Image>().color = DesignTokens.Divider;
         go.GetComponent<Image>().raycastTarget = false;
-        var le = go.AddComponent<LayoutElement>(); le.minHeight = 1; le.preferredHeight = 1; le.flexibleWidth = 1;
+        // 2 design px, not 1: the canvas scales by screenWidth/1920, so at a
+        // 1280-wide window a 1px rule renders at ~0.64 device pixels and, in a
+        // 16%-ink colour, effectively disappears when a reflow nudges it onto a
+        // different sub-pixel boundary. 2px stays >=1 device pixel down to 50%.
+        var le = go.AddComponent<LayoutElement>();
+        le.minHeight = 2; le.preferredHeight = 2; le.flexibleHeight = 0; le.flexibleWidth = 1;
     }
 
     /// <summary>
@@ -690,8 +700,33 @@ public static class CreatureBuilderSceneTool
         line.GetComponent<Image>().raycastTarget = false;
         var rt = (RectTransform)line.transform; rt.anchorMin = aMin; rt.anchorMax = aMax; rt.pivot = new Vector2(0.5f, 0.5f);
         rt.sizeDelta = size; rt.anchoredPosition = Vector2.zero;
+        IgnoreLayout(line);
+    }
+
+    /// <summary>
+    /// Edge rules and borders are positioned by their anchors, but most of the
+    /// panels they belong to also carry a layout group, which would otherwise
+    /// seize them and re-stack them as ordinary rows/cells. This opts them out.
+    /// </summary>
+    private static void IgnoreLayout(GameObject go)
+    {
+        var le = go.GetComponent<LayoutElement>();
+        if (le == null) le = go.AddComponent<LayoutElement>();
+        le.ignoreLayout = true;
     }
     private static void BottomHairline(GameObject go) => EdgeLine(go, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1));
+
+    /// <summary>Full-bleed rule closing off a whole inspector block. Heavier than
+    /// the divider used inside a section, so the blocks read as separate.</summary>
+    private static void SectionRule(GameObject go)
+    {
+        var line = Panel("SectionRule", go.transform, DesignTokens.Alpha(DesignTokens.Text, 0.30f));
+        line.GetComponent<Image>().raycastTarget = false;
+        var rt = (RectTransform)line.transform;
+        rt.anchorMin = new Vector2(0, 0); rt.anchorMax = new Vector2(1, 0); rt.pivot = new Vector2(0.5f, 0);
+        rt.sizeDelta = new Vector2(0, 1); rt.anchoredPosition = Vector2.zero;
+        IgnoreLayout(line);
+    }
     private static void TopHairline(GameObject go) => EdgeLine(go, new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 1));
     private static void LeftHairline(GameObject go) => EdgeLine(go, new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0));
     private static void RightHairline(GameObject go) => EdgeLine(go, new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 0));
@@ -701,5 +736,6 @@ public static class CreatureBuilderSceneTool
         var b = Panel("Border", go.transform, color, DesignTokens.OutlineSprite);
         b.GetComponent<Image>().raycastTarget = false;
         Stretch((RectTransform)b.transform);
+        IgnoreLayout(b);
     }
 }

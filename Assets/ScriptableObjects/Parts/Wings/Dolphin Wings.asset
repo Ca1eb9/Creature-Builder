@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Dolphin Wings
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: d01edd5b-d54e-46be-9e31-48e463f34607
+  partName: Dolphin Wings
+  category: 5
+  prefab: {fileID: 7191668980649456937, guid: da758bd702434cc4e88eda66c2c12cdf, type: 3}
+  icon: {fileID: 21300000, guid: 9fdd98bc2b9cf8f439a5c8e09cf9cd08, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Zebra Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 6b5472fa-2384-4236-9a4c-0795e0f386d7
+  partID: c1154735-5252-4391-87e9-f680740cdf4f
   partName: Zebra Head
   category: 0
-  prefab: {fileID: 5872304633080086010, guid: dc6a2b483ee24734580eefeee1aebcbb, type: 3}
+  prefab: {fileID: 6450928949391148338, guid: dc6a2b483ee24734580eefeee1aebcbb, type: 3}
   icon: {fileID: 21300000, guid: cf6a64222fcbf83479ed906108e15d9b, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

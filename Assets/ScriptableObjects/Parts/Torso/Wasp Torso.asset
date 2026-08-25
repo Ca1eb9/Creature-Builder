@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wasp Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: b41a80cb-7c59-4a23-8684-1dc230c92d28
+  partID: ead93904-0324-4e40-a879-4383f2ea6948
   partName: Wasp Torso
   category: 1
-  prefab: {fileID: 2866240094502722339, guid: 7481ef4b6ee00404e92e9ea1ff50b510, type: 3}
+  prefab: {fileID: 5915961942426135017, guid: 7481ef4b6ee00404e92e9ea1ff50b510, type: 3}
   icon: {fileID: 21300000, guid: a0d1c2bb5b807de47a033be248f79da3, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

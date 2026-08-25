@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Crab Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c18bf70e-9afb-44b0-9a1e-d8e996806245
+  partID: 8ca7564c-55a2-468d-8ef6-fd10d8ea2743
   partName: Crab Head
   category: 0
-  prefab: {fileID: 7734661044191521117, guid: da22c057af39e4f4780b7f19001d1f56, type: 3}
+  prefab: {fileID: 3814518772602738477, guid: da22c057af39e4f4780b7f19001d1f56, type: 3}
   icon: {fileID: 21300000, guid: d25a19c9d57e0bf4684a7673f0d61f17, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

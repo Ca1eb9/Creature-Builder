@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Horse Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 91c6df91-2abf-4d8a-b685-e935b4402c88
+  partID: 6106fde5-ba34-4359-91e7-d83d3cdd5b05
   partName: Horse Front Legs
   category: 2
-  prefab: {fileID: 6411004387542709914, guid: 3f6e62556dbd78546b69e4e2168c688f, type: 3}
+  prefab: {fileID: 1203757136037614584, guid: 3f6e62556dbd78546b69e4e2168c688f, type: 3}
   icon: {fileID: 21300000, guid: 62a3e4873246c2e4ca061dc3f9c1d694, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

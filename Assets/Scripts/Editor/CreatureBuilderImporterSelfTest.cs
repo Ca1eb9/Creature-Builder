@@ -25,8 +25,11 @@ public static class CreatureBuilderImporterSelfTest
     //      -executeMethod CreatureBuilderImporterSelfTest.RunMultiPartBatchTest
     // ==================================================================
 
+    private static int partsBeforeTest;
+
     public static void RunMultiPartBatchTest()
     {
+        partsBeforeTest = AssetDatabase.FindAssets("t:BodyPartData").Length;
         var failures = new List<string>();
         try
         {
@@ -47,9 +50,12 @@ public static class CreatureBuilderImporterSelfTest
         if (postReport.errors.Count > 0)
             failures.Add("Project validation after test found errors:\n" + postReport.summary);
 
+        // Compare against what the project had BEFORE the test rather than a
+        // hardcoded count: the project now holds real imported content, so any
+        // fixed number goes stale the moment a model is added.
         int realParts = AssetDatabase.FindAssets("t:BodyPartData").Length;
-        if (realParts != 4)
-            failures.Add($"Expected 4 real BodyPartData assets after cleanup, found {realParts} — test artifacts may have leaked.");
+        if (realParts != partsBeforeTest)
+            failures.Add($"Expected {partsBeforeTest} BodyPartData assets after cleanup, found {realParts} — test artifacts may have leaked.");
 
         if (failures.Count == 0)
         {

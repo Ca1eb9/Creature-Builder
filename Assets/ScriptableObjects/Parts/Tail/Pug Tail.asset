@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pug Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 01f581b5-0080-4e25-8b75-f908a5d2672a
+  partID: cb6741b6-da2d-4939-b972-b1d3a3448c32
   partName: Pug Tail
   category: 4
-  prefab: {fileID: 7166050596049012052, guid: aa20920b1c593f148a1afdc80521846a, type: 3}
+  prefab: {fileID: 60641487159601004, guid: aa20920b1c593f148a1afdc80521846a, type: 3}
   icon: {fileID: 21300000, guid: e81f220cf28488a4b82c1fec97ccfce6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

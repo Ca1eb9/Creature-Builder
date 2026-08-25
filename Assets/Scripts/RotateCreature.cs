@@ -46,7 +46,7 @@ public class RotateCreature : MonoBehaviour
 
     void HandleRotation()
     {
-        // if (IsPointerOverInteractableUI()) return;
+        if (IsPointerOverInteractableUI()) return;
 
         if (mouse.leftButton.wasPressedThisFrame)
         {

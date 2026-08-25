@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Trex Front Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 158f1df9-5459-40ce-b0e2-0105a6051ff5
+  partName: Trex Front Legs
+  category: 2
+  prefab: {fileID: 4380163331079128282, guid: bb7acbd1f94dffc4c8ad7caa07f02164, type: 3}
+  icon: {fileID: 21300000, guid: d8620d9dedab105408abbd596c330f2a, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

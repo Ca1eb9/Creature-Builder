@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Spider Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2d4e673f-9a0a-499c-a7d2-a8a47dadca80
+  partID: 0e81b26a-7b41-4e9f-8075-1fe59bc1c833
   partName: Spider Torso
   category: 1
-  prefab: {fileID: 1861141177304252304, guid: 0bb3de419bca7f34c892066ad74334f6, type: 3}
+  prefab: {fileID: 7643422522029399206, guid: 0bb3de419bca7f34c892066ad74334f6, type: 3}
   icon: {fileID: 21300000, guid: f144c6ecb10fcde4da1b78c76eba5136, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

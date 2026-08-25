@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Horse Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 0cd0fe21-f3ee-4388-a912-49989b9011d9
+  partID: dfa5e8a5-ca0e-46cf-a78f-e6e346698e9b
   partName: Horse Head
   category: 0
-  prefab: {fileID: 1484854036284786814, guid: 51fdbebd1a18d434c84d477fd7b94fdb, type: 3}
+  prefab: {fileID: 8718980238169539622, guid: 51fdbebd1a18d434c84d477fd7b94fdb, type: 3}
   icon: {fileID: 21300000, guid: 7c321525d3994054c9c4fe06eddc7788, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

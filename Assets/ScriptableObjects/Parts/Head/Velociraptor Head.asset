@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Velociraptor Head
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: f32cd47a-882e-4111-8f12-deaf3c190623
+  partName: Velociraptor Head
+  category: 0
+  prefab: {fileID: 927926406475279559, guid: 65b216648c9713b4bbdc394be285f17b, type: 3}
+  icon: {fileID: 21300000, guid: c0b5a8e1412776440b99ded9246684e2, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

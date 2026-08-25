@@ -17,8 +17,8 @@ using UnityEditor.SceneManagement;
 public static class CreatureBuilderLinkPaddingTool
 {
     // RectOffset is (left, right, top, bottom).
-    private const int NavL = 8, NavR = 8, NavT = 6, NavB = 6;
-    private const int LinkL = 12, LinkR = 12, LinkT = 6, LinkB = 6;
+    private const int NavL = 14, NavR = 14, NavT = 8, NavB = 8;
+    private const int LinkL = 16, LinkR = 16, LinkT = 8, LinkB = 8;
 
     private const string NavPrefix = "Nav_";
     private const string LinkPrefix = "Link_";

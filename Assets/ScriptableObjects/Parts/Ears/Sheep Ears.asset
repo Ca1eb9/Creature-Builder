@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Sheep Ears
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 1f59367f-85a3-4453-91de-003d37557f6a
+  partName: Sheep Ears
+  category: 7
+  prefab: {fileID: 2002673707369394461, guid: 23fd99ad9eacffe4ca5fdb234bc4dbab, type: 3}
+  icon: {fileID: 21300000, guid: 50a183aa1e43af8419e8c2672566726f, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

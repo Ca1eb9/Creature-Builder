@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Sheep Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c13f4b0b-65e2-427e-b518-f1e993dcadf0
+  partID: cb98bea1-e636-42c4-ae6e-a18861549cd4
   partName: Sheep Head
   category: 0
-  prefab: {fileID: 7226370358390324198, guid: 8fdfa00069599c846aca87bb15b8830a, type: 3}
+  prefab: {fileID: 4633263826823140293, guid: 8fdfa00069599c846aca87bb15b8830a, type: 3}
   icon: {fileID: 21300000, guid: c3f86e8b5d229fb40a3c948477126c83, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

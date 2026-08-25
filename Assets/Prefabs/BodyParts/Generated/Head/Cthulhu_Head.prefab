@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3947609442822968177
+--- !u!1 &185537505385379824
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5748398917798625997}
+  - component: {fileID: 5304483898805403674}
   m_Layer: 0
   m_Name: Cthulhu_Head
   m_TagString: Untagged
@@ -16,23 +16,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5748398917798625997
+--- !u!4 &5304483898805403674
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947609442822968177}
+  m_GameObject: {fileID: 185537505385379824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8982277554435466859}
+  - {fileID: 1374197025174888705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8202678932341750551
+--- !u!1 &8237290912786181052
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8982277554435466859}
-  - component: {fileID: 2681095140975176097}
-  - component: {fileID: 1844046028973541168}
+  - component: {fileID: 1374197025174888705}
+  - component: {fileID: 1672588473125884555}
+  - component: {fileID: 5081106600203971824}
   m_Layer: 0
   m_Name: Cthulhu(Clone)
   m_TagString: Untagged
@@ -50,36 +50,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8982277554435466859
+--- !u!4 &1374197025174888705
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202678932341750551}
+  m_GameObject: {fileID: 8237290912786181052}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5748398917798625997}
+  m_Father: {fileID: 5304483898805403674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2681095140975176097
+--- !u!33 &1672588473125884555
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202678932341750551}
+  m_GameObject: {fileID: 8237290912786181052}
   m_Mesh: {fileID: -8839368762345780380, guid: af64fc21b2e8b164d9f956a99728c777, type: 3}
---- !u!23 &1844046028973541168
+--- !u!23 &5081106600203971824
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202678932341750551}
+  m_GameObject: {fileID: 8237290912786181052}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1

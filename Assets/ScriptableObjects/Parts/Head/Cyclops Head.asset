@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cyclops Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 20c678c0-a898-44be-a23e-fc3ce4be42e6
+  partID: 1ae900b3-598d-4b53-be73-c44c050af729
   partName: Cyclops Head
   category: 0
-  prefab: {fileID: 916197654058850329, guid: 69c235c277197d34f82cb02727902be7, type: 3}
+  prefab: {fileID: 1571444152383368345, guid: 69c235c277197d34f82cb02727902be7, type: 3}
   icon: {fileID: 21300000, guid: c5af0ad7589791a4bb1828c57f2b4bec, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

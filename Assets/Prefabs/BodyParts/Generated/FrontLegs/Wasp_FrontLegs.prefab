@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2794416313626238419
+--- !u!1 &517934401653935271
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5130008530390718995}
-  - component: {fileID: 891760211390234218}
-  - component: {fileID: 5538442630854992560}
+  - component: {fileID: 1413986731626091423}
+  - component: {fileID: 5806053764287196450}
+  - component: {fileID: 8049309443630661256}
   m_Layer: 0
   m_Name: Frontlegs(Clone)
   m_TagString: Untagged
@@ -18,36 +18,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5130008530390718995
+--- !u!4 &1413986731626091423
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2794416313626238419}
+  m_GameObject: {fileID: 517934401653935271}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5023098, y: 0.49767953, z: 0.49768424, w: 0.5023051}
+  m_LocalRotation: {x: -0.49872693, y: 0.5012699, z: 0.5012523, w: 0.49874452}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100.00001, y: 100.00001, z: 100.00003}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4589450635989578315}
+  m_Father: {fileID: 7925416471555022683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &891760211390234218
+--- !u!33 &5806053764287196450
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2794416313626238419}
+  m_GameObject: {fileID: 517934401653935271}
   m_Mesh: {fileID: -432168272403530732, guid: 5bf1cee54b0226442a1ce7c21d5aa158, type: 3}
---- !u!23 &5538442630854992560
+--- !u!23 &8049309443630661256
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2794416313626238419}
+  m_GameObject: {fileID: 517934401653935271}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &9221185210484467114
+--- !u!1 &1430761701195262946
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4589450635989578315}
+  - component: {fileID: 7925416471555022683}
   m_Layer: 0
   m_Name: Wasp_FrontLegs
   m_TagString: Untagged
@@ -107,19 +107,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4589450635989578315
+--- !u!4 &7925416471555022683
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9221185210484467114}
+  m_GameObject: {fileID: 1430761701195262946}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5130008530390718995}
+  - {fileID: 1413986731626091423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

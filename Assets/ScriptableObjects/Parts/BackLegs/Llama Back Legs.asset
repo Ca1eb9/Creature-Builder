@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Llama Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2d93ca51-3e2f-4d3e-9531-45daa6a9b5a3
+  partID: 820bdd41-3bfa-42d0-aab7-3fd7b2402342
   partName: Llama Back Legs
   category: 3
-  prefab: {fileID: 3969284806875058473, guid: 66a6c6db84d9907409b5ee758935bfd2, type: 3}
+  prefab: {fileID: 4183695913277308724, guid: 66a6c6db84d9907409b5ee758935bfd2, type: 3}
   icon: {fileID: 21300000, guid: 39a3903cbef77e046963f9c905876ad2, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

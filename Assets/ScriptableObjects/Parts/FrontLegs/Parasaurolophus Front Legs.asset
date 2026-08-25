@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Parasaurolophus Front Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 6ec8e13b-4dcb-488f-a6fe-9ccf525fa8a1
+  partName: Parasaurolophus Front Legs
+  category: 2
+  prefab: {fileID: 802038224165875288, guid: 46880cc420d9ee849a4c50015331c040, type: 3}
+  icon: {fileID: 21300000, guid: 81deb456687f45a46b4dd5dfac8fb54d, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

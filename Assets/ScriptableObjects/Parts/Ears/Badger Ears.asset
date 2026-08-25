@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Badger Ears
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: 61ef7599-c5d3-4003-9282-2a526e6538fc
+  partName: Badger Ears
+  category: 7
+  prefab: {fileID: 2578523424639419039, guid: 3b3433ca23107064495a9355f43f83fa, type: 3}
+  icon: {fileID: 21300000, guid: 2a4cff5c566dfcf4c802893af017ddbb, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

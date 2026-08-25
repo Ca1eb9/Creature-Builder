@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pug Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: dc998b41-86f8-4b2c-9d0f-2e3245db936e
+  partID: b6748d59-ce93-4504-89f8-4d784dc3deeb
   partName: Pug Front Legs
   category: 2
-  prefab: {fileID: 8395667055493765907, guid: 586fd45cc6c603943807565dcdd944d7, type: 3}
+  prefab: {fileID: 1712053357608295539, guid: 586fd45cc6c603943807565dcdd944d7, type: 3}
   icon: {fileID: 21300000, guid: f1b1e94463ae0224a97421df784ae08a, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

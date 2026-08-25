@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Stegosaurus Back Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: d1ef2141-087b-418f-97f3-7625b3aca5ae
+  partName: Stegosaurus Back Legs
+  category: 3
+  prefab: {fileID: 1122056302628779419, guid: 457b7c37746c15e43945dc1ccd6fab39, type: 3}
+  icon: {fileID: 21300000, guid: ab062ac40a9195c4aaf82c83c7d76b9b, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Ghost Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 9cd0f513-d9f5-465f-9381-9748cc84e12c
+  partID: 8710f7bb-07c5-49cc-b070-0d06bc392463
   partName: Ghost Head
   category: 0
-  prefab: {fileID: 4780563853992268267, guid: d9789dcc916cd934e896fc26d4dfd6f3, type: 3}
+  prefab: {fileID: 1674303910157960500, guid: d9789dcc916cd934e896fc26d4dfd6f3, type: 3}
   icon: {fileID: 21300000, guid: 2c0cd2c9ce7bf4a4a97bf98a27f2c1ff, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

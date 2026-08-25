@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Zebra Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8ca416b0-a76a-415a-b7e6-447026ada20e
+  partID: f42c0105-d38e-4423-b651-88fddc578f9d
   partName: Zebra Front Legs
   category: 2
-  prefab: {fileID: 9102964519806377885, guid: 1df74eb1d4989e744b79c0fe608875f6, type: 3}
+  prefab: {fileID: 5911641697719018221, guid: 1df74eb1d4989e744b79c0fe608875f6, type: 3}
   icon: {fileID: 21300000, guid: cb42d9d8b474704488bfb9e0cb646977, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}
