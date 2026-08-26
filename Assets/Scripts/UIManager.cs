@@ -892,9 +892,7 @@ public class UIManager : MonoBehaviour
 
         // Collapsed inspector keeps its context, like "Inspector · Doomcow".
         if (inspectorGutterLabel != null)
-            inspectorGutterLabel.text = string.IsNullOrWhiteSpace(currentLoadedName)
-                ? "INSPECTOR"
-                : $"INSPECTOR · {currentLoadedName.ToUpper()}";
+            inspectorGutterLabel.text = "INSPECTOR";
     }
 
     // -------- helpers --------

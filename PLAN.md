@@ -18,6 +18,14 @@ follow-up patch needed. Plan created 2026-07-06.
 | Every `partID` | Saves reference parts by ID; regenerating orphans saved creatures. |
 | `companyName` + `productName` | Determine persistentDataPath; renaming "loses" all her saves. |
 | Save folder name (`Creatures`) + JSON field names | Same reason. |
+| Object names inside each model FBX (`Head`, `Torso`, ...) | `Reimport Selected Model` re-attaches saved part IDs by matching model name + category. Rename an object and the match fails, so the part gets a fresh ID and orphans every save using it. |
+| Model FBX filenames (`Wasp.fbx`) | Same matching rule — the filename is half the key. |
+
+**Post-ship model repairs:** prefer a *geometry-only* fix (holes, normals,
+materials) — overwrite the FBX and the generated prefabs pick up the new mesh
+automatically, with IDs and calibration untouched. Only an origin / rotation /
+scale change needs `Reimport Selected Model`, which preserves IDs and
+calibration but *only* while the names above are unchanged.
 
 Ownership legend — **[ME]**: Claude, unsupervised. **[ME+V]**: Claude does it,
 Caleb visually verifies in Unity. **[YOU]**: Caleb only.

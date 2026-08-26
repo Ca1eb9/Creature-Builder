@@ -162,7 +162,16 @@ public class CreatureSaveLoad : MonoBehaviour
     {
         string path = GetSavePath(creatureName);
         if (!File.Exists(path)) return false;
-        try { File.Delete(path); return true; }
+        try
+        {
+            File.Delete(path);
+            // The thumbnail lives beside the save; without this it is orphaned
+            // on disk forever, and a stale one would resurface if the same name
+            // is used again before a new picture is captured.
+            string thumb = GetThumbnailPath(creatureName);
+            if (File.Exists(thumb)) File.Delete(thumb);
+            return true;
+        }
         catch (System.Exception e) { Debug.LogError($"Delete failed: {e}"); return false; }
     }
 
