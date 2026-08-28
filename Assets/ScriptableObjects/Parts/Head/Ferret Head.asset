@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Ferret Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 50360614-ed81-4a51-a13f-e9bd434e9542
+  partID: 5e8ba714-c5d0-4ad7-90f0-e710b3b8a0c9
   partName: Ferret Head
   category: 0
-  prefab: {fileID: 839785190911104906, guid: fad50f16caaf5684c880de5b25f32261, type: 3}
+  prefab: {fileID: 4480307405115104298, guid: fad50f16caaf5684c880de5b25f32261, type: 3}
   icon: {fileID: 21300000, guid: b2bda1a052385a14791287633ae71226, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

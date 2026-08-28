@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Fish Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 867b3349-0075-4afa-9791-8ce608d57d47
+  partID: 3d741b45-a2fd-4227-b97c-65391ed94f26
   partName: Fish Wings
   category: 5
-  prefab: {fileID: 7299814880960698318, guid: 7b68116303eaa4a46b36b6095f390476, type: 3}
+  prefab: {fileID: 1716727359898153819, guid: 7b68116303eaa4a46b36b6095f390476, type: 3}
   icon: {fileID: 21300000, guid: 5e440efdfb3d0c24e986142555052675, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

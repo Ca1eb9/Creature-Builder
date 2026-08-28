@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Fox Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 47c4c34d-7eca-4e57-ad78-d88f01385054
+  partID: ffadae96-5f93-4126-bc6f-5abb4fc5c5e8
   partName: Fox Tail
   category: 4
-  prefab: {fileID: 2130240198928742303, guid: 4e102f78302c15e42ae95b5045e3745d, type: 3}
+  prefab: {fileID: 7911936269767419365, guid: 4e102f78302c15e42ae95b5045e3745d, type: 3}
   icon: {fileID: 21300000, guid: dec9ab9ef4066b045977c5e9e5859965, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

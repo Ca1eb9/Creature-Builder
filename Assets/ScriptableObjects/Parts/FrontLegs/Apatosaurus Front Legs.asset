@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Apatosaurus Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: cd78beba-34a5-464c-ad7d-66feb15bb036
+  partID: 6e76e399-ad7b-4157-baaa-b24f10e8815c
   partName: Apatosaurus Front Legs
   category: 2
-  prefab: {fileID: 8249891293279327945, guid: c41fdaa0dfc55d94f856f120e78ce602, type: 3}
+  prefab: {fileID: 4241350593616336206, guid: c41fdaa0dfc55d94f856f120e78ce602, type: 3}
   icon: {fileID: 21300000, guid: 03afeb3c6ac7cfc40aae24373ecdc3c7, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

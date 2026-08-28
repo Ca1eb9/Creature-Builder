@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Spider Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d3a21dd1-d2b6-4bf4-9ac7-45b56caadd12
+  partID: d87f3af0-ce2b-497a-94ea-20c531473bc4
   partName: Spider Front Legs
   category: 2
-  prefab: {fileID: 9082302855649076873, guid: ae73fe377263fd6468c6da90ba754c5c, type: 3}
+  prefab: {fileID: 3936912254008680068, guid: ae73fe377263fd6468c6da90ba754c5c, type: 3}
   icon: {fileID: 21300000, guid: 1c5a1b7ac41d5b74d8fa9936d4849457, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

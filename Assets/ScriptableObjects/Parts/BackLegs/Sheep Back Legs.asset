@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Sheep Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: fdc907bb-c31f-42a8-8534-325dca766b2a
+  partID: 2e5e0551-7597-424e-8012-963f6f1621f7
   partName: Sheep Back Legs
   category: 3
-  prefab: {fileID: 2619325724073924644, guid: 0b610af3ddd3a29418399ab9f6439515, type: 3}
+  prefab: {fileID: 1121647948521942731, guid: 0b610af3ddd3a29418399ab9f6439515, type: 3}
   icon: {fileID: 21300000, guid: d2eed0887ce3c4a498431590b64b9e35, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

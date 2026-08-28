@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pig Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 73ce7507-d681-4dc4-b0dd-c6325b343523
+  partID: 37a3a8a2-8de8-48f7-bda1-53a050d9c579
   partName: Pig Tail
   category: 4
-  prefab: {fileID: 8530571127418401884, guid: cc80799776f80624c80d894d49bc964f, type: 3}
+  prefab: {fileID: 584119457999891458, guid: cc80799776f80624c80d894d49bc964f, type: 3}
   icon: {fileID: 21300000, guid: 1e8361dcc618eff4db45e9a253766ac6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

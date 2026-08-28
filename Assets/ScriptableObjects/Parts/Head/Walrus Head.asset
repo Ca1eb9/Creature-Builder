@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Walrus Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: b8f097f9-b22b-458c-a68f-13c67c233649
+  partID: 8f01f35e-7163-429d-83d8-0b4e5e815320
   partName: Walrus Head
   category: 0
-  prefab: {fileID: 5203019640808528158, guid: fed1b2092f95bb4468c2df7010909851, type: 3}
+  prefab: {fileID: 1173669795803938077, guid: fed1b2092f95bb4468c2df7010909851, type: 3}
   icon: {fileID: 21300000, guid: f8ed18f0b63e7e349929501f51c0cd55, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

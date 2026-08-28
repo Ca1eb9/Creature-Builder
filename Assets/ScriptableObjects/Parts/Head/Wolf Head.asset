@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wolf Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 3ddef06b-af0f-48cd-8331-ef16e60e1745
+  partID: 4b9f5700-1bf8-4d01-892e-f42607a6cf4b
   partName: Wolf Head
   category: 0
-  prefab: {fileID: 3489039016716881971, guid: 99669e00e223ca542affc8207c1ae191, type: 3}
+  prefab: {fileID: 9148512849850487086, guid: 99669e00e223ca542affc8207c1ae191, type: 3}
   icon: {fileID: 21300000, guid: 85229e259b587354284433284b943895, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

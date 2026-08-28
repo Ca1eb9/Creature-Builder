@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Parrot Back Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: b22d813f-0c85-4faf-91e0-e5407a7be985
+  partName: Parrot Back Legs
+  category: 3
+  prefab: {fileID: 438309958590109296, guid: 264541e867d51f24f9c51ebb31539f52, type: 3}
+  icon: {fileID: 21300000, guid: d4dcb3030df74214b8196cec63e7ac57, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

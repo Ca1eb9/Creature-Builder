@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Manta Ray Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 3e4afe44-4412-4e48-bf0d-49fb1de1f617
+  partID: 1dba0e05-6a33-461b-8d6a-ac282ef73af3
   partName: Manta Ray Tail
   category: 4
-  prefab: {fileID: 663569691197920397, guid: f51b09d159fdbd14983313b5434bfd00, type: 3}
+  prefab: {fileID: 7946771127876233798, guid: f51b09d159fdbd14983313b5434bfd00, type: 3}
   icon: {fileID: 21300000, guid: 5e500954e36a3e7439d5741521553c5f, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

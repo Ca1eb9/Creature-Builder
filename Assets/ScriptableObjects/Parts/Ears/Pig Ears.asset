@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pig Ears
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 3c2a2e37-fa95-460b-9f78-ef872cac8d93
+  partID: 2c6f5687-a666-4e79-b19e-7bbd424fdec4
   partName: Pig Ears
   category: 7
-  prefab: {fileID: 8243027588628918319, guid: bdd7783be22ec6240b180366d681f467, type: 3}
+  prefab: {fileID: 1647965883716915020, guid: bdd7783be22ec6240b180366d681f467, type: 3}
   icon: {fileID: 21300000, guid: f212b277ccd75d44aaaee6b0243f399a, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

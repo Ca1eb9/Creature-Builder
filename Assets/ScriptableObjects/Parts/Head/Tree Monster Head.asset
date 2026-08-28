@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Tree Monster Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 7925420e-f1a9-498a-9e3f-bdbdaf67ccb6
+  partID: 4d11ec54-4c11-45de-9c69-e6ae49484e46
   partName: Tree Monster Head
   category: 0
-  prefab: {fileID: 4121949195843662054, guid: 324127a26f6b05e4cadfddc0f6eb9aa4, type: 3}
+  prefab: {fileID: 713298252108483904, guid: 324127a26f6b05e4cadfddc0f6eb9aa4, type: 3}
   icon: {fileID: 21300000, guid: 7b4a19d6f07956b439a963dbd2ce69d4, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

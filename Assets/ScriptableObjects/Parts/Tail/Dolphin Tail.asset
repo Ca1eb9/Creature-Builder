@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Dolphin Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ae8469cb-4ad8-4ec1-b517-4861f941df31
+  partID: 0aca26fe-eb9d-4127-8d8b-52b2e3bf3f23
   partName: Dolphin Tail
   category: 4
-  prefab: {fileID: 8375594125981636475, guid: 96f9f3587d5755e49864457b103470c2, type: 3}
+  prefab: {fileID: 2373788472645540274, guid: 96f9f3587d5755e49864457b103470c2, type: 3}
   icon: {fileID: 21300000, guid: 995859bdec36a384cb631dfce8bd6afa, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

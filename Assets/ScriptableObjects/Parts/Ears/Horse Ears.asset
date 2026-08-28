@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Horse Ears
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8c091e52-e560-4db6-9081-bca19eb5ff11
+  partID: 4bdb445e-a9c9-4e25-bf54-2ad199e26caf
   partName: Horse Ears
   category: 7
-  prefab: {fileID: 6274028648981906381, guid: 3934e6bff586bd546be27a5b31d5a684, type: 3}
+  prefab: {fileID: 7244618984158962454, guid: 3934e6bff586bd546be27a5b31d5a684, type: 3}
   icon: {fileID: 21300000, guid: 3ddf0ed3b30cb444c91c87cc2abbae47, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

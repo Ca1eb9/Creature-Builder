@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Trex Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c7fecdc7-f81b-4b5b-8416-04fb06a9cdc0
+  partID: 9fbc4f89-25f3-4d60-98ae-bb83cda4484b
   partName: Trex Back Legs
   category: 3
-  prefab: {fileID: 1616855586049994505, guid: 2a2a633d24c64304ba77c7a44d1f9a3c, type: 3}
+  prefab: {fileID: 4765343013764563639, guid: 2a2a633d24c64304ba77c7a44d1f9a3c, type: 3}
   icon: {fileID: 21300000, guid: bda9bf08c85fe0743987d2cb11db5bf1, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

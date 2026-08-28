@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Zebra Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ff2165ab-a4d3-4f86-8190-d0f82a99eac2
+  partID: a7f1872a-2c1a-4e06-ab1a-99d84cc83f84
   partName: Zebra Torso
   category: 1
-  prefab: {fileID: 6472192901763664443, guid: 6d511a1c94a0a874ca826980e63758d5, type: 3}
+  prefab: {fileID: 25826637742029886, guid: 6d511a1c94a0a874ca826980e63758d5, type: 3}
   icon: {fileID: 21300000, guid: 0467a85e6cd108e4aa08b352d390471f, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

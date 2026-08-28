@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Mushroom Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: f5e89fdd-fa96-48d0-9cbb-0cee41408396
+  partID: 64a52aba-b040-4c0d-a45e-a4aa4ea2d827
   partName: Mushroom Head
   category: 0
-  prefab: {fileID: 7974829904546713501, guid: d8f3016191773ac4898c771e494d7723, type: 3}
+  prefab: {fileID: 2805958711981440059, guid: d8f3016191773ac4898c771e494d7723, type: 3}
   icon: {fileID: 21300000, guid: 562e7fcbc89a9434693a41c48a680ba0, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

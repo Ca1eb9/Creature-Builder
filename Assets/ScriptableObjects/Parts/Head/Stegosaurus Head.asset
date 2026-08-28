@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Stegosaurus Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 615d05ea-429b-487e-a430-28b516c6cc45
+  partID: 40df22e8-857c-4edd-a392-b1e049f73694
   partName: Stegosaurus Head
   category: 0
-  prefab: {fileID: 3915722401217503837, guid: 000367628b9a9154f8a2ebeaae3f9684, type: 3}
+  prefab: {fileID: 6320619378807298640, guid: 000367628b9a9154f8a2ebeaae3f9684, type: 3}
   icon: {fileID: 21300000, guid: bf2b667a88611d741b5bd66705bafe95, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

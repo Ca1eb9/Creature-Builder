@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Badger Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2948f920-35df-4d16-a7c1-782240c04819
+  partID: 316b53e9-56ba-4016-9f62-3b63d4430611
   partName: Badger Back Legs
   category: 3
-  prefab: {fileID: 8799919958910641067, guid: ed762c6d9eb378547844344c38b92c92, type: 3}
+  prefab: {fileID: 3187268257963680732, guid: ed762c6d9eb378547844344c38b92c92, type: 3}
   icon: {fileID: 21300000, guid: 226c75d60b7f2e54aa0377f85da9dc40, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

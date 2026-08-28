@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Alien Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 897d592c-46ef-4eb4-810e-436b9ad9d7b0
+  partID: 2ce285d6-4656-4b08-a872-2bc40d54321b
   partName: Alien Back Legs
   category: 3
-  prefab: {fileID: 7571940960297184917, guid: d174da03604c04142ae709b5b9aa88d6, type: 3}
+  prefab: {fileID: 1343487883991029634, guid: d174da03604c04142ae709b5b9aa88d6, type: 3}
   icon: {fileID: 21300000, guid: d26f773c27b2b3640bd37c50a8cc82a4, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

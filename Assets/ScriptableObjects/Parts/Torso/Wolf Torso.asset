@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wolf Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 12134035-c383-4d78-8d6a-68ae65244162
+  partID: 3081d8bb-1e4e-4fe0-aeb1-1543f62a4117
   partName: Wolf Torso
   category: 1
-  prefab: {fileID: 1501847582617501886, guid: 25667ed9853938a4d9b2021b661218f7, type: 3}
+  prefab: {fileID: 974430194375830779, guid: 25667ed9853938a4d9b2021b661218f7, type: 3}
   icon: {fileID: 21300000, guid: 2ea9531f4fc8229499cd4bb22de9ca10, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

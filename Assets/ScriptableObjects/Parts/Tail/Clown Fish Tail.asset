@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Clown Fish Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 390b1809-bb43-499b-9ce0-f61a97c989c3
+  partID: 89c1eb4d-1485-4993-98ec-ddd0f97223bd
   partName: Clown Fish Tail
   category: 4
-  prefab: {fileID: 2184613892085706652, guid: 12e042bf4adc31846a80e3966701a5c2, type: 3}
+  prefab: {fileID: 4329661240076880673, guid: 12e042bf4adc31846a80e3966701a5c2, type: 3}
   icon: {fileID: 21300000, guid: 1bcf00cba82786f45bddbeec3b01b517, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Turtle Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ae6f0768-ee92-448d-ac1e-e3fed48a5ad6
+  partID: aaac8e53-c0df-4070-afc2-065000d37dfe
   partName: Turtle Back Legs
   category: 3
-  prefab: {fileID: 4700348792244964585, guid: cab1db18cbbbf334dbd5d968a3a4a766, type: 3}
+  prefab: {fileID: 7798319016846330053, guid: cab1db18cbbbf334dbd5d968a3a4a766, type: 3}
   icon: {fileID: 21300000, guid: c83e19fa654a7fe4aa8694d3e7ebd0f0, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

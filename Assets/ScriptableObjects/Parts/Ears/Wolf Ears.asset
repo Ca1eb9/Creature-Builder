@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wolf Ears
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 546d78b6-3cd4-495a-822b-9a6bbeb73d3f
+  partID: 2330ac4f-3aef-4b4c-8689-9826134fa96f
   partName: Wolf Ears
   category: 7
-  prefab: {fileID: 1466172392468636658, guid: 0cc9a31a1e463744e922124b5137b83a, type: 3}
+  prefab: {fileID: 5051775338826207830, guid: 0cc9a31a1e463744e922124b5137b83a, type: 3}
   icon: {fileID: 21300000, guid: 3cb4b7f099d4ba14589163a150b1a590, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

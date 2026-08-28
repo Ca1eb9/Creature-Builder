@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cthulhu Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d91856d2-663d-4f34-9134-3e5061130868
+  partID: 906eca28-1e4a-4667-9989-d3817a700dfc
   partName: Cthulhu Head
   category: 0
-  prefab: {fileID: 185537505385379824, guid: fc030c92cdd3f4a4d92876fdff92ea5f, type: 3}
+  prefab: {fileID: 6361414993646980344, guid: fc030c92cdd3f4a4d92876fdff92ea5f, type: 3}
   icon: {fileID: 21300000, guid: 243737596537c1e4fb63440ac2a82036, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

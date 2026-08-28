@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Ferret Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 4afa4926-da50-4054-b01c-02b36ef32597
+  partID: e446b571-2411-4aeb-8722-11044b5b65b1
   partName: Ferret Back Legs
   category: 3
-  prefab: {fileID: 4047406160074094470, guid: 1fcb64c917dde3f49981fe331992143f, type: 3}
+  prefab: {fileID: 700241450175842358, guid: 1fcb64c917dde3f49981fe331992143f, type: 3}
   icon: {fileID: 21300000, guid: f0c8b2a07277d0547af8414256642ba4, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Walrus Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2e5fdf44-cd14-46f9-982c-cf2098611dc1
+  partID: a6b6bf3d-9266-4ea2-b901-ec148147fad8
   partName: Walrus Front Legs
   category: 2
-  prefab: {fileID: 1038258639557636630, guid: 63a856a1c5104e546ac2e72dc03f778e, type: 3}
+  prefab: {fileID: 3874840248270956629, guid: 63a856a1c5104e546ac2e72dc03f778e, type: 3}
   icon: {fileID: 21300000, guid: b4979362b7be9cf40b57368794bc1b60, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

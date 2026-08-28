@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Bull Horns
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 14e8956e-297e-4a10-bdc6-6ece48cfa0c8
+  partID: 06354d43-74e6-4762-8d3f-d4e5ce91f398
   partName: Bull Horns
   category: 6
-  prefab: {fileID: 5420657272620816081, guid: 396c085eee02f82489189e63c904ef78, type: 3}
+  prefab: {fileID: 6418758918608655326, guid: 396c085eee02f82489189e63c904ef78, type: 3}
   icon: {fileID: 21300000, guid: 90966a2792481ca43830158ee6a87bfb, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

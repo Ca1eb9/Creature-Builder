@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Fox Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: a0562520-fbb3-4ae7-b435-81887cda4c2d
+  partID: 089c6211-736a-4269-bf5b-be29df2bc992
   partName: Fox Front Legs
   category: 2
-  prefab: {fileID: 928537448292460759, guid: 2963d9987f0b3c842baae446dcc5c68e, type: 3}
+  prefab: {fileID: 4885861665375759553, guid: 2963d9987f0b3c842baae446dcc5c68e, type: 3}
   icon: {fileID: 21300000, guid: bd1a42e1ae6564f4aaf2a285118af414, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

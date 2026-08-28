@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7118983079084319022
+--- !u!1 &2635660561455436019
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 130897126642378547}
-  - component: {fileID: 35066957437225734}
-  - component: {fileID: 5543712812675716415}
+  - component: {fileID: 5221620797758667403}
+  - component: {fileID: 8926737691616737893}
+  - component: {fileID: 580284434335023158}
   m_Layer: 0
   m_Name: Front legs(Clone)
   m_TagString: Untagged
@@ -18,36 +18,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &130897126642378547
+--- !u!4 &5221620797758667403
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7118983079084319022}
+  m_GameObject: {fileID: 2635660561455436019}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 99.999985, z: 99.999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2637540789701345670}
+  m_Father: {fileID: 3423766131885205799}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &35066957437225734
+--- !u!33 &8926737691616737893
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7118983079084319022}
+  m_GameObject: {fileID: 2635660561455436019}
   m_Mesh: {fileID: -235735397261334440, guid: 5d8bb147c759c1448b60623f19953ac3, type: 3}
---- !u!23 &5543712812675716415
+--- !u!23 &580284434335023158
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7118983079084319022}
+  m_GameObject: {fileID: 2635660561455436019}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -66,8 +66,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4770390735465466038, guid: 5d8bb147c759c1448b60623f19953ac3, type: 3}
-  - {fileID: -1580535799172915004, guid: 5d8bb147c759c1448b60623f19953ac3, type: 3}
+  - {fileID: 2100000, guid: 1739c8cae3a76354b96141658d20488c, type: 2}
+  - {fileID: 2100000, guid: 2e1ee86b870545d4dbb433cd6e3fbe8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8166469553577251154
+--- !u!1 &9200226229410848793
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2637540789701345670}
+  - component: {fileID: 3423766131885205799}
   m_Layer: 0
   m_Name: Velociraptor_FrontLegs
   m_TagString: Untagged
@@ -107,19 +107,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2637540789701345670
+--- !u!4 &3423766131885205799
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8166469553577251154}
+  m_GameObject: {fileID: 9200226229410848793}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 130897126642378547}
+  - {fileID: 5221620797758667403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

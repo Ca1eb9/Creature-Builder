@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pug Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8f4bed59-e63a-42dc-ac14-fb4cf7c52f0f
+  partID: 9045cfb5-dca0-4e4f-a81a-b3f8ea94b5ab
   partName: Pug Head
   category: 0
-  prefab: {fileID: 2634292764212025697, guid: 8838210bb94f07b4abcb1cc30cf093cc, type: 3}
+  prefab: {fileID: 7999668468660441893, guid: 8838210bb94f07b4abcb1cc30cf093cc, type: 3}
   icon: {fileID: 21300000, guid: a1bb3406bbd78244c8f47c8d14a22310, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

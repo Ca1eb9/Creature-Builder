@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Triceratops Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d3db960e-2e7d-4cf9-b942-a0a265ecf88c
+  partID: 2b1cde3d-581e-43c0-bcbc-4f104252143e
   partName: Triceratops Torso
   category: 1
-  prefab: {fileID: 2656062257848480957, guid: 0e23fb06ebea65443a20360c9d10b394, type: 3}
+  prefab: {fileID: 4067001754958670067, guid: 0e23fb06ebea65443a20360c9d10b394, type: 3}
   icon: {fileID: 21300000, guid: 2abc0113ecbc5c94d94fb6dee9c25b5d, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

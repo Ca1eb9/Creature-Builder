@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Texture.001
     second: {fileID: 2100000, guid: ebca2f26389b70b4bb055c54b7c6114b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _002_CoolAlien
+    second: {fileID: 2100000, guid: c373634fa4c35794dbe4d2e5bb1fbcd8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

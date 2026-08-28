@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Triceratops Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 1ff56599-96f8-43a7-a732-96b814999dcf
+  partID: 85c48f7d-120d-4d47-bc0f-ee87c92c55b1
   partName: Triceratops Front Legs
   category: 2
-  prefab: {fileID: 5991952210315107719, guid: c472b06e9996a254ead5ae5885d52207, type: 3}
+  prefab: {fileID: 3341213636732562983, guid: c472b06e9996a254ead5ae5885d52207, type: 3}
   icon: {fileID: 21300000, guid: 08359a5d45f385646ac9ad89174f43c9, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

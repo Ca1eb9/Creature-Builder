@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 55cd4ea4c582ca64c932629131c9492c
+guid: 6a53b506238620341a10701b218128af
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Texture.014
-    second: {fileID: 2100000, guid: b3e60e5b0a6ab1945aa54fc56d575b7f, type: 2}
+      name: black panda.001
+    second: {fileID: 2100000, guid: aaca1f4c1b5a0844bb8c3a47fa09f420, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body.002
+    second: {fileID: 2100000, guid: f75f55e2d99b9d34182ea272b8837403, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

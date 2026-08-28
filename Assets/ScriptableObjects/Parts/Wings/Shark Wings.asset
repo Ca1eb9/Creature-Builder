@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Shark Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: aa49e2a2-b2d5-4bc3-916e-7fde5c396063
+  partID: d653fff6-1b1b-4c4a-9cce-25b7253dce6e
   partName: Shark Wings
   category: 5
-  prefab: {fileID: 7862221208711469134, guid: 512266285c7bde84f8adf1aca90db5b2, type: 3}
+  prefab: {fileID: 493047897683907733, guid: 512266285c7bde84f8adf1aca90db5b2, type: 3}
   icon: {fileID: 21300000, guid: 27da058479d25c741802ef073dccd6b2, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

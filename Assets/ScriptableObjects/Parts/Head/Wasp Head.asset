@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wasp Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 10e74cb5-6870-4c61-aa65-bc3efcadbafc
+  partID: 88f92bf3-f2cb-4407-85b4-e8da3cd4455c
   partName: Wasp Head
   category: 0
-  prefab: {fileID: 8317626059976283879, guid: 5e35d98bd3d2cd74bb92cc9c26cc8364, type: 3}
+  prefab: {fileID: 3575024185012189961, guid: 5e35d98bd3d2cd74bb92cc9c26cc8364, type: 3}
   icon: {fileID: 21300000, guid: ae0c6846d5ba06b4fab52c00cd2ae4fd, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Manta Ray Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5a6396af-5525-4013-979c-759cdef5c6d9
+  partID: d8a690af-aa23-40bc-ba27-ca272e12bd11
   partName: Manta Ray Head
   category: 0
-  prefab: {fileID: 5885986975429888372, guid: 15dbba21dc8a2204aa0ebf10a692cc64, type: 3}
+  prefab: {fileID: 2776264063157110916, guid: 15dbba21dc8a2204aa0ebf10a692cc64, type: 3}
   icon: {fileID: 21300000, guid: e84041a88ea2a9e4086bb95e104cba63, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

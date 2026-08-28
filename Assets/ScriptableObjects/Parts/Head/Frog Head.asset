@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Frog Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5b5e3fe3-2bc9-4dfc-9e54-8a5fa654422e
+  partID: dd1c06e0-97bb-4326-9bb4-234e51c80016
   partName: Frog Head
   category: 0
-  prefab: {fileID: 3814225498392640316, guid: 41a66fdcae384b84da2515d9a361c39b, type: 3}
+  prefab: {fileID: 8441877395802086799, guid: 41a66fdcae384b84da2515d9a361c39b, type: 3}
   icon: {fileID: 21300000, guid: dce5e6a32a3f3434882b2cbe765ae027, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Rat Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: b2028e29-6c34-4645-add5-9a12640a5d48
+  partID: 45b4960b-6188-45ab-913d-3a5e5e15fa90
   partName: Rat Torso
   category: 1
-  prefab: {fileID: 100994831564189483, guid: e9452480eba041140befbf825b335c60, type: 3}
+  prefab: {fileID: 6956130820571009090, guid: e9452480eba041140befbf825b335c60, type: 3}
   icon: {fileID: 21300000, guid: db580ee6952afb14885ae5eff72fe918, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Donkey Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 67f1f584-485b-4479-903a-b954f25082a2
+  partID: 81f20d89-5ae0-481d-b72e-3637bc855295
   partName: Donkey Head
   category: 0
-  prefab: {fileID: 1756528213466407476, guid: d5691d6668b05fc408a00773edbe7d81, type: 3}
+  prefab: {fileID: 8159130672506736540, guid: d5691d6668b05fc408a00773edbe7d81, type: 3}
   icon: {fileID: 21300000, guid: 0e9bb4a6e50e7f649b0333a8945ad5c3, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

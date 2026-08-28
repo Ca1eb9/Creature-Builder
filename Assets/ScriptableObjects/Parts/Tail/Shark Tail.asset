@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Shark Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: acf8d1a7-b765-4cec-8a01-c07e8c5b8b9f
+  partID: f24686d0-a02e-4cc8-922a-e3b4553c9f58
   partName: Shark Tail
   category: 4
-  prefab: {fileID: 2171151527636179868, guid: 714b32b1a2b573545b8d1a693ef7ef96, type: 3}
+  prefab: {fileID: 4553700744614117903, guid: 714b32b1a2b573545b8d1a693ef7ef96, type: 3}
   icon: {fileID: 21300000, guid: d21f605f3e25c4043b0e9e81ea658b78, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Manta Ray Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 012f2b7e-7535-4d5c-8c47-b94d62b6fee9
+  partID: 2022d36c-2049-4f6a-ac2d-a10e32274517
   partName: Manta Ray Wings
   category: 5
-  prefab: {fileID: 1064487526407145247, guid: 7f39bf47bd8354e479ddeabf204a012b, type: 3}
+  prefab: {fileID: 1320754069132888220, guid: 7f39bf47bd8354e479ddeabf204a012b, type: 3}
   icon: {fileID: 21300000, guid: 79924df8d3ad35e4c803be912b7275ff, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

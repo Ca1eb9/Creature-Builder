@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Chicken Monster Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: beac9501-29a3-4fc9-86ed-5b67d07d8efa
+  partID: 21e5eea4-d78f-49fd-9b49-1e263c4d0e07
   partName: Chicken Monster Head
   category: 0
-  prefab: {fileID: 5938656678458639787, guid: 6b55b1f0627f1e441b22bc5044702dc7, type: 3}
+  prefab: {fileID: 2216633912748895739, guid: 6b55b1f0627f1e441b22bc5044702dc7, type: 3}
   icon: {fileID: 21300000, guid: fbeadd988417cf345b4cf924803c3d24, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

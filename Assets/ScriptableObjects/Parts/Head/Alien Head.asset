@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Alien Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 3d7a1e4b-81d2-4a58-9279-3ccf01af8106
+  partID: b51b57da-1265-47f7-a252-fbecc87e3413
   partName: Alien Head
   category: 0
-  prefab: {fileID: 2491487713714664857, guid: 7dddffd9ba6d0d344b403cab638d4f5f, type: 3}
+  prefab: {fileID: 8381721946046899907, guid: 7dddffd9ba6d0d344b403cab638d4f5f, type: 3}
   icon: {fileID: 21300000, guid: ce99685bddd1d7146b1786fd4ac38e76, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

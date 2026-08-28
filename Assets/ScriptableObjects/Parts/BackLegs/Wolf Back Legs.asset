@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wolf Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: daad9d10-f857-4ae0-9d37-2cbf036a91cb
+  partID: ed6c4549-e4bd-4db5-825c-b8766e5d4827
   partName: Wolf Back Legs
   category: 3
-  prefab: {fileID: 2592227588182635117, guid: 64c9c85c8832a8248a707d6c1054031e, type: 3}
+  prefab: {fileID: 774175505536913394, guid: 64c9c85c8832a8248a707d6c1054031e, type: 3}
   icon: {fileID: 21300000, guid: 1f674a4829ac83d449ccfb8dbcfc9388, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

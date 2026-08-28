@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cow Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5db8f3ae-c1d8-4c19-95df-f010bcff4dc3
+  partID: f1f57635-6842-4cc7-9532-84657724b6a4
   partName: Cow Tail
   category: 4
-  prefab: {fileID: 1219814345078824556, guid: 8324e1240a2787348ae799eb57798e6c, type: 3}
+  prefab: {fileID: 7774049825954423444, guid: 8324e1240a2787348ae799eb57798e6c, type: 3}
   icon: {fileID: 21300000, guid: 61ab71b7e5bd5774baa32fe6bd72c362, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

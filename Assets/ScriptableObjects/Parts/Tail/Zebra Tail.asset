@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Zebra Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 7ef471b0-2a6d-401b-954d-ad6ba51d211a
+  partID: 1031b170-aca2-4ef6-8ba2-45eedc11203b
   partName: Zebra Tail
   category: 4
-  prefab: {fileID: 1702414395910226529, guid: 1962a72e118f4df488d88fe5746c4941, type: 3}
+  prefab: {fileID: 6655683605171273963, guid: 1962a72e118f4df488d88fe5746c4941, type: 3}
   icon: {fileID: 21300000, guid: 6670b3fe1a79db347bde89462a9d0c33, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

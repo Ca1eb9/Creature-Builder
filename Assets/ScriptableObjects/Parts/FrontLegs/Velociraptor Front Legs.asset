@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Velociraptor Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d9029abf-deff-4fde-9ed0-e602d11552dc
+  partID: 0f4c37ef-95cb-40b2-842c-e2f26554e30e
   partName: Velociraptor Front Legs
   category: 2
-  prefab: {fileID: 8166469553577251154, guid: 93cb2511a30c8cc48ba47847659faf40, type: 3}
+  prefab: {fileID: 9200226229410848793, guid: 93cb2511a30c8cc48ba47847659faf40, type: 3}
   icon: {fileID: 21300000, guid: 52ff9314e26135242967d3fcf92d0d04, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

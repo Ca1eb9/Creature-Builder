@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Frog Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5d8a01d0-3e29-4149-bf23-373954ad7a1a
+  partID: c0c3849d-05ce-4a5b-9208-218df6620778
   partName: Frog Torso
   category: 1
-  prefab: {fileID: 8964663319691457116, guid: 99d5c1329f351844abd3fd82dcc4b4f3, type: 3}
+  prefab: {fileID: 7798167158993002529, guid: 99d5c1329f351844abd3fd82dcc4b4f3, type: 3}
   icon: {fileID: 21300000, guid: 8617586c774703d4dbec1176ade64b46, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pig Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 374c7760-9876-46b5-84c4-da80a17ab1d7
+  partID: 665cde83-d2d7-4eb1-b600-8796e4c3fafe
   partName: Pig Back Legs
   category: 3
-  prefab: {fileID: 5681127867424437619, guid: 1b48540e584d7c84e82020e01ed578d3, type: 3}
+  prefab: {fileID: 8314769066887053944, guid: 1b48540e584d7c84e82020e01ed578d3, type: 3}
   icon: {fileID: 21300000, guid: 3b5572a2e6c3aeb48b240443f5eb621a, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

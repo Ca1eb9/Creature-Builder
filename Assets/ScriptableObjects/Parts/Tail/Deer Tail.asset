@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Deer Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: b618cdf7-4149-4d18-ba1a-5bb5665b31a1
+  partID: 1decca77-e98a-48bd-97e3-ed849370943a
   partName: Deer Tail
   category: 4
-  prefab: {fileID: 4660873639314509521, guid: f331ec7610575ca45b722479d3c6eb18, type: 3}
+  prefab: {fileID: 6119577312769008253, guid: f331ec7610575ca45b722479d3c6eb18, type: 3}
   icon: {fileID: 21300000, guid: 8550b7ebbccbea7489ec7d2988318e33, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

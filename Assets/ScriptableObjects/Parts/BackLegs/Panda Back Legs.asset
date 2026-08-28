@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
+  m_Name: Panda Back Legs
+  m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
+  partID: b00577bf-5edd-4dd1-8393-9a5b623c0a9f
+  partName: Panda Back Legs
+  category: 3
+  prefab: {fileID: 420901709337608638, guid: a04b18a3abe55584b981e46415789b94, type: 3}
+  icon: {fileID: 21300000, guid: 70549154c5ce15c4c81432ff668470fb, type: 3}
+  description: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  scaleMultiplier: 1
+  useAutoScale: 1

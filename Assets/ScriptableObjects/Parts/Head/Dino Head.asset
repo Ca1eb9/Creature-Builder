@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Dino Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 96bb65a4-921f-45e6-90e8-e62a89482dfc
+  partID: 9f6104da-6e2a-4ea5-b1d0-a61359387a91
   partName: Dino Head
   category: 0
-  prefab: {fileID: 6375616842675253258, guid: 7d82f0718e1de9c4f9e3bb8013c9be2c, type: 3}
+  prefab: {fileID: 5354991498935313455, guid: 7d82f0718e1de9c4f9e3bb8013c9be2c, type: 3}
   icon: {fileID: 21300000, guid: c4fb270f3d39f0a4f8bc4a57c919afa1, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

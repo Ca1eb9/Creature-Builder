@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Deer Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 566a657b-9b60-4099-94b9-6771e44ba9aa
+  partID: d680dd48-0e63-4f16-bc06-1112458718f8
   partName: Deer Back Legs
   category: 3
-  prefab: {fileID: 5900692939096048659, guid: f8f8b93db4513494e935c83d40821d19, type: 3}
+  prefab: {fileID: 1935058072594939486, guid: f8f8b93db4513494e935c83d40821d19, type: 3}
   icon: {fileID: 21300000, guid: c4d1549115db6ac45a76ed875c3ccea6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

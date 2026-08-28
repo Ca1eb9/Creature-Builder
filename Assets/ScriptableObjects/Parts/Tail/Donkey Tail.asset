@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Donkey Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 50d328d6-3a8c-4980-b223-7a63f8971add
+  partID: b2cba050-5367-4152-ba9d-6de9618b75a7
   partName: Donkey Tail
   category: 4
-  prefab: {fileID: 1578520559939516464, guid: 9751e508b41581545acdbddbbc0b5397, type: 3}
+  prefab: {fileID: 7921244110894816625, guid: 9751e508b41581545acdbddbbc0b5397, type: 3}
   icon: {fileID: 21300000, guid: 7e970cb808ccb8e419879552902dfcb8, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Triceratops Horns
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ab0ec06e-5402-4e22-945a-3f1e887451a2
+  partID: d9d2d5a7-7a91-4abb-bb85-07c5d312405d
   partName: Triceratops Horns
   category: 6
-  prefab: {fileID: 1503071937339450762, guid: 44ac4435ef08f164da6fedc216b46154, type: 3}
+  prefab: {fileID: 7624650415634313992, guid: 44ac4435ef08f164da6fedc216b46154, type: 3}
   icon: {fileID: 21300000, guid: f8c7f24729f38a6439b36bc8181a63e9, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

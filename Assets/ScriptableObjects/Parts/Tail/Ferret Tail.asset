@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Ferret Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2be78f0c-d276-43a9-b046-8390be4bcd98
+  partID: 5733a2c0-639e-4776-abd0-e869fe2618c3
   partName: Ferret Tail
   category: 4
-  prefab: {fileID: 5649649939298196567, guid: fb36ef4722dc49c49983c2469759efe6, type: 3}
+  prefab: {fileID: 5621876580330260659, guid: fb36ef4722dc49c49983c2469759efe6, type: 3}
   icon: {fileID: 21300000, guid: 6b12cc0b846f2b34d9a9788324e60728, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

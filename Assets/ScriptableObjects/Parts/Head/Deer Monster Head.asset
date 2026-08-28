@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Deer Monster Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 63d42235-8319-4fc5-a7b9-bd43cc620b3a
+  partID: c1304f6d-cdad-4ae1-9152-17c6d7250aad
   partName: Deer Monster Head
   category: 0
-  prefab: {fileID: 6385580775252996450, guid: 559e6fdf9fe32fd40acfa10555d8f16b, type: 3}
+  prefab: {fileID: 6251885589364615121, guid: 559e6fdf9fe32fd40acfa10555d8f16b, type: 3}
   icon: {fileID: 21300000, guid: a8907ced4a1dae449af60b5ae1d5b075, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Yellow Dragon Horns
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: e23425ea-a5a7-4cc8-ba41-8f282b15d7c1
+  partID: abcf37be-4ea8-4d91-b2ab-0fac421d7502
   partName: Yellow Dragon Horns
   category: 6
-  prefab: {fileID: 4844973444878573897, guid: e4b163f458b22f54e85f1bfdeb48640d, type: 3}
+  prefab: {fileID: 8131090246115270447, guid: e4b163f458b22f54e85f1bfdeb48640d, type: 3}
   icon: {fileID: 21300000, guid: 5557ac2429d88384b864eb6adfd2cebd, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

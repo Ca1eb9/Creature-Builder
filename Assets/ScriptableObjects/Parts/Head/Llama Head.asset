@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Llama Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 91987c5a-897b-4150-ac42-8cc4ce5dc606
+  partID: 3aec8f15-723d-47e8-9320-4ae0e23c7ef5
   partName: Llama Head
   category: 0
-  prefab: {fileID: 7568614803080257043, guid: 45cc5ae3efa5c484593fc486cd61b132, type: 3}
+  prefab: {fileID: 3412578932884500080, guid: 45cc5ae3efa5c484593fc486cd61b132, type: 3}
   icon: {fileID: 21300000, guid: 399b54f207888de4f845652f712659eb, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

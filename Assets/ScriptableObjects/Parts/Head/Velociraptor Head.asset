@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Velociraptor Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: f32cd47a-882e-4111-8f12-deaf3c190623
+  partID: a9f40a5f-fb98-46f3-9801-62889845a0b2
   partName: Velociraptor Head
   category: 0
-  prefab: {fileID: 927926406475279559, guid: 65b216648c9713b4bbdc394be285f17b, type: 3}
+  prefab: {fileID: 3681614114576877650, guid: 65b216648c9713b4bbdc394be285f17b, type: 3}
   icon: {fileID: 21300000, guid: c0b5a8e1412776440b99ded9246684e2, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

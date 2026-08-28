@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Dragon Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 30540569-a154-4122-b338-7a0847faaff8
+  partID: 1d620b88-48d3-4584-b030-2b12463a138c
   partName: Dragon Front Legs
   category: 2
-  prefab: {fileID: 757480338499677935, guid: cd778a00ddf37b94eaf7807ae52b7649, type: 3}
+  prefab: {fileID: 7887081991693375460, guid: cd778a00ddf37b94eaf7807ae52b7649, type: 3}
   icon: {fileID: 21300000, guid: acefeca3a2318fd4496807248ba119c6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

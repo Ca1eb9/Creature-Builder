@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Bee Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2484b66f-993f-4b82-b8dc-04fa6221887a
+  partID: 38639f60-daee-482d-a34d-e795943c086c
   partName: Bee Wings
   category: 5
-  prefab: {fileID: 5992976528590053175, guid: 4a22261336c9c6b4f9ee27dfcd17c916, type: 3}
+  prefab: {fileID: 4729161719130454301, guid: 4a22261336c9c6b4f9ee27dfcd17c916, type: 3}
   icon: {fileID: 21300000, guid: 5fbf0b87c7c4cc34a9c1af021b863b85, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

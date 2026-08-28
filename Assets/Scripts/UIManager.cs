@@ -410,8 +410,26 @@ public class UIManager : MonoBehaviour
         foreach (var kv in socketValues)
         {
             var data = assembler.GetEquippedData(kv.Key);
-            if (kv.Value != null)
-                kv.Value.text = data != null ? ShortPartName(data.partName, kv.Key) : "None";
+            if (kv.Value == null) continue;
+
+            bool empty = data == null;
+            kv.Value.text = empty ? "—" : ShortPartName(data.partName, kv.Key);
+
+            // An em dash is a lone thin horizontal stroke, and Cormorant draws a
+            // very fine one. In a small window the canvas scales below 1:1 and it
+            // can fall under a device pixel and disappear, so the empty marker is
+            // drawn in the sturdier body face, emboldened. Part names are fine in
+            // Cormorant — letters have vertical stems with far more coverage.
+            if (empty)
+            {
+                if (DesignTokens.BodyFont != null) kv.Value.font = DesignTokens.BodyFont;
+                kv.Value.fontStyle = FontStyles.Bold;
+            }
+            else
+            {
+                if (DesignTokens.HeadingFont != null) kv.Value.font = DesignTokens.HeadingFont;
+                kv.Value.fontStyle = FontStyles.Normal;
+            }
         }
     }
 
@@ -421,7 +439,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     static string ShortPartName(string partName, BodyPartCategory cat)
     {
-        if (string.IsNullOrWhiteSpace(partName)) return "None";
+        if (string.IsNullOrWhiteSpace(partName)) return "—";
         string suffix = Prettify(cat.ToString());               // "Front Legs"
         string trimmed = partName.Trim();
 

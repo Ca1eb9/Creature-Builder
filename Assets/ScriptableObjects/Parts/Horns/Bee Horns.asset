@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Bee Horns
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 571728e8-4cf9-4596-b398-f8b62bc2731b
+  partID: 8c1477fd-663f-40b1-ae19-b29baa7e5629
   partName: Bee Horns
   category: 6
-  prefab: {fileID: 2798155629465284214, guid: b34ee2ac36c2006489dedc07462f65b3, type: 3}
+  prefab: {fileID: 8614950108555523121, guid: b34ee2ac36c2006489dedc07462f65b3, type: 3}
   icon: {fileID: 21300000, guid: fe6d702b89ae3c945b26eabfaf36de1d, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

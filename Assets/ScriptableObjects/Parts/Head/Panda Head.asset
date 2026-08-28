@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Panda Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ff5f777d-26f9-4d45-983a-647db08b3db9
+  partID: 62693df1-9960-498b-aab9-a8881cc11ddf
   partName: Panda Head
   category: 0
-  prefab: {fileID: 1708378563072821816, guid: 198201fa43fce17489964bda7914bf1e, type: 3}
+  prefab: {fileID: 506917943666631561, guid: 198201fa43fce17489964bda7914bf1e, type: 3}
   icon: {fileID: 21300000, guid: b3f0c55b7e867e247934881daf51fffa, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

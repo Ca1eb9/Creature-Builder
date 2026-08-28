@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cow Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: e51fea33-9f17-46e5-ae85-2b4d5f16e75d
+  partID: b7f7e772-3615-478c-8ab8-90fb0d4221eb
   partName: Cow Front Legs
   category: 2
-  prefab: {fileID: 7461500020386858860, guid: a9ae9f01952965242bdf0aa67dcbd93a, type: 3}
+  prefab: {fileID: 6624908605386522463, guid: a9ae9f01952965242bdf0aa67dcbd93a, type: 3}
   icon: {fileID: 21300000, guid: 766b0dfb4dc8a4e4a81e127560f838f8, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

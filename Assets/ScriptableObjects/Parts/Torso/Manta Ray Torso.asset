@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Manta Ray Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8d975b62-05f8-46e7-bd24-3545bab3a1e2
+  partID: 0ba57ae7-3a87-456c-a349-ec7a9879e5eb
   partName: Manta Ray Torso
   category: 1
-  prefab: {fileID: 181198525376929180, guid: 48ff6988b12463f4d9c0fd7c1bc355c4, type: 3}
+  prefab: {fileID: 1335497782266612240, guid: 48ff6988b12463f4d9c0fd7c1bc355c4, type: 3}
   icon: {fileID: 21300000, guid: a6b775877d21b6744a27e00b34031b1d, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

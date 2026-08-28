@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Yellow Dragon Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: cfb6cfe3-e6cf-4930-a129-6f4eda689231
+  partID: 49751fe4-b3a0-48c8-a15b-5efd02e72c39
   partName: Yellow Dragon Head
   category: 0
-  prefab: {fileID: 6114499953901200778, guid: 2030736e79454b24aa65fea9052a5983, type: 3}
+  prefab: {fileID: 62251333402343120, guid: 2030736e79454b24aa65fea9052a5983, type: 3}
   icon: {fileID: 21300000, guid: 5cb485b419543bb4ea0858f8d1e888ff, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

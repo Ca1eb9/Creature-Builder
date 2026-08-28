@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Frog Back Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: a25425c6-3d45-4e40-ba58-9f1ffb14a32a
+  partID: 238f44f6-9b84-46ac-9d5d-592ce9ac9334
   partName: Frog Back Legs
   category: 3
-  prefab: {fileID: 6037403416874416806, guid: 789568020265306448b7e1118d74d1e1, type: 3}
+  prefab: {fileID: 7506633633353062359, guid: 789568020265306448b7e1118d74d1e1, type: 3}
   icon: {fileID: 21300000, guid: c7f77741890acdf4b84fb2ce323ade11, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

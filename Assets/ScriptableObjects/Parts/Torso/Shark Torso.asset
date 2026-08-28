@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Shark Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: fd498ed0-192a-49cf-9dd7-2dc2edd32f3a
+  partID: a03a4eaf-fae7-4443-8448-f02792b3eafd
   partName: Shark Torso
   category: 1
-  prefab: {fileID: 8283302420656666414, guid: 2bf416e201c7b3f4880dc5dfdd4eeab0, type: 3}
+  prefab: {fileID: 2975040781668198898, guid: 2bf416e201c7b3f4880dc5dfdd4eeab0, type: 3}
   icon: {fileID: 21300000, guid: d125fcac7309f7241ae5f1174cda522f, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

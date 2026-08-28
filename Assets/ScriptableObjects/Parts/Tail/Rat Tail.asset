@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Rat Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: fc22179f-5045-4bac-b24d-fe7437a0e094
+  partID: d4ee48c0-36a4-43ef-bdd5-9b0f5985b271
   partName: Rat Tail
   category: 4
-  prefab: {fileID: 1982546875268961675, guid: 3b79e806dc57bac46b2a86c2c2d023f7, type: 3}
+  prefab: {fileID: 7397135724917883163, guid: 3b79e806dc57bac46b2a86c2c2d023f7, type: 3}
   icon: {fileID: 21300000, guid: 3b14d1233b1249f428b42f14774030a2, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Bat Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ef873828-764f-47d7-bef6-b5425aa690b3
+  partID: 132800db-a9fd-4ef2-9c95-0d7d6a184bfe
   partName: Bat Head
   category: 0
-  prefab: {fileID: 3924801997499242526, guid: fdba5995be7e4924da0b6d8174a44f54, type: 3}
+  prefab: {fileID: 4584523650833666592, guid: fdba5995be7e4924da0b6d8174a44f54, type: 3}
   icon: {fileID: 21300000, guid: 4ac733fb024ab3e4bac928c8f66ab2b6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

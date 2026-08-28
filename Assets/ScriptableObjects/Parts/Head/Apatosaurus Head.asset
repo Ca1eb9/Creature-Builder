@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Apatosaurus Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8f95e730-b58a-4c8c-b0bf-6a13dbcebebd
+  partID: 7313280c-0f1c-4e9e-8026-bc95dbdf498e
   partName: Apatosaurus Head
   category: 0
-  prefab: {fileID: 4051235039895400104, guid: 70f1f7c0ee2425f4684ba80d2c8d2269, type: 3}
+  prefab: {fileID: 883572596020624808, guid: 70f1f7c0ee2425f4684ba80d2c8d2269, type: 3}
   icon: {fileID: 21300000, guid: 084d7a1f4cb91be459bb904d7fded2bb, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

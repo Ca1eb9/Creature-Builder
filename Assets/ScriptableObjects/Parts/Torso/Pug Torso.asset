@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Pug Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: ab4c8eca-15ff-44fc-9479-30adc8e0b845
+  partID: fa6d82eb-f74e-4570-8342-c91723cd5541
   partName: Pug Torso
   category: 1
-  prefab: {fileID: 7925395215711148550, guid: 0b46b23eef9c115448f37acb74be1019, type: 3}
+  prefab: {fileID: 187996152849203708, guid: 0b46b23eef9c115448f37acb74be1019, type: 3}
   icon: {fileID: 21300000, guid: ee560d9f4ef026546a67fea9a61c4585, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

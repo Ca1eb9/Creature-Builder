@@ -3,7 +3,27 @@ guid: 72cbbaab9d4d26e47a0a14c99d563ce7
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Belly
+    second: {fileID: 2100000, guid: c85f80d50564b624e9c5cfdcedeecf6f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Claws
+    second: {fileID: 2100000, guid: 4d54efc06d123be4894550bc27b0e1fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: 26d77719a6e39214e9fdb9dd3f910115, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wings
+    second: {fileID: 2100000, guid: 3c09d135c4e94d24da42131d4b382589, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

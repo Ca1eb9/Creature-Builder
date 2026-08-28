@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Sheep Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 135916b0-e7fd-4cd6-943e-5f64b07a2cdc
+  partID: ae42451e-d2c9-4094-b2c6-daa849e53efc
   partName: Sheep Torso
   category: 1
-  prefab: {fileID: 4301793201282110050, guid: 58519aa6fd2a61c4c8e7051a895236a1, type: 3}
+  prefab: {fileID: 7523396377049162191, guid: 58519aa6fd2a61c4c8e7051a895236a1, type: 3}
   icon: {fileID: 21300000, guid: eb0a39913584b124292d90e822e268c3, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Llama Ears
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c94f576d-9081-4285-8972-d3ea4637cc26
+  partID: 9bb083a0-3fa0-42cd-b43f-46dad36739f1
   partName: Llama Ears
   category: 7
-  prefab: {fileID: 2449923855619834868, guid: 02f043fff737c3645ad00b58b6fffab2, type: 3}
+  prefab: {fileID: 6156998994771564072, guid: 02f043fff737c3645ad00b58b6fffab2, type: 3}
   icon: {fileID: 21300000, guid: 940be8335bcf10f43851e6c5b6e61494, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

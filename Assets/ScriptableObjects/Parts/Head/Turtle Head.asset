@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Turtle Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: f527adf1-eab9-4e42-9b71-4628b77552c6
+  partID: 5c2bea1b-cf27-4b62-aeea-72d23b42e33b
   partName: Turtle Head
   category: 0
-  prefab: {fileID: 2412613536616414189, guid: bf9300c386f126e40ae189b8224a51a1, type: 3}
+  prefab: {fileID: 2785941583310706866, guid: bf9300c386f126e40ae189b8224a51a1, type: 3}
   icon: {fileID: 21300000, guid: f89ec42c252539f42be24dfaa44e1657, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

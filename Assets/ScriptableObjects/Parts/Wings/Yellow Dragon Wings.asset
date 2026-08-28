@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Yellow Dragon Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 7b60cf60-10d5-4949-a1d5-bc3cfbbfc025
+  partID: 0da7629a-bdb0-450c-95b3-a3c768e12144
   partName: Yellow Dragon Wings
   category: 5
-  prefab: {fileID: 9113215618600765361, guid: 843d850f289f65c4cbf0c5571fc0022a, type: 3}
+  prefab: {fileID: 7122726444196010253, guid: 843d850f289f65c4cbf0c5571fc0022a, type: 3}
   icon: {fileID: 21300000, guid: 4077080c3978d924f8caddb8e0e69a67, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

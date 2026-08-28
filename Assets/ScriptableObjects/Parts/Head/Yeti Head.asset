@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Yeti Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: fddf1481-68e6-4386-9cb8-b875872af5de
+  partID: dbac1fe5-c583-458b-812a-89dd5b9e4784
   partName: Yeti Head
   category: 0
-  prefab: {fileID: 3658381528236917879, guid: bcc6a0b1a4b3feb44bde5d7f5db52f34, type: 3}
+  prefab: {fileID: 3950895770574023641, guid: bcc6a0b1a4b3feb44bde5d7f5db52f34, type: 3}
   icon: {fileID: 21300000, guid: 03a2a2a73b8e4f346b29b33633983ac0, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

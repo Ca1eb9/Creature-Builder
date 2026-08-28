@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Dragon Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 55519c53-48b3-46a4-ba11-7509d2cdc1d1
+  partID: 4ad304f2-b3be-4be2-9cbe-ae1f14a97305
   partName: Dragon Wings
   category: 5
-  prefab: {fileID: 1365836571749814387, guid: 03bbe68db9cff134baf03a4a76bab392, type: 3}
+  prefab: {fileID: 4664940178052526893, guid: 03bbe68db9cff134baf03a4a76bab392, type: 3}
   icon: {fileID: 21300000, guid: ea70e4bbba5edee48b1b813086a85126, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

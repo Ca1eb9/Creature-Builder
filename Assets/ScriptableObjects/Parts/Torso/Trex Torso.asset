@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Trex Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8f057b0a-1f79-4379-b253-d8df4e5a4763
+  partID: b566baa1-0e97-42fa-8b6a-3701e906e6ca
   partName: Trex Torso
   category: 1
-  prefab: {fileID: 5771018134750671689, guid: 0e6d418d56e4f7f4daf67805906b40e1, type: 3}
+  prefab: {fileID: 1042186892858383171, guid: 0e6d418d56e4f7f4daf67805906b40e1, type: 3}
   icon: {fileID: 21300000, guid: 9601136421071444691a7ff2506b1597, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

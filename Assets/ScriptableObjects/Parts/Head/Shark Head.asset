@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Shark Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 4c5f33eb-65b2-4636-b0a7-32c8ffa98f80
+  partID: da4623ff-03cd-44bb-85c2-95039cd7e1ab
   partName: Shark Head
   category: 0
-  prefab: {fileID: 5640978407318967765, guid: e5f625f3b98538a4ea9b9a57407daa65, type: 3}
+  prefab: {fileID: 880672635072505686, guid: e5f625f3b98538a4ea9b9a57407daa65, type: 3}
   icon: {fileID: 21300000, guid: 76921f87171163740969f720b301478c, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

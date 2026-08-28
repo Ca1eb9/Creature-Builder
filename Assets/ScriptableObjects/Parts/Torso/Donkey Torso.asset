@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Donkey Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 4b85857e-15fc-4707-8c77-71fba4f45977
+  partID: 613333bc-2bb9-4519-ac28-e2976c6afe1a
   partName: Donkey Torso
   category: 1
-  prefab: {fileID: 2442064891449330783, guid: 87f295221dcdac34887e703b96b38998, type: 3}
+  prefab: {fileID: 1491109039072386432, guid: 87f295221dcdac34887e703b96b38998, type: 3}
   icon: {fileID: 21300000, guid: add75e465ea30b04c8d1f2c517c751b8, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

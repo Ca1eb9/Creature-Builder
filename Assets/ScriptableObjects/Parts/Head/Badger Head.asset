@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Badger Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: cccb5194-0e1a-4a34-bc2d-4c087eb4e158
+  partID: 48c5dca8-144a-4118-84e3-8dc22221d45a
   partName: Badger Head
   category: 0
-  prefab: {fileID: 5095308839013854750, guid: 74bee67a39316ff4bbf33cc5c741f024, type: 3}
+  prefab: {fileID: 2838732681654714214, guid: 74bee67a39316ff4bbf33cc5c741f024, type: 3}
   icon: {fileID: 21300000, guid: ca871b6f16b985f4ab141850a7679492, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Horse Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: c3765aaa-7033-4236-9bb6-3fce6dae1783
+  partID: c9e78c99-e42e-47f0-88ed-1d5de2e835e6
   partName: Horse Tail
   category: 4
-  prefab: {fileID: 2114507961134819602, guid: bfde5fbaa63493948b9ba9997a322842, type: 3}
+  prefab: {fileID: 2195111018210563376, guid: bfde5fbaa63493948b9ba9997a322842, type: 3}
   icon: {fileID: 21300000, guid: 894df6244a6e3cf49a60694852360d55, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

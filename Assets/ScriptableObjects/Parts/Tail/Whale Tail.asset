@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Whale Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: de447eae-4437-4123-81fc-8c4cdcfe410d
+  partID: 11866102-1b28-4bd1-ab93-9c4dcc1e672a
   partName: Whale Tail
   category: 4
-  prefab: {fileID: 8411476739308803804, guid: b85bc9db7744189498484a95093f8ecb, type: 3}
+  prefab: {fileID: 5755979272493321392, guid: b85bc9db7744189498484a95093f8ecb, type: 3}
   icon: {fileID: 21300000, guid: d762e2d04fadb95488ed8e66913bf551, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

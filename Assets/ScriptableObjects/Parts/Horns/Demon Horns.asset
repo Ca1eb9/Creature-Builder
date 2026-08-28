@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Demon Horns
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 432054a0-a9fd-4d97-9143-e7bd8987621f
+  partID: 106395a4-36e4-4673-8bcf-de94ec4afc86
   partName: Demon Horns
   category: 6
-  prefab: {fileID: 7122783267264945060, guid: 64541a38b733ded4d9287b0c9f256c83, type: 3}
+  prefab: {fileID: 4058697588679036507, guid: 64541a38b733ded4d9287b0c9f256c83, type: 3}
   icon: {fileID: 21300000, guid: 618277b04c65fd14182a7c1275f20b96, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

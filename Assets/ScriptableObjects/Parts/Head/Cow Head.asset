@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Cow Head
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 2e2095d2-1961-4f6d-8865-fa7ddb0aa5e1
+  partID: bd42bcd1-9444-4887-91f6-51d024d56e0a
   partName: Cow Head
   category: 0
-  prefab: {fileID: 5063253181968661608, guid: 3c2362e28b020d04bb7f68e5acd7b649, type: 3}
+  prefab: {fileID: 7018337282124010326, guid: 3c2362e28b020d04bb7f68e5acd7b649, type: 3}
   icon: {fileID: 21300000, guid: c5845334cd126ab47adcef8ef9fc4509, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

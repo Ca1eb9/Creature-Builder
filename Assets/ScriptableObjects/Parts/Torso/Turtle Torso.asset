@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Turtle Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 8090a58f-7c73-4075-8edd-5d873c492d46
+  partID: 4c5700b5-6e9d-4d18-a762-c92098494f5d
   partName: Turtle Torso
   category: 1
-  prefab: {fileID: 672526495297962063, guid: 22b51dc1a1c659e44bbc39e69baf8d5b, type: 3}
+  prefab: {fileID: 3742097765899269102, guid: 22b51dc1a1c659e44bbc39e69baf8d5b, type: 3}
   icon: {fileID: 21300000, guid: 94341aabe0837634a830cb97ac4984a1, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

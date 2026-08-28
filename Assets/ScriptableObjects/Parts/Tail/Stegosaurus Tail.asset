@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Stegosaurus Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: fc02cf85-8edc-4d6e-a7b3-866c037ba354
+  partID: a8dae820-f3df-4120-8757-a99e86395021
   partName: Stegosaurus Tail
   category: 4
-  prefab: {fileID: 3763402800050297186, guid: 6f6e189520ded5e45a3f0f099b380438, type: 3}
+  prefab: {fileID: 505023021785953029, guid: 6f6e189520ded5e45a3f0f099b380438, type: 3}
   icon: {fileID: 21300000, guid: 91580eac86dda55449d3585f01b0f5c8, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

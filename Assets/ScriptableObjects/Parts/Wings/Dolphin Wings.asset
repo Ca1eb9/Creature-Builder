@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Dolphin Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: d01edd5b-d54e-46be-9e31-48e463f34607
+  partID: 953fa9ca-f3b2-4e90-b405-9d4131fd1cf6
   partName: Dolphin Wings
   category: 5
-  prefab: {fileID: 7191668980649456937, guid: da758bd702434cc4e88eda66c2c12cdf, type: 3}
+  prefab: {fileID: 5013240862425395066, guid: da758bd702434cc4e88eda66c2c12cdf, type: 3}
   icon: {fileID: 21300000, guid: 9fdd98bc2b9cf8f439a5c8e09cf9cd08, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

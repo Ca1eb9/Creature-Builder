@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Donkey Front Legs
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 39077b2e-429a-46eb-97e6-0c07fb0d05f0
+  partID: 0c3f36a4-ad5c-4ba8-8a0b-ec2c74469194
   partName: Donkey Front Legs
   category: 2
-  prefab: {fileID: 5341567322452393152, guid: d407b2ef6fc05a14ba16beed86129c62, type: 3}
+  prefab: {fileID: 5732969134439163822, guid: d407b2ef6fc05a14ba16beed86129c62, type: 3}
   icon: {fileID: 21300000, guid: 6aa18f1922dc30f428db928bd13d39f6, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

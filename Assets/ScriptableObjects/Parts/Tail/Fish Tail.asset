@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Fish Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 25a58be3-d2be-43dc-9c0d-129d4f36686c
+  partID: 1200d4d7-fcea-4673-aec4-d071ce05fa75
   partName: Fish Tail
   category: 4
-  prefab: {fileID: 6176756683494977457, guid: ae5af89005a64f64fa3fda40edba353c, type: 3}
+  prefab: {fileID: 2221218082548795426, guid: ae5af89005a64f64fa3fda40edba353c, type: 3}
   icon: {fileID: 21300000, guid: 53b627cf557f57a479d0472da582c9cd, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

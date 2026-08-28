@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wolf Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 143e6614-4cdc-42c8-a89f-341e83d7fdf8
+  partID: 6af110d5-6418-4a8d-a222-d6f81f27dbc4
   partName: Wolf Tail
   category: 4
-  prefab: {fileID: 6427015016123727353, guid: 8de383618333fd34c91f53cb55415f68, type: 3}
+  prefab: {fileID: 6636704258848934766, guid: 8de383618333fd34c91f53cb55415f68, type: 3}
   icon: {fileID: 21300000, guid: edd7126c8a036a646bc194d70f1edfe1, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

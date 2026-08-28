@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Alien Torso
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 6f1381c0-10bd-4199-8219-a81cbc5a2d68
+  partID: 971e4003-720c-43cc-9495-bbdf2901ae49
   partName: Alien Torso
   category: 1
-  prefab: {fileID: 2224597192780652904, guid: 74ebf60bbee5d5a41bd0c87e050ae602, type: 3}
+  prefab: {fileID: 1589440197075117307, guid: 74ebf60bbee5d5a41bd0c87e050ae602, type: 3}
   icon: {fileID: 21300000, guid: de33afa63cd68fb438f4f4ea695ca8ee, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

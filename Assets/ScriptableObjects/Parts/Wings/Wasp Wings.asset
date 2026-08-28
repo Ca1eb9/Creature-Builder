@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Wasp Wings
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: 5903a08e-0aa7-43d6-9667-3999ded9e4d3
+  partID: 151d93e2-1125-4240-94dd-a0e69d323f25
   partName: Wasp Wings
   category: 5
-  prefab: {fileID: 3272311644587489231, guid: 44162baa52d715b4e88386e016ad0e38, type: 3}
+  prefab: {fileID: 6816573332884734284, guid: 44162baa52d715b4e88386e016ad0e38, type: 3}
   icon: {fileID: 21300000, guid: d33c68ec85ba81447aa539d76f918b56, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd58a1b98804b3d4981859b1b70de610, type: 3}
   m_Name: Parasaurolophus Tail
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartData
-  partID: da48b4a7-8d4e-40eb-9005-29882fd16cff
+  partID: fbee9934-0d79-4819-bc2d-14734122fed1
   partName: Parasaurolophus Tail
   category: 4
-  prefab: {fileID: 2154171927666291657, guid: 6c9e2282f4efbce47b61842849af5220, type: 3}
+  prefab: {fileID: 1699466629242615576, guid: 6c9e2282f4efbce47b61842849af5220, type: 3}
   icon: {fileID: 21300000, guid: 725ba49c0945a664fad3b77628692b95, type: 3}
   description: 
   positionOffset: {x: 0, y: 0, z: 0}
