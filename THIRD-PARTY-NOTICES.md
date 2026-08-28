@@ -1,8 +1,12 @@
 # Third-party notices
 
-The project's own source code is MIT licensed (see `LICENSE`). The assets
-bundled with it are not — each keeps the license it came with, and those
-licenses apply to the built application as well as to this repository.
+The project's own source code is under a proprietary, all-rights-reserved
+license (see `LICENSE`) — no commercial use, no modification, no resale.
+
+The assets bundled with it are separate: each keeps the license it came with,
+and those licenses govern that asset on their own terms. In particular the
+fonts below are openly licensed and may be reused independently of this
+software; the restrictions in `LICENSE` do not extend to them.
 
 ---
 
