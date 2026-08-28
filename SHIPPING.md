@@ -73,6 +73,11 @@ path. Renaming either makes every existing creature vanish from her library
 **Delete before zipping:** any `*_BurstDebugInformation_DoNotShip` folder.
 It is debug symbols, adds tens of MB, and ships nothing useful.
 
+**Include with the zip:** `LICENSE` and `THIRD-PARTY-NOTICES.md`. The fonts are
+under the SIL Open Font License, which requires its text to travel with them —
+the OFL files live in `Assets/Fonts/` and are carried into the build, but
+shipping the notices at the top level makes the licensing legible.
+
 ### Test the built exe (not the Editor)
 The Editor hides real problems. Run the actual build and repeat the smoke test,
 paying attention to:
