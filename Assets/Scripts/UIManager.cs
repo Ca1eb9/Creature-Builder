@@ -285,9 +285,12 @@ public class UIManager : MonoBehaviour
         SetActiveChild(noneCard, "IconArea", false);
         SetActiveChild(noneCard, "Icon", false);
         SetActiveChild(noneCard, "IconRule", false);
-        SetActiveChild(noneCard, "DashedBorder", true);
+        // A clean hairline box, not the tiled dash sprite: at this canvas scale the
+        // dashes rasterise into chunky tick marks rather than the fine dashed rule
+        // the mockup shows, so a plain 1px outline reads much closer to it.
+        SetActiveChild(noneCard, "DashedBorder", false);
         SetActiveChild(noneCard, "Dash", true);
-        SetActiveChild(noneCard, "Border", false);
+        SetActiveChild(noneCard, "Border", true);
 
         // Selected = this category genuinely has nothing equipped. The accent
         // tint carries that; the "EQUIPPED" kicker would read wrong on an empty slot.
@@ -306,8 +309,8 @@ public class UIManager : MonoBehaviour
         }
         var dashLbl = noneCard.transform.Find("Dash")?.GetComponent<TextMeshProUGUI>();
         if (dashLbl != null) dashLbl.color = isSelected ? DesignTokens.Accent : DesignTokens.Neutral600;
-        var dashed = noneCard.transform.Find("DashedBorder")?.GetComponent<Image>();
-        if (dashed != null) dashed.color = isSelected ? DesignTokens.Accent : DesignTokens.Neutral400;
+        var outline = noneCard.transform.Find("Border")?.GetComponent<Image>();
+        if (outline != null) outline.color = isSelected ? DesignTokens.Accent : DesignTokens.Neutral400;
 
         SetButtonBase(noneCard.GetComponent<Button>(),
                       isSelected ? DesignTokens.Accent100 : new Color(1, 1, 1, 0));
